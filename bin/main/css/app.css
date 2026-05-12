@@ -64,6 +64,16 @@
 }
 .primary-button:hover { -fx-background-color: #3498db; }
 
+.success-button {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+.success-button:hover { -fx-background-color: #2ecc71; }
+
 .danger-button {
     -fx-background-color: #c0392b;
     -fx-text-fill: white;

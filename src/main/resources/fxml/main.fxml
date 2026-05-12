@@ -15,6 +15,7 @@
             <Button fx:id="dashboardBtn"    text="Dashboard"         onAction="#showDashboard"    styleClass="nav-button"/>
             <Button fx:id="accountsBtn"     text="Accounts"          onAction="#showAccounts"     styleClass="nav-button"/>
             <Button fx:id="transactionsBtn" text="Transactions"      onAction="#showTransactions" styleClass="nav-button"/>
+            <Button fx:id="distributionBtn" text="Distributions"     onAction="#showDistributions" styleClass="nav-button"/>
             <Button fx:id="loansBtn"        text="Loans"             onAction="#showLoans"        styleClass="nav-button"/>
             <Button fx:id="dailyOpsBtn"     text="Daily Operations"  onAction="#showDailyOps"     styleClass="nav-button"/>
             <Button fx:id="reportsBtn"      text="Reports"           onAction="#showReports"      styleClass="nav-button"/>

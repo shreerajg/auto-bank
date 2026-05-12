@@ -22,6 +22,7 @@ public class MainController {
     @FXML private Button dashboardBtn;
     @FXML private Button accountsBtn;
     @FXML private Button transactionsBtn;
+    @FXML private Button distributionBtn;
     @FXML private Button loansBtn;
     @FXML private Button dailyOpsBtn;
     @FXML private Button reportsBtn;
@@ -38,6 +39,7 @@ public class MainController {
     @FXML private void showDashboard()    { load("/fxml/dashboard.fxml");     activate(dashboardBtn); }
     @FXML private void showAccounts()     { load("/fxml/accounts.fxml");      activate(accountsBtn); }
     @FXML private void showTransactions() { load("/fxml/transactions.fxml");  activate(transactionsBtn); }
+    @FXML private void showDistributions(){ load("/fxml/distributions.fxml"); activate(distributionBtn); }
     @FXML private void showLoans()        { placeholder("Loans");             activate(loansBtn); }
     @FXML private void showDailyOps()     { placeholder("Daily Operations");  activate(dailyOpsBtn); }
     @FXML private void showReports()      { placeholder("Reports");           activate(reportsBtn); }
@@ -77,7 +79,7 @@ public class MainController {
     }
 
     private void activate(Button active) {
-        for (Button b : new Button[]{dashboardBtn, accountsBtn, transactionsBtn,
+        for (Button b : new Button[]{dashboardBtn, accountsBtn, transactionsBtn, distributionBtn,
                                      loansBtn, dailyOpsBtn, reportsBtn, settingsBtn}) {
             b.getStyleClass().remove("active");
         }

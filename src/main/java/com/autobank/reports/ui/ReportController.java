@@ -3,12 +3,13 @@ package com.autobank.reports.ui;
 import com.autobank.config.DatabaseConfig;
 import com.autobank.reports.service.ReportService;
 import com.autobank.reports.service.ReportService.SummaryStats;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.MapValueFactory;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -42,9 +43,12 @@ public class ReportController {
 
     @FXML
     public void initialize() {
-        colAccNum.setCellValueFactory(new MapValueFactory<>("accNum"));
-        colAccName.setCellValueFactory(new MapValueFactory<>("name"));
-        colAccBal.setCellValueFactory(new MapValueFactory<>("balance"));
+        colAccNum.setCellValueFactory(cd -> new SimpleStringProperty(
+            cd.getValue().getOrDefault("accNum", "").toString()));
+        colAccName.setCellValueFactory(cd -> new SimpleStringProperty(
+            cd.getValue().getOrDefault("name", "").toString()));
+        colAccBal.setCellValueFactory(cd -> new SimpleObjectProperty<>(
+            (BigDecimal) cd.getValue().get("balance")));
 
         dayRangeCombo.setItems(FXCollections.observableArrayList(7, 14, 30, 60, 90));
         dayRangeCombo.setValue(30);

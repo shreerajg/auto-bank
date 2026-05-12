@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.autobank.ui.DashboardController"
+      spacing="24" styleClass="content-pane"
+      xmlns="http://javafx.com/javafx/22">
+
+    <Label text="Dashboard" styleClass="page-title"/>
+
+    <GridPane hgap="20" vgap="20">
+        <VBox styleClass="stat-card" spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Label text="Total Accounts" styleClass="stat-label"/>
+            <Label fx:id="totalAccountsLabel" text="—" styleClass="stat-value"/>
+        </VBox>
+        <VBox styleClass="stat-card" spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <Label text="Total Balance" styleClass="stat-label"/>
+            <Label fx:id="totalBalanceLabel" text="—" styleClass="stat-value"/>
+        </VBox>
+        <VBox styleClass="stat-card" spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <Label text="Active Loans" styleClass="stat-label"/>
+            <Label fx:id="activeLoansLabel" text="—" styleClass="stat-value"/>
+        </VBox>
+        <VBox styleClass="stat-card" spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label text="Today's Transactions" styleClass="stat-label"/>
+            <Label fx:id="todayTxLabel" text="—" styleClass="stat-value"/>
+        </VBox>
+    </GridPane>
+</VBox>

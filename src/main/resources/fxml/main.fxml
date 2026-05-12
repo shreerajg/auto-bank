@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.autobank.ui.MainController"
+            xmlns="http://javafx.com/javafx/22">
+
+    <left>
+        <VBox styleClass="sidebar" spacing="4" minWidth="200">
+            <Label text="AutoBank" styleClass="sidebar-title"/>
+            <Label fx:id="currentUserLabel" styleClass="user-label"/>
+            <Separator/>
+
+            <Button fx:id="dashboardBtn"    text="Dashboard"         onAction="#showDashboard"    styleClass="nav-button"/>
+            <Button fx:id="accountsBtn"     text="Accounts"          onAction="#showAccounts"     styleClass="nav-button"/>
+            <Button fx:id="transactionsBtn" text="Transactions"      onAction="#showTransactions" styleClass="nav-button"/>
+            <Button fx:id="loansBtn"        text="Loans"             onAction="#showLoans"        styleClass="nav-button"/>
+            <Button fx:id="dailyOpsBtn"     text="Daily Operations"  onAction="#showDailyOps"     styleClass="nav-button"/>
+            <Button fx:id="reportsBtn"      text="Reports"           onAction="#showReports"      styleClass="nav-button"/>
+            <Button fx:id="settingsBtn"     text="Settings"          onAction="#showSettings"     styleClass="nav-button"/>
+
+            <Pane VBox.vgrow="ALWAYS"/>
+            <Separator/>
+            <Button text="Logout" onAction="#handleLogout" styleClass="nav-button, logout-button"/>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane fx:id="contentArea" styleClass="content-area"/>
+    </center>
+
+    <bottom>
+        <HBox styleClass="status-bar" spacing="20" alignment="CENTER_LEFT">
+            <Label fx:id="dateLabel"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Label text="AutoBank v1.0"/>
+        </HBox>
+    </bottom>
+</BorderPane>

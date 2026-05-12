@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem *)",
+      "Bash(java -version)",
+      "Bash(gradle --version)",
+      "Bash(psql --version)",
+      "PowerShell(winget install *)",
+      "PowerShell(Get-Process *)",
+      "PowerShell(Get-Content \"C:\\\\Program Files\\\\PostgreSQL\\\\17\\\\data\\\\pg_hba.conf\" | Where-Object { $_ -notmatch \"^#\" -and $_.Trim\\(\\) -ne \"\" })"
+    ]
+  }
+}

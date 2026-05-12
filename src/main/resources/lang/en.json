@@ -1,0 +1,9 @@
+{
+  "app.title": "AutoBank",
+  "app.subtitle": "Cooperative Banking System",
+  "login.username": "Username",
+  "login.password": "Password",
+  "login.button": "Login",
+  "login.error.empty": "Please enter username and password",
+  "login.error.invalid": "Invalid username or password"
+}

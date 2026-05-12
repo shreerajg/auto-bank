@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.autobank.transaction.ui.TransactionController"
+           dividerPositions="0.65"
+           xmlns="http://javafx.com/javafx/22">
+
+    <VBox spacing="10" styleClass="content-pane">
+        <Label text="Transactions" styleClass="page-title"/>
+        <TableView fx:id="transactionTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colId"      text="Ref #"        prefWidth="60"/>
+                <TableColumn fx:id="colType"    text="Type"         prefWidth="110"/>
+                <TableColumn fx:id="colAmount"  text="Amount (₹)"   prefWidth="110"/>
+                <TableColumn fx:id="colBalance" text="Balance After" prefWidth="120"/>
+                <TableColumn fx:id="colDesc"    text="Description"  prefWidth="200"/>
+                <TableColumn fx:id="colStatus"  text="Status"       prefWidth="80"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <VBox spacing="12" styleClass="content-pane form-panel">
+        <Label text="New Transaction" styleClass="section-title"/>
+        <Label text="Search Account"/>
+        <TextField fx:id="accountSearchField" promptText="Type name or account #…"/>
+        <ComboBox fx:id="accountCombo" maxWidth="Infinity"/>
+        <Label text="Amount (₹)"/>
+        <TextField fx:id="amountField" promptText="0.00"/>
+        <Label text="Description (optional)"/>
+        <TextArea fx:id="descriptionField" promptText="Note…" prefRowCount="3"/>
+        <HBox spacing="10">
+            <Button text="Deposit"  onAction="#handleDeposit"    styleClass="primary-button" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+            <Button text="Withdraw" onAction="#handleWithdrawal" styleClass="danger-button"  HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+        </HBox>
+        <Label fx:id="statusLabel" styleClass="status-label" wrapText="true"/>
+    </VBox>
+</SplitPane>

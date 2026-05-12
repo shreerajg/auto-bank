@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.autobank.account.ui.AccountController"
+           dividerPositions="0.65"
+           xmlns="http://javafx.com/javafx/22">
+
+    <VBox spacing="10" styleClass="content-pane">
+        <Label text="Account Management" styleClass="page-title"/>
+        <TextField fx:id="searchField" promptText="Search by name or account number…"/>
+        <TableView fx:id="accountTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colAccountNumber" text="Account #"    prefWidth="120"/>
+                <TableColumn fx:id="colHolderName"   text="Holder Name"  prefWidth="220"/>
+                <TableColumn fx:id="colPhone"         text="Phone"        prefWidth="120"/>
+                <TableColumn fx:id="colBalance"       text="Balance (₹)"  prefWidth="130"/>
+                <TableColumn fx:id="colStatus"        text="Status"       prefWidth="80"/>
+            </columns>
+        </TableView>
+        <Label fx:id="statusLabel" styleClass="status-label"/>
+    </VBox>
+
+    <VBox spacing="12" styleClass="content-pane form-panel">
+        <Label text="New Account" styleClass="section-title"/>
+        <Label text="Holder Name *"/>
+        <TextField fx:id="nameField" promptText="Full name"/>
+        <Label text="Phone"/>
+        <TextField fx:id="phoneField" promptText="Contact number"/>
+        <Label text="Address"/>
+        <TextField fx:id="addressField" promptText="Village / address"/>
+        <Button text="Create Account" onAction="#handleCreateAccount"
+                styleClass="primary-button" maxWidth="Infinity"/>
+    </VBox>
+</SplitPane>

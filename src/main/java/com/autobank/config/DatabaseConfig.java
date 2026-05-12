@@ -20,12 +20,15 @@ public class DatabaseConfig {
         try {
             Properties props = new Properties();
             InputStream in = DatabaseConfig.class.getResourceAsStream("/config.properties");
-            if (in != null) { props.load(in); in.close(); }
+            if (in != null) {
+                props.load(in);
+                in.close();
+            }
 
             HikariConfig cfg = new HikariConfig();
-            cfg.setJdbcUrl(props.getProperty("db.url", "jdbc:mysql://localhost:3306/autobank"));
+            cfg.setJdbcUrl(props.getProperty("db.url", "jdbc:postgresql://localhost:5432/autobank"));
             cfg.setUsername(props.getProperty("db.user", "root"));
-            cfg.setPassword(props.getProperty("db.password", "root"));
+            cfg.setPassword(props.getProperty("db.password", "topg"));
             cfg.setMaximumPoolSize(5);
             cfg.setConnectionTimeout(8000);
             cfg.setAutoCommit(true);
@@ -42,7 +45,9 @@ public class DatabaseConfig {
         return dataSource != null && !dataSource.isClosed();
     }
 
-    public static String getConnectionError() { return connectionError; }
+    public static String getConnectionError() {
+        return connectionError;
+    }
 
     public static Connection getConnection() throws SQLException {
         return dataSource.getConnection();
@@ -50,7 +55,8 @@ public class DatabaseConfig {
 
     public static void runSchema() throws Exception {
         try (InputStream in = DatabaseConfig.class.getResourceAsStream("/schema.sql")) {
-            if (in == null) return;
+            if (in == null)
+                return;
             String sql = new String(in.readAllBytes(), StandardCharsets.UTF_8);
             try (Connection conn = getConnection()) {
                 for (String raw : sql.split(";")) {
@@ -70,8 +76,8 @@ public class DatabaseConfig {
 
     public static boolean isFirstRun() {
         try (Connection conn = getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM users")) {
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM users")) {
             return rs.next() && rs.getInt(1) == 0;
         } catch (Exception e) {
             return false;

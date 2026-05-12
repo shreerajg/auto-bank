@@ -13,7 +13,7 @@ AutoBank is a professional, reliable, and offline-first desktop financial manage
 ## 🛠️ Technology Stack
 - **Frontend**: JavaFX (Modern, lightweight, keyboard-friendly UI).
 - **Backend**: Java (Transaction engine and business logic).
-- **Database**: PostgreSQL (Ensures data integrity and transaction safety).
+- **Database**: MySQL (Ensures data integrity and transaction safety).
 - **Automation**: Python (Excel/PDF parsing, report generation, and analytics).
 
 ## 📂 System Modules
@@ -34,7 +34,7 @@ AutoBank is a professional, reliable, and offline-first desktop financial manage
 
 ### Prerequisites
 - Java JDK 17 or higher
-- PostgreSQL
+- MySQL
 - Python 3.x (with required libraries in `python/requirements.txt`)
 
 ### Installation & Run

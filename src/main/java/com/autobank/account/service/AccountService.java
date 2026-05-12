@@ -15,7 +15,7 @@ public class AccountService {
         boolean blank = query == null || query.isBlank();
         String sql = blank
             ? "SELECT * FROM accounts ORDER BY holder_name LIMIT 200"
-            : "SELECT * FROM accounts WHERE holder_name ILIKE ? OR account_number ILIKE ? ORDER BY holder_name LIMIT 100";
+            : "SELECT * FROM accounts WHERE holder_name LIKE ? OR account_number LIKE ? ORDER BY holder_name LIMIT 100";
 
         List<Account> list = new ArrayList<>();
         try (Connection conn = DatabaseConfig.getConnection();

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.autobank.dailyops.ui.DailyOpsController"
+      spacing="16" styleClass="content-pane"
+      xmlns="http://javafx.com/javafx/22">
+
+    <Label text="Daily Operations" styleClass="page-title"/>
+    <Label fx:id="todayDateLabel"/>
+
+    <!-- Today Panel -->
+    <HBox spacing="16">
+        <!-- Open Day -->
+        <VBox spacing="10" styleClass="form-panel" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+            <Label text="Day Status" styleClass="section-title"/>
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Label text="Status:"/>
+                <Label fx:id="sessionStatusLabel" text="—"/>
+            </HBox>
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Label text="Opening Balance:"/>
+                <Label fx:id="openingBalLabel" text="—"/>
+            </HBox>
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Label text="Expected Cash:"/>
+                <Label fx:id="expectedCashLabel" text="—"/>
+            </HBox>
+        </VBox>
+
+        <!-- Actions -->
+        <VBox spacing="10" styleClass="form-panel" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+            <Label text="Open Day" styleClass="section-title"/>
+            <Label text="Opening Cash (₹)"/>
+            <TextField fx:id="openingBalField" promptText="Cash on hand at opening"/>
+            <Button fx:id="openDayBtn" text="Open Day" onAction="#handleOpenDay"
+                    styleClass="success-button" maxWidth="Infinity"/>
+
+            <Separator/>
+
+            <Label text="Close Day" styleClass="section-title"/>
+            <Label text="Actual Cash in Hand (₹)"/>
+            <TextField fx:id="actualCashField" promptText="Count and enter cash"/>
+            <Button fx:id="closeDayBtn" text="Close Day" onAction="#handleCloseDay"
+                    styleClass="danger-button" maxWidth="Infinity"/>
+        </VBox>
+    </HBox>
+
+    <Label fx:id="statusLabel" styleClass="status-label" wrapText="true"/>
+
+    <!-- History -->
+    <Label text="Session History (Last 30 Days)" styleClass="section-title"/>
+    <TableView fx:id="historyTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colDate"          text="Date"             prefWidth="120"/>
+            <TableColumn fx:id="colOpening"       text="Opening Bal (₹)"  prefWidth="130"/>
+            <TableColumn fx:id="colExpected"      text="Expected Cash (₹)" prefWidth="140"/>
+            <TableColumn fx:id="colActual"        text="Actual Cash (₹)"  prefWidth="130"/>
+            <TableColumn fx:id="colSessionStatus" text="Status"           prefWidth="80"/>
+        </columns>
+    </TableView>
+</VBox>

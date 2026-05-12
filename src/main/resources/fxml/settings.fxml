@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.autobank.settings.ui.SettingsController"
+      spacing="16" styleClass="content-pane"
+      xmlns="http://javafx.com/javafx/22">
+
+    <Label text="Settings" styleClass="page-title"/>
+
+    <HBox spacing="16" fillHeight="true">
+        <!-- Left Column -->
+        <VBox spacing="16" HBox.hgrow="ALWAYS">
+
+            <!-- DB Info -->
+            <VBox spacing="10" styleClass="form-panel">
+                <Label text="Database Connection" styleClass="section-title"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Status:"/>
+                    <Label fx:id="dbStatusLabel" text="—"/>
+                </HBox>
+                <Label text="Connection URL (read-only)"/>
+                <TextField fx:id="dbUrlField" editable="false" styleClass="read-only-field"/>
+                <Label text="User (read-only)"/>
+                <TextField fx:id="dbUserField" editable="false" styleClass="read-only-field"/>
+                <Button text="Test Connection" onAction="#handleTestConnection"
+                        styleClass="primary-button" maxWidth="Infinity"/>
+                <Label fx:id="settingsStatusLabel" styleClass="status-label"/>
+            </VBox>
+
+            <!-- Change Password -->
+            <VBox spacing="10" styleClass="form-panel">
+                <Label text="Change Password" styleClass="section-title"/>
+                <Label text="Current Password"/>
+                <PasswordField fx:id="oldPasswordField" promptText="Current password"/>
+                <Label text="New Password"/>
+                <PasswordField fx:id="newPasswordField" promptText="New password"/>
+                <Label text="Confirm New Password"/>
+                <PasswordField fx:id="confirmPasswordField" promptText="Re-enter new password"/>
+                <Button text="Update Password" onAction="#handleChangePassword"
+                        styleClass="success-button" maxWidth="Infinity"/>
+                <Label fx:id="pwStatusLabel" styleClass="status-label" wrapText="true"/>
+            </VBox>
+        </VBox>
+
+        <!-- Right Column -->
+        <VBox spacing="16" HBox.hgrow="ALWAYS">
+
+            <!-- System Info -->
+            <VBox spacing="8" styleClass="form-panel">
+                <Label text="System Info" styleClass="section-title"/>
+                <HBox spacing="10">
+                    <Label text="Version:"/>
+                    <Label fx:id="versionLabel" text="—"/>
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="Logged in as:"/>
+                    <Label fx:id="currentUserLabel" text="—"/>
+                </HBox>
+            </VBox>
+
+            <!-- Audit Log Viewer -->
+            <VBox spacing="8" styleClass="form-panel" VBox.vgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Recent Audit Log" styleClass="section-title" HBox.hgrow="ALWAYS"/>
+                    <Button text="Reload" onAction="#handleViewFullLog" styleClass="primary-button"/>
+                </HBox>
+                <TextArea fx:id="auditLogArea" editable="false" wrapText="true"
+                          prefRowCount="18" VBox.vgrow="ALWAYS"
+                          style="-fx-font-family: 'Consolas', monospace; -fx-font-size: 11px;"/>
+            </VBox>
+        </VBox>
+    </HBox>
+</VBox>

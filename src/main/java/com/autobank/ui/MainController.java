@@ -40,10 +40,10 @@ public class MainController {
     @FXML private void showAccounts()     { load("/fxml/accounts.fxml");      activate(accountsBtn); }
     @FXML private void showTransactions() { load("/fxml/transactions.fxml");  activate(transactionsBtn); }
     @FXML private void showDistributions(){ load("/fxml/distributions.fxml"); activate(distributionBtn); }
-    @FXML private void showLoans()        { placeholder("Loans");             activate(loansBtn); }
-    @FXML private void showDailyOps()     { placeholder("Daily Operations");  activate(dailyOpsBtn); }
-    @FXML private void showReports()      { placeholder("Reports");           activate(reportsBtn); }
-    @FXML private void showSettings()     { placeholder("Settings");          activate(settingsBtn); }
+    @FXML private void showLoans()        { load("/fxml/loans.fxml");      activate(loansBtn); }
+    @FXML private void showDailyOps()     { load("/fxml/dailyops.fxml");   activate(dailyOpsBtn); }
+    @FXML private void showReports()      { load("/fxml/reports.fxml");    activate(reportsBtn); }
+    @FXML private void showSettings()     { load("/fxml/settings.fxml");   activate(settingsBtn); }
 
     @FXML
     private void handleLogout() {

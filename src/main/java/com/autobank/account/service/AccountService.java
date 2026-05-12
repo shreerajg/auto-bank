@@ -36,14 +36,23 @@ public class AccountService {
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(
                  "INSERT INTO accounts (account_number, holder_name, phone, address) " +
-                 "VALUES (?, ?, ?, ?) RETURNING *")) {
+                 "VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, number);
             stmt.setString(2, holderName);
             stmt.setString(3, phone);
             stmt.setString(4, address);
-            ResultSet rs = stmt.executeQuery();
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next()) {
-                Account a = map(rs);
+                Account a = new Account();
+                a.setId(rs.getInt(1));
+                a.setAccountNumber(number);
+                a.setHolderName(holderName);
+                a.setPhone(phone);
+                a.setAddress(address);
+                a.setBalance(new java.math.BigDecimal("0.00"));
+                a.setStatus("ACTIVE");
+                a.setCreatedAt(java.time.LocalDateTime.now());
                 int opId = UserSession.getInstance().getCurrentUser().getId();
                 AuditLogger.log("ACCOUNT_CREATED", "ACCOUNT", a.getId(),
                                 "Account " + number + " for " + holderName, opId);

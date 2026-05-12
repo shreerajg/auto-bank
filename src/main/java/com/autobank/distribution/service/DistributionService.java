@@ -60,7 +60,7 @@ public class DistributionService {
         try (Connection conn = DatabaseConfig.getConnection()) {
             conn.setAutoCommit(false);
             try {
-                String sqlDist = "INSERT INTO payment_distributions (import_file, total_amount, total_records, operator_id) VALUES (?, ?, ?, ?) RETURNING id";
+                String sqlDist = "INSERT INTO payment_distributions (import_file, total_amount, total_records, operator_id) VALUES (?, ?, ?, ?)";
                 PreparedStatement psDist = conn.prepareStatement(sqlDist, Statement.RETURN_GENERATED_KEYS);
                 psDist.setString(1, dist.getImportFile());
                 psDist.setBigDecimal(2, dist.getTotalAmount());

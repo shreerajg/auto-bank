@@ -26,9 +26,9 @@ public class DatabaseConfig {
             }
 
             HikariConfig cfg = new HikariConfig();
-            cfg.setJdbcUrl(props.getProperty("db.url", "jdbc:postgresql://localhost:5432/autobank"));
-            cfg.setUsername(props.getProperty("db.user", "postgres"));
-            cfg.setPassword(props.getProperty("db.password", "postgres"));
+            cfg.setJdbcUrl(props.getProperty("db.url", "jdbc:mysql://localhost:3306/autobank"));
+            cfg.setUsername(props.getProperty("db.user", "root"));
+            cfg.setPassword(props.getProperty("db.password", "topg"));
             cfg.setMaximumPoolSize(5);
             cfg.setConnectionTimeout(8000);
             cfg.setAutoCommit(true);

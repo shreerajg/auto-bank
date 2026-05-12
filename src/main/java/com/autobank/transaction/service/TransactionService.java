@@ -45,7 +45,7 @@ public class TransactionService {
             int opId = UserSession.getInstance().getCurrentUser().getId();
             PreparedStatement ins = conn.prepareStatement(
                 "INSERT INTO transactions (account_id, type, amount, balance_before, balance_after, " +
-                "description, status, operator_id) VALUES (?, ?, ?, ?, ?, ?, 'ACTIVE', ?) RETURNING id");
+                "description, status, operator_id) VALUES (?, ?, ?, ?, ?, ?, 'ACTIVE', ?)", Statement.RETURN_GENERATED_KEYS);
             ins.setInt(1, accountId);
             ins.setString(2, type);
             ins.setBigDecimal(3, amount);
@@ -53,7 +53,8 @@ public class TransactionService {
             ins.setBigDecimal(5, after);
             ins.setString(6, desc);
             ins.setInt(7, opId);
-            ResultSet idRs = ins.executeQuery();
+            ins.executeUpdate();
+            ResultSet idRs = ins.getGeneratedKeys();
 
             conn.commit();
 

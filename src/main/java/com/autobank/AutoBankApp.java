@@ -30,9 +30,9 @@ public class AutoBankApp extends Application {
         if (!DatabaseConfig.isConnected()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Database Error");
-            alert.setHeaderText("Cannot connect to PostgreSQL");
+            alert.setHeaderText("Cannot connect to MySQL");
             alert.setContentText(
-                "Ensure PostgreSQL is running and update:\n" +
+                "Ensure MySQL is running and update:\n" +
                 "src/main/resources/config.properties\n\n" +
                 "Error: " + DatabaseConfig.getConnectionError()
             );

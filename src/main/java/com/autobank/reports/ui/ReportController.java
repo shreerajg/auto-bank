@@ -19,6 +19,7 @@ import java.util.Map;
 
 public class ReportController {
 
+    // --- Stat card labels ---
     @FXML private Label statAccounts;
     @FXML private Label statTotalBal;
     @FXML private Label statDeposits;
@@ -26,12 +27,26 @@ public class ReportController {
     @FXML private Label statTxCount;
     @FXML private Label statActiveLoans;
     @FXML private Label statLoanOutstanding;
+    @FXML private Label statTodayTx;
+    @FXML private Label statTodayVol;
     @FXML private Label statusLabel;
 
-    @FXML private BarChart<String, Number> volumeChart;
-    @FXML private CategoryAxis chartXAxis;
-    @FXML private NumberAxis chartYAxis;
+    // --- Charts ---
+    @FXML private LineChart<String, Number>   trendChart;
+    @FXML private CategoryAxis trendXAxis;
+    @FXML private NumberAxis   trendYAxis;
 
+    @FXML private PieChart splitPieChart;
+
+    @FXML private BarChart<String, Number>   monthlyBarChart;
+    @FXML private CategoryAxis monthXAxis;
+    @FXML private NumberAxis   monthYAxis;
+
+    @FXML private BarChart<String, Number>   loanStatusChart;
+    @FXML private CategoryAxis loanXAxis;
+    @FXML private NumberAxis   loanYAxis;
+
+    // --- Top accounts table ---
     @FXML private TableView<Map<String, Object>> topAccountsTable;
     @FXML private TableColumn<Map<String, Object>, String>     colAccNum;
     @FXML private TableColumn<Map<String, Object>, String>     colAccName;
@@ -52,11 +67,26 @@ public class ReportController {
 
         dayRangeCombo.setItems(FXCollections.observableArrayList(7, 14, 30, 60, 90));
         dayRangeCombo.setValue(30);
-        dayRangeCombo.setOnAction(e -> loadChartData());
+        dayRangeCombo.setOnAction(e -> loadTrendChart());
 
-        chartXAxis.setLabel("Date");
-        chartYAxis.setLabel("Amount (₹)");
-        volumeChart.setTitle("Transaction Volume");
+        trendXAxis.setLabel("Date");
+        trendYAxis.setLabel("Amount (₹)");
+        trendChart.setTitle("Daily Transaction Trend");
+        trendChart.setCreateSymbols(false);
+        trendChart.setAnimated(false);
+
+        monthXAxis.setLabel("Month");
+        monthYAxis.setLabel("Volume (₹)");
+        monthlyBarChart.setTitle("Monthly Volume (Last 6 Months)");
+        monthlyBarChart.setAnimated(false);
+
+        loanXAxis.setLabel("Status");
+        loanYAxis.setLabel("Count");
+        loanStatusChart.setTitle("Loan Status");
+        loanStatusChart.setAnimated(false);
+        loanStatusChart.setLegendVisible(false);
+
+        splitPieChart.setLabelsVisible(false);
 
         loadAll();
     }
@@ -65,7 +95,10 @@ public class ReportController {
 
     private void loadAll() {
         loadStats();
-        loadChartData();
+        loadTrendChart();
+        loadPieChart();
+        loadMonthlyBarChart();
+        loadLoanStatusChart();
         loadTopAccounts();
     }
 
@@ -73,33 +106,76 @@ public class ReportController {
         try {
             SummaryStats s = service.getSummary();
             statAccounts.setText(String.valueOf(s.totalAccounts()));
-            statTotalBal.setText("₹" + s.totalBalance());
-            statDeposits.setText("₹" + s.totalDeposits());
-            statWithdrawals.setText("₹" + s.totalWithdrawals());
+            statTotalBal.setText("₹" + fmt(s.totalBalance()));
+            statDeposits.setText("₹" + fmt(s.totalDeposits()));
+            statWithdrawals.setText("₹" + fmt(s.totalWithdrawals()));
             statTxCount.setText(String.valueOf(s.totalTransactions()));
             statActiveLoans.setText(String.valueOf(s.activeLoans()));
-            statLoanOutstanding.setText("₹" + s.loanOutstanding());
+            statLoanOutstanding.setText("₹" + fmt(s.loanOutstanding()));
+            statTodayTx.setText(String.valueOf(s.todayTransactions()));
+            statTodayVol.setText("₹" + fmt(s.todayVolume()));
         } catch (Exception e) {
             statusLabel.setText("Stats error: " + e.getMessage());
         }
     }
 
-    private void loadChartData() {
+    private void loadTrendChart() {
         try {
             int days = dayRangeCombo.getValue();
             Map<String, BigDecimal[]> data = service.getDailyVolume(days);
-            XYChart.Series<String, Number> deposits = new XYChart.Series<>();
-            deposits.setName("Deposits");
+            XYChart.Series<String, Number> deposits    = new XYChart.Series<>();
             XYChart.Series<String, Number> withdrawals = new XYChart.Series<>();
+            deposits.setName("Deposits");
             withdrawals.setName("Withdrawals");
-
             data.forEach((date, vals) -> {
                 deposits.getData().add(new XYChart.Data<>(date, vals[0]));
                 withdrawals.getData().add(new XYChart.Data<>(date, vals[1]));
             });
-            volumeChart.getData().setAll(deposits, withdrawals);
+            trendChart.getData().setAll(deposits, withdrawals);
         } catch (Exception e) {
-            statusLabel.setText("Chart error: " + e.getMessage());
+            statusLabel.setText("Trend chart error: " + e.getMessage());
+        }
+    }
+
+    private void loadPieChart() {
+        try {
+            SummaryStats s = service.getSummary();
+            double dep  = s.totalDeposits().doubleValue();
+            double with = s.totalWithdrawals().doubleValue();
+            ObservableList<PieChart.Data> pie = FXCollections.observableArrayList(
+                new PieChart.Data("Deposits", dep),
+                new PieChart.Data("Withdrawals", with)
+            );
+            splitPieChart.setData(pie);
+            splitPieChart.setTitle("Deposits ₹" + fmt(s.totalDeposits()) +
+                                   "  |  Withdrawals ₹" + fmt(s.totalWithdrawals()));
+        } catch (Exception e) {
+            statusLabel.setText("Pie chart error: " + e.getMessage());
+        }
+    }
+
+    private void loadMonthlyBarChart() {
+        try {
+            Map<String, BigDecimal> monthly = service.getMonthlyVolume(6);
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.setName("Total Volume");
+            monthly.forEach((month, vol) ->
+                series.getData().add(new XYChart.Data<>(month, vol)));
+            monthlyBarChart.getData().setAll(series);
+        } catch (Exception e) {
+            statusLabel.setText("Monthly chart error: " + e.getMessage());
+        }
+    }
+
+    private void loadLoanStatusChart() {
+        try {
+            SummaryStats s = service.getSummary();
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.getData().add(new XYChart.Data<>("Active",  s.activeLoans()));
+            series.getData().add(new XYChart.Data<>("Closed",  s.closedLoans()));
+            loanStatusChart.getData().setAll(series);
+        } catch (Exception e) {
+            statusLabel.setText("Loan chart error: " + e.getMessage());
         }
     }
 
@@ -118,5 +194,13 @@ public class ReportController {
         } catch (Exception e) {
             statusLabel.setText("Top accounts error: " + e.getMessage());
         }
+    }
+
+    private String fmt(BigDecimal val) {
+        if (val == null) return "0";
+        long v = val.longValue();
+        if (v >= 10_00_000) return String.format("%.2fL", v / 1_00_000.0);
+        if (v >= 1000)      return String.format("%.2fK", v / 1000.0);
+        return val.toPlainString();
     }
 }

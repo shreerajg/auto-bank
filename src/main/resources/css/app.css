@@ -196,3 +196,56 @@
     -fx-font-weight: bold;
     -fx-text-fill: #555;
 }
+
+/* ── Coloured Stat Card Variants ─────────────────── */
+.stat-card-blue   { -fx-border-color: #2980b9; -fx-border-width: 0 0 0 4px; -fx-border-radius: 0 4px 4px 0; }
+.stat-card-green  { -fx-border-color: #27ae60; -fx-border-width: 0 0 0 4px; -fx-border-radius: 0 4px 4px 0; }
+.stat-card-teal   { -fx-border-color: #16a085; -fx-border-width: 0 0 0 4px; -fx-border-radius: 0 4px 4px 0; }
+.stat-card-purple { -fx-border-color: #8e44ad; -fx-border-width: 0 0 0 4px; -fx-border-radius: 0 4px 4px 0; }
+.stat-card-orange { -fx-border-color: #e67e22; -fx-border-width: 0 0 0 4px; -fx-border-radius: 0 4px 4px 0; }
+.stat-card-red    { -fx-border-color: #c0392b; -fx-border-width: 0 0 0 4px; -fx-border-radius: 0 4px 4px 0; }
+
+/* ── Chart Card ───────────────────────────────────── */
+.chart-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 8, 0, 0, 2);
+    -fx-padding: 6px;
+}
+
+/* ── Chart Styling ────────────────────────────────── */
+.chart {
+    -fx-background-color: white;
+}
+.chart-plot-background {
+    -fx-background-color: #f8f9fb;
+}
+.chart-vertical-grid-lines, .chart-horizontal-grid-lines {
+    -fx-stroke: #e8eaec;
+}
+.chart-title {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+.axis-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: #888;
+}
+.axis {
+    -fx-tick-label-font-size: 10px;
+    -fx-tick-label-fill: #666;
+}
+/* Line chart series colors */
+.default-color0.chart-series-line { -fx-stroke: #2980b9; -fx-stroke-width: 2.5px; }
+.default-color1.chart-series-line { -fx-stroke: #e74c3c; -fx-stroke-width: 2.5px; }
+/* Bar chart series colors */
+.default-color0.chart-bar { -fx-bar-fill: #3498db; }
+.default-color1.chart-bar { -fx-bar-fill: #e74c3c; }
+/* Pie chart colors */
+.default-color0.chart-pie { -fx-pie-color: #27ae60; }
+.default-color1.chart-pie { -fx-pie-color: #e74c3c; }
+.chart-legend {
+    -fx-background-color: transparent;
+}
+

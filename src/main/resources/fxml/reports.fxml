@@ -3,71 +3,105 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.chart.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.autobank.reports.ui.ReportController"
-      spacing="16" styleClass="content-pane"
-      xmlns="http://javafx.com/javafx/22">
+<ScrollPane fitToWidth="true"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.autobank.reports.ui.ReportController"
+            xmlns="http://javafx.com/javafx/22"
+            styleClass="content-pane">
 
-    <HBox alignment="CENTER_LEFT" spacing="12">
+<VBox spacing="14" style="-fx-padding: 0 4 8 0;">
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="10">
         <Label text="Reports &amp; Analytics" styleClass="page-title" HBox.hgrow="ALWAYS"/>
+        <Label text="Period:"/>
+        <ComboBox fx:id="dayRangeCombo" prefWidth="80"/>
+        <Label text="days"/>
         <Button text="⟳ Refresh" onAction="#handleRefresh" styleClass="primary-button"/>
     </HBox>
 
-    <!-- Summary Cards -->
-    <HBox spacing="12" fillHeight="true">
-        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+    <!-- Stat Row 1 -->
+    <HBox spacing="10">
+        <VBox styleClass="stat-card, stat-card-blue" HBox.hgrow="ALWAYS" maxWidth="Infinity">
             <Label text="Active Accounts" styleClass="stat-label"/>
             <Label fx:id="statAccounts" text="—" styleClass="stat-value"/>
         </VBox>
-        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-            <Label text="Total Balance (₹)" styleClass="stat-label"/>
+        <VBox styleClass="stat-card, stat-card-green" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+            <Label text="Total Balance" styleClass="stat-label"/>
             <Label fx:id="statTotalBal" text="—" styleClass="stat-value"/>
         </VBox>
-        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-            <Label text="Total Deposits (₹)" styleClass="stat-label"/>
-            <Label fx:id="statDeposits" text="—" styleClass="stat-value"/>
+        <VBox styleClass="stat-card, stat-card-teal" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+            <Label text="Today Txns" styleClass="stat-label"/>
+            <Label fx:id="statTodayTx" text="—" styleClass="stat-value"/>
         </VBox>
-        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-            <Label text="Total Withdrawals (₹)" styleClass="stat-label"/>
-            <Label fx:id="statWithdrawals" text="—" styleClass="stat-value"/>
+        <VBox styleClass="stat-card, stat-card-purple" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+            <Label text="Today Volume" styleClass="stat-label"/>
+            <Label fx:id="statTodayVol" text="—" styleClass="stat-value"/>
         </VBox>
-    </HBox>
-    <HBox spacing="12">
-        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-            <Label text="Transactions" styleClass="stat-label"/>
+        <VBox styleClass="stat-card, stat-card-orange" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+            <Label text="Total Txns" styleClass="stat-label"/>
             <Label fx:id="statTxCount" text="—" styleClass="stat-value"/>
         </VBox>
-        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+        <VBox styleClass="stat-card, stat-card-red" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+            <Label text="Deposits" styleClass="stat-label"/>
+            <Label fx:id="statDeposits" text="—" styleClass="stat-value"/>
+        </VBox>
+        <VBox styleClass="stat-card, stat-card-blue" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+            <Label text="Withdrawals" styleClass="stat-label"/>
+            <Label fx:id="statWithdrawals" text="—" styleClass="stat-value"/>
+        </VBox>
+        <VBox styleClass="stat-card, stat-card-orange" HBox.hgrow="ALWAYS" maxWidth="Infinity">
             <Label text="Active Loans" styleClass="stat-label"/>
             <Label fx:id="statActiveLoans" text="—" styleClass="stat-value"/>
         </VBox>
-        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-            <Label text="Loan Outstanding (₹)" styleClass="stat-label"/>
+        <VBox styleClass="stat-card, stat-card-green" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+            <Label text="Loan Pending" styleClass="stat-label"/>
             <Label fx:id="statLoanOutstanding" text="—" styleClass="stat-value"/>
         </VBox>
-        <VBox HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
     </HBox>
 
-    <!-- Chart + Top Accounts -->
-    <HBox spacing="16" VBox.vgrow="ALWAYS">
-        <VBox HBox.hgrow="ALWAYS" spacing="8">
-            <HBox alignment="CENTER_LEFT" spacing="10">
-                <Label text="Transaction Volume — Last"/>
-                <ComboBox fx:id="dayRangeCombo" prefWidth="80"/>
-                <Label text="days"/>
-            </HBox>
-            <BarChart fx:id="volumeChart" VBox.vgrow="ALWAYS">
-                <xAxis><CategoryAxis fx:id="chartXAxis"/></xAxis>
-                <yAxis><NumberAxis fx:id="chartYAxis"/></yAxis>
+    <!-- Line Chart: full width -->
+    <VBox styleClass="chart-card">
+        <LineChart fx:id="trendChart" prefHeight="240" animated="false"
+                   createSymbols="false" legendVisible="true">
+            <xAxis><CategoryAxis fx:id="trendXAxis" label="Date"/></xAxis>
+            <yAxis><NumberAxis fx:id="trendYAxis" label="Amount (₹)"/></yAxis>
+        </LineChart>
+    </VBox>
+
+    <!-- Row: Pie + Monthly Bar -->
+    <HBox spacing="10">
+        <VBox styleClass="chart-card" HBox.hgrow="ALWAYS">
+            <Label text="Deposit vs Withdrawal Split" styleClass="section-title"
+                   style="-fx-padding: 4 8 0 8;"/>
+            <PieChart fx:id="splitPieChart" prefHeight="270" animated="false"
+                      labelsVisible="false" legendVisible="true"
+                      legendSide="BOTTOM"/>
+        </VBox>
+        <VBox styleClass="chart-card" HBox.hgrow="ALWAYS">
+            <BarChart fx:id="monthlyBarChart" prefHeight="290" animated="false">
+                <xAxis><CategoryAxis fx:id="monthXAxis" label="Month"/></xAxis>
+                <yAxis><NumberAxis fx:id="monthYAxis" label="Volume (₹)"/></yAxis>
+            </BarChart>
+        </VBox>
+    </HBox>
+
+    <!-- Row: Loan Status Bar + Top Accounts -->
+    <HBox spacing="10">
+        <VBox styleClass="chart-card" minWidth="300" maxWidth="340">
+            <BarChart fx:id="loanStatusChart" prefHeight="260" animated="false" legendVisible="false">
+                <xAxis><CategoryAxis fx:id="loanXAxis" label="Loan Status"/></xAxis>
+                <yAxis><NumberAxis fx:id="loanYAxis" label="Count"/></yAxis>
             </BarChart>
         </VBox>
 
-        <VBox spacing="8" minWidth="320">
-            <Label text="Top 10 Accounts by Balance" styleClass="section-title"/>
-            <TableView fx:id="topAccountsTable" VBox.vgrow="ALWAYS">
+        <VBox spacing="8" HBox.hgrow="ALWAYS" styleClass="chart-card">
+            <Label text="Top 10 Accounts by Balance" styleClass="section-title"
+                   style="-fx-padding: 4 0 0 4;"/>
+            <TableView fx:id="topAccountsTable" prefHeight="240" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="colAccNum"  text="Account #"   prefWidth="110"/>
-                    <TableColumn fx:id="colAccName" text="Holder"      prefWidth="160"/>
+                    <TableColumn fx:id="colAccName" text="Holder Name" prefWidth="200"/>
                     <TableColumn fx:id="colAccBal"  text="Balance (₹)" prefWidth="120"/>
                 </columns>
             </TableView>
@@ -75,4 +109,6 @@
     </HBox>
 
     <Label fx:id="statusLabel" styleClass="status-label" wrapText="true"/>
+
 </VBox>
+</ScrollPane>

@@ -1,0 +1,35 @@
+# User requested ignores
+.claude/
+GEMINI.md
+Auto bank system information .md
+
+# Gradle
+.gradle/
+build/
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+bin/
+out/
+
+# Logs
+*.log
+logs/
+
+# Database (optional, depends on if you want to commit local db files)
+# db/*.sql (don't ignore schema, maybe ignore data if any)
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+python/requirements.txt.log

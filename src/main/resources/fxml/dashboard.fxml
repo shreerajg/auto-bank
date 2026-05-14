@@ -1,30 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <VBox xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.autobank.ui.DashboardController"
-      spacing="24" styleClass="content-pane"
+      spacing="28" styleClass="content-pane"
       xmlns="http://javafx.com/javafx/22">
 
-    <Label text="Dashboard" styleClass="page-title"/>
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <VBox spacing="4">
+            <Label text="Dashboard" styleClass="page-title"/>
+            <Label text="Overview of your cooperative banking activity"
+                   style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+        </VBox>
+    </HBox>
 
-    <GridPane hgap="20" vgap="20">
-        <VBox styleClass="stat-card" spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
-            <Label text="Total Accounts" styleClass="stat-label"/>
+    <!-- Stat Cards Row 1 -->
+    <HBox spacing="16">
+        <VBox styleClass="stat-card, stat-card-blue" spacing="10" HBox.hgrow="ALWAYS">
+            <Label text="TOTAL ACCOUNTS" styleClass="stat-label"/>
             <Label fx:id="totalAccountsLabel" text="—" styleClass="stat-value"/>
+            <Label text="Active members" style="-fx-font-size: 11px; -fx-text-fill: #4b5563;"/>
         </VBox>
-        <VBox styleClass="stat-card" spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0">
-            <Label text="Total Balance" styleClass="stat-label"/>
+        <VBox styleClass="stat-card, stat-card-green" spacing="10" HBox.hgrow="ALWAYS">
+            <Label text="TOTAL BALANCE" styleClass="stat-label"/>
             <Label fx:id="totalBalanceLabel" text="—" styleClass="stat-value"/>
+            <Label text="Funds under management" style="-fx-font-size: 11px; -fx-text-fill: #4b5563;"/>
         </VBox>
-        <VBox styleClass="stat-card" spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="1">
-            <Label text="Active Loans" styleClass="stat-label"/>
+        <VBox styleClass="stat-card, stat-card-purple" spacing="10" HBox.hgrow="ALWAYS">
+            <Label text="ACTIVE LOANS" styleClass="stat-label"/>
             <Label fx:id="activeLoansLabel" text="—" styleClass="stat-value"/>
+            <Label text="Outstanding loan accounts" style="-fx-font-size: 11px; -fx-text-fill: #4b5563;"/>
         </VBox>
-        <VBox styleClass="stat-card" spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="1">
-            <Label text="Today's Transactions" styleClass="stat-label"/>
+        <VBox styleClass="stat-card, stat-card-orange" spacing="10" HBox.hgrow="ALWAYS">
+            <Label text="TODAY'S TRANSACTIONS" styleClass="stat-label"/>
             <Label fx:id="todayTxLabel" text="—" styleClass="stat-value"/>
+            <Label text="Deposits &amp; withdrawals" style="-fx-font-size: 11px; -fx-text-fill: #4b5563;"/>
         </VBox>
-    </GridPane>
+    </HBox>
+
+    <!-- Quick info bar -->
+    <HBox spacing="12" alignment="CENTER_LEFT"
+          style="-fx-background-color: rgba(99,102,241,0.08); -fx-padding: 14px 20px; -fx-background-radius: 10px; -fx-border-color: rgba(99,102,241,0.2); -fx-border-radius: 10px; -fx-border-width: 1px;">
+        <Label text="💡" style="-fx-font-size: 16px;"/>
+        <Label text="System is running in offline mode — all data is stored locally."
+               style="-fx-text-fill: #818cf8; -fx-font-size: 12px;"/>
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Label fx:id="systemStatusLabel" text="● Operational"
+               style="-fx-text-fill: #34d399; -fx-font-size: 12px; -fx-font-weight: bold;"/>
+    </HBox>
 </VBox>

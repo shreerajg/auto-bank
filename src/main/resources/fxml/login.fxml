@@ -1,30 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1"
+<HBox xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.autobank.auth.ui.LoginController"
-      alignment="CENTER" spacing="20" styleClass="login-root"
+      styleClass="login-root"
       xmlns="http://javafx.com/javafx/22">
 
-    <Label text="AutoBank" styleClass="app-title"/>
-    <Label fx:id="subtitleLabel" text="Cooperative Banking System" styleClass="subtitle"/>
-
-    <VBox spacing="10" styleClass="login-form">
-        <Label fx:id="usernameLabel" text="Username"/>
-        <TextField fx:id="usernameField" promptText="Enter username"/>
-
-        <Label fx:id="passwordLabel" text="Password"/>
-        <PasswordField fx:id="passwordField" promptText="Enter password"/>
-
-        <Label fx:id="errorLabel" styleClass="error-label" visible="false" managed="false"/>
-
-        <Button fx:id="loginButton" text="Login" onAction="#handleLogin"
-                defaultButton="true" styleClass="primary-button" maxWidth="Infinity"/>
+    <!-- Left accent panel -->
+    <VBox alignment="CENTER" spacing="16" HBox.hgrow="ALWAYS"
+          style="-fx-background-color: linear-gradient(to bottom, #1e1b4b, #312e81, #1e1b4b); -fx-padding: 60px 40px;">
+        <Label text="🏦" style="-fx-font-size: 56px;"/>
+        <Label text="AutoBank" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #a5b4fc;"/>
+        <Label text="Cooperative Banking System"
+               style="-fx-font-size: 14px; -fx-text-fill: #6366f1; -fx-font-style: italic;"/>
+        <Region prefHeight="20"/>
+        <Label text="✦  Secure  ·  Reliable  ·  Offline-First  ✦"
+               style="-fx-font-size: 11px; -fx-text-fill: #4338ca; -fx-font-weight: bold;"/>
     </VBox>
 
-    <HBox alignment="CENTER" spacing="10">
-        <Button text="English" onAction="#switchToEnglish" styleClass="lang-button"/>
-        <Button text="मराठी"  onAction="#switchToMarathi"  styleClass="lang-button"/>
-    </HBox>
-</VBox>
+    <!-- Right login card -->
+    <VBox alignment="CENTER" spacing="0" HBox.hgrow="ALWAYS"
+          style="-fx-background-color: #0d1117; -fx-padding: 60px 50px;">
+
+        <VBox spacing="24" styleClass="login-form" maxWidth="360">
+            <Label text="Welcome Back" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #f3f4f6;"/>
+            <Label text="Sign in to your AutoBank account"
+                   style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+
+            <VBox spacing="6">
+                <Label fx:id="usernameLabel" text="USERNAME"/>
+                <TextField fx:id="usernameField" promptText="Enter your username"/>
+            </VBox>
+
+            <VBox spacing="6">
+                <Label fx:id="passwordLabel" text="PASSWORD"/>
+                <PasswordField fx:id="passwordField" promptText="Enter your password"/>
+            </VBox>
+
+            <Label fx:id="errorLabel" styleClass="error-label" visible="false" managed="false" wrapText="true"/>
+
+            <Button fx:id="loginButton" text="Sign In →" onAction="#handleLogin"
+                    defaultButton="true" styleClass="primary-button" maxWidth="Infinity"/>
+
+            <HBox alignment="CENTER" spacing="12">
+                <Button text="English" onAction="#switchToEnglish" styleClass="lang-button"/>
+                <Button text="मराठी"  onAction="#switchToMarathi"  styleClass="lang-button"/>
+            </HBox>
+        </VBox>
+
+        <Label text="AutoBank v1.0  ·  Patsanstha Edition"
+               style="-fx-font-size: 10px; -fx-text-fill: #374151; -fx-padding: 20px 0 0 0;"/>
+    </VBox>
+</HBox>

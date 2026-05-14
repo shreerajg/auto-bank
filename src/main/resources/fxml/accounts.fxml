@@ -1,36 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <SplitPane xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.autobank.account.ui.AccountController"
-           dividerPositions="0.65"
+           dividerPositions="0.67"
            xmlns="http://javafx.com/javafx/22">
 
-    <VBox spacing="10" styleClass="content-pane">
-        <Label text="Account Management" styleClass="page-title"/>
-        <TextField fx:id="searchField" promptText="Search by name or account number…"/>
+    <!-- Left: table area -->
+    <VBox spacing="14" styleClass="content-pane">
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="3" HBox.hgrow="ALWAYS">
+                <Label text="Account Management" styleClass="page-title"/>
+                <Label text="Manage cooperative member accounts"
+                       style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+            </VBox>
+        </HBox>
+
+        <HBox spacing="10" alignment="CENTER_LEFT"
+              style="-fx-background-color: #161b27; -fx-padding: 8px 14px; -fx-background-radius: 8px; -fx-border-color: rgba(255,255,255,0.07); -fx-border-radius: 8px;">
+            <Label text="🔍" style="-fx-font-size: 14px; -fx-text-fill: #6b7280;"/>
+            <TextField fx:id="searchField" promptText="Search by name or account number…"
+                       HBox.hgrow="ALWAYS"
+                       style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #e5e7eb; -fx-prompt-text-fill: #4b5563;"/>
+        </HBox>
+
         <TableView fx:id="accountTable" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="colAccountNumber" text="Account #"    prefWidth="120"/>
-                <TableColumn fx:id="colHolderName"   text="Holder Name"  prefWidth="220"/>
-                <TableColumn fx:id="colPhone"         text="Phone"        prefWidth="120"/>
-                <TableColumn fx:id="colBalance"       text="Balance (₹)"  prefWidth="130"/>
-                <TableColumn fx:id="colStatus"        text="Status"       prefWidth="80"/>
+                <TableColumn fx:id="colAccountNumber" text="Account #"   prefWidth="120"/>
+                <TableColumn fx:id="colHolderName"   text="Holder Name" prefWidth="200"/>
+                <TableColumn fx:id="colPhone"         text="Phone"       prefWidth="120"/>
+                <TableColumn fx:id="colBalance"       text="Balance (₹)" prefWidth="130"/>
+                <TableColumn fx:id="colStatus"        text="Status"      prefWidth="90"/>
             </columns>
         </TableView>
+
         <Label fx:id="statusLabel" styleClass="status-label"/>
     </VBox>
 
-    <VBox spacing="12" styleClass="content-pane form-panel">
+    <!-- Right: form -->
+    <VBox spacing="14" styleClass="content-pane form-panel">
         <Label text="New Account" styleClass="section-title"/>
-        <Label text="Holder Name *"/>
-        <TextField fx:id="nameField" promptText="Full name"/>
-        <Label text="Phone"/>
-        <TextField fx:id="phoneField" promptText="Contact number"/>
-        <Label text="Address"/>
-        <TextField fx:id="addressField" promptText="Village / address"/>
-        <Button text="Create Account" onAction="#handleCreateAccount"
+        <Separator/>
+
+        <VBox spacing="5">
+            <Label text="HOLDER NAME *"/>
+            <TextField fx:id="nameField" promptText="Full name"/>
+        </VBox>
+        <VBox spacing="5">
+            <Label text="PHONE"/>
+            <TextField fx:id="phoneField" promptText="Contact number"/>
+        </VBox>
+        <VBox spacing="5">
+            <Label text="ADDRESS"/>
+            <TextField fx:id="addressField" promptText="Village / address"/>
+        </VBox>
+
+        <Pane VBox.vgrow="ALWAYS"/>
+
+        <Button text="✚  Create Account" onAction="#handleCreateAccount"
                 styleClass="primary-button" maxWidth="Infinity"/>
     </VBox>
 </SplitPane>

@@ -1,9 +1,0 @@
-{
-  "app.title": "ऑटोबँक",
-  "app.subtitle": "सहकारी बँकिंग प्रणाली",
-  "login.username": "वापरकर्तानाव",
-  "login.password": "पासवर्ड",
-  "login.button": "प्रवेश करा",
-  "login.error.empty": "कृपया वापरकर्तानाव आणि पासवर्ड टाका",
-  "login.error.invalid": "चुकीचे वापरकर्तानाव किंवा पासवर्ड"
-}

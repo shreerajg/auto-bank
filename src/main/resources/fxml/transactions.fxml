@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <SplitPane xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.autobank.transaction.ui.TransactionController"
-           dividerPositions="0.65"
+           dividerPositions="0.67"
            xmlns="http://javafx.com/javafx/22">
 
-    <VBox spacing="10" styleClass="content-pane">
-        <Label text="Transactions" styleClass="page-title"/>
+    <!-- Left: table -->
+    <VBox spacing="14" styleClass="content-pane">
+        <VBox spacing="3">
+            <Label text="Transactions" styleClass="page-title"/>
+            <Label text="Deposit and withdrawal ledger"
+                   style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+        </VBox>
+
         <TableView fx:id="transactionTable" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="colId"      text="Ref #"        prefWidth="60"/>
@@ -21,18 +28,34 @@
         </TableView>
     </VBox>
 
-    <VBox spacing="12" styleClass="content-pane form-panel">
+    <!-- Right: form -->
+    <VBox spacing="14" styleClass="content-pane form-panel">
         <Label text="New Transaction" styleClass="section-title"/>
-        <Label text="Search Account"/>
-        <TextField fx:id="accountSearchField" promptText="Type name or account #…"/>
-        <ComboBox fx:id="accountCombo" maxWidth="Infinity"/>
-        <Label text="Amount (₹)"/>
-        <TextField fx:id="amountField" promptText="0.00"/>
-        <Label text="Description (optional)"/>
-        <TextArea fx:id="descriptionField" promptText="Note…" prefRowCount="3"/>
+        <Separator/>
+
+        <VBox spacing="5">
+            <Label text="SEARCH ACCOUNT"/>
+            <TextField fx:id="accountSearchField" promptText="Type name or account #…"/>
+        </VBox>
+        <ComboBox fx:id="accountCombo" maxWidth="Infinity" promptText="Select account…"/>
+
+        <VBox spacing="5">
+            <Label text="AMOUNT (₹)"/>
+            <TextField fx:id="amountField" promptText="0.00"/>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="DESCRIPTION (OPTIONAL)"/>
+            <TextArea fx:id="descriptionField" promptText="Note…" prefRowCount="3"/>
+        </VBox>
+
+        <Pane VBox.vgrow="ALWAYS"/>
+
         <HBox spacing="10">
-            <Button text="Deposit"  onAction="#handleDeposit"    styleClass="primary-button" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-            <Button text="Withdraw" onAction="#handleWithdrawal" styleClass="danger-button"  HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+            <Button text="⬆  Deposit"  onAction="#handleDeposit"
+                    styleClass="success-button" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+            <Button text="⬇  Withdraw" onAction="#handleWithdrawal"
+                    styleClass="danger-button"  HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
         </HBox>
         <Label fx:id="statusLabel" styleClass="status-label" wrapText="true"/>
     </VBox>

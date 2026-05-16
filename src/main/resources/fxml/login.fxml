@@ -10,31 +10,30 @@
 
     <!-- Left accent panel -->
     <VBox alignment="CENTER" spacing="16" HBox.hgrow="ALWAYS"
-          style="-fx-background-color: linear-gradient(to bottom, #1e1b4b, #312e81, #1e1b4b); -fx-padding: 60px 40px;">
-        <Label text="🏦" style="-fx-font-size: 56px;"/>
-        <Label text="AutoBank" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #a5b4fc;"/>
-        <Label text="Cooperative Banking System"
-               style="-fx-font-size: 14px; -fx-text-fill: #6366f1; -fx-font-style: italic;"/>
+          styleClass="login-accent-panel">
+        <Label text="🏦" styleClass="login-brand-icon"/>
+        <Label text="AutoBank" styleClass="login-brand-title"/>
+        <Label text="Cooperative Banking System" styleClass="login-brand-subtitle"/>
         <Region prefHeight="20"/>
-        <Label text="✦  Secure  ·  Reliable  ·  Offline-First  ✦"
-               style="-fx-font-size: 11px; -fx-text-fill: #4338ca; -fx-font-weight: bold;"/>
+        <Label text="✦  Secure  ·  Reliable  ·  Offline-First  ✦" styleClass="login-brand-tagline"/>
     </VBox>
 
     <!-- Right login card -->
     <VBox alignment="CENTER" spacing="0" HBox.hgrow="ALWAYS"
-          style="-fx-background-color: #0d1117; -fx-padding: 60px 50px;">
+          styleClass="login-form-panel">
 
-        <VBox spacing="24" styleClass="login-form" maxWidth="360">
-            <Label text="Welcome Back" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #f3f4f6;"/>
-            <Label text="Sign in to your AutoBank account"
-                   style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+        <VBox spacing="24" styleClass="login-form" maxWidth="400">
+            <VBox spacing="8">
+                <Label text="Welcome Back" styleClass="page-title" style="-fx-font-size: 24px;"/>
+                <Label text="Sign in to your AutoBank account" styleClass="page-subtitle"/>
+            </VBox>
 
-            <VBox spacing="6">
+            <VBox spacing="8">
                 <Label fx:id="usernameLabel" text="USERNAME"/>
                 <TextField fx:id="usernameField" promptText="Enter your username"/>
             </VBox>
 
-            <VBox spacing="6">
+            <VBox spacing="8">
                 <Label fx:id="passwordLabel" text="PASSWORD"/>
                 <PasswordField fx:id="passwordField" promptText="Enter your password"/>
             </VBox>
@@ -50,7 +49,6 @@
             </HBox>
         </VBox>
 
-        <Label text="AutoBank v1.0  ·  Patsanstha Edition"
-               style="-fx-font-size: 10px; -fx-text-fill: #374151; -fx-padding: 20px 0 0 0;"/>
+        <Label text="AutoBank v1.0  ·  Patsanstha Edition" styleClass="login-footer-text"/>
     </VBox>
 </HBox>

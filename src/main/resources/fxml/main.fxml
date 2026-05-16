@@ -28,6 +28,7 @@
             <Button fx:id="loansBtn"        text="🏠  Loans"             onAction="#showLoans"        styleClass="nav-button"/>
             <Button fx:id="dailyOpsBtn"     text="📅  Daily Operations"  onAction="#showDailyOps"     styleClass="nav-button"/>
             <Button fx:id="reportsBtn"      text="📈  Reports"           onAction="#showReports"      styleClass="nav-button"/>
+            <Button fx:id="backupBtn"       text="🔒  Backup &amp; Recovery" onAction="#showBackup"   styleClass="nav-button"/>
             <Button fx:id="settingsBtn"     text="⚙️  Settings"          onAction="#showSettings"     styleClass="nav-button"/>
 
             <Pane VBox.vgrow="ALWAYS"/>

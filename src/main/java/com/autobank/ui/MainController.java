@@ -1,6 +1,7 @@
 package com.autobank.ui;
 
 import com.autobank.auth.model.UserSession;
+import com.autobank.backup.BackupScheduler;
 import com.autobank.util.AuditLogger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +28,7 @@ public class MainController {
     @FXML private Button dailyOpsBtn;
     @FXML private Button reportsBtn;
     @FXML private Button settingsBtn;
+    @FXML private Button backupBtn;
 
     @FXML
     public void initialize() {
@@ -34,6 +36,12 @@ public class MainController {
         currentUserLabel.setText(user.getUsername() + " (" + user.getRole() + ")");
         dateLabel.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
         showDashboard();
+
+        // Start the daily backup scheduler in the background
+        BackupScheduler.getInstance().start(
+            path -> {}, // silent success — backup is in ~/AutoBank/backups
+            err  -> {}  // logged by BackupService itself
+        );
     }
 
     @FXML private void showDashboard()    { load("/fxml/dashboard.fxml");     activate(dashboardBtn); }
@@ -44,6 +52,7 @@ public class MainController {
     @FXML private void showDailyOps()     { load("/fxml/dailyops.fxml");   activate(dailyOpsBtn); }
     @FXML private void showReports()      { load("/fxml/reports.fxml");    activate(reportsBtn); }
     @FXML private void showSettings()     { load("/fxml/settings.fxml");   activate(settingsBtn); }
+    @FXML private void showBackup()        { load("/fxml/backup.fxml");      activate(backupBtn); }
 
     @FXML
     private void handleLogout() {
@@ -80,7 +89,7 @@ public class MainController {
 
     private void activate(Button active) {
         for (Button b : new Button[]{dashboardBtn, accountsBtn, transactionsBtn, distributionBtn,
-                                     loansBtn, dailyOpsBtn, reportsBtn, settingsBtn}) {
+                                     loansBtn, dailyOpsBtn, reportsBtn, settingsBtn, backupBtn}) {
             b.getStyleClass().remove("active");
         }
         active.getStyleClass().add("active");

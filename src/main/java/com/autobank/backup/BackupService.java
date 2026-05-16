@@ -30,12 +30,24 @@ public class BackupService {
     private final Path backupDir;
     private final int maxRetained;
 
-    /** Default constructor — uses ~/AutoBank/backups, keeps 10 copies. */
+    /** Default constructor — reads backup.dir and backup.retain from config.properties. */
     public BackupService() {
-        this(
-            Paths.get(System.getProperty("user.home"), "AutoBank", "backups"),
-            10
-        );
+        Properties props = new Properties();
+        try (InputStream in = BackupService.class.getResourceAsStream("/config.properties")) {
+            if (in != null) props.load(in);
+        } catch (IOException ignored) {}
+
+        String dirProp = props.getProperty("backup.dir", "").trim();
+        Path dir = dirProp.isEmpty()
+            ? Paths.get(System.getProperty("user.home"), "AutoBank", "backups")
+            : Paths.get(dirProp);
+
+        int retain = 10;
+        try { retain = Integer.parseInt(props.getProperty("backup.retain", "10").trim()); }
+        catch (NumberFormatException ignored) {}
+
+        this.backupDir   = dir;
+        this.maxRetained = retain;
     }
 
     public BackupService(Path backupDir, int maxRetained) {

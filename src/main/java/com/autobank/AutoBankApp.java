@@ -1,6 +1,7 @@
 package com.autobank;
 
 import com.autobank.auth.model.UserSession;
+import com.autobank.backup.BackupScheduler;
 import com.autobank.config.DatabaseConfig;
 import com.autobank.util.I18n;
 import javafx.application.Application;
@@ -15,9 +16,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.time.LocalTime;
 import java.util.Optional;
+import java.util.Properties;
 
 public class AutoBankApp extends Application {
 
@@ -52,6 +56,29 @@ public class AutoBankApp extends Application {
         }
 
         showLogin(stage);
+
+        // Configure and arm the daily backup scheduler from config
+        initBackupScheduler();
+    }
+
+    private void initBackupScheduler() {
+        Properties props = new Properties();
+        try (InputStream in = getClass().getResourceAsStream("/config.properties")) {
+            if (in != null) props.load(in);
+        } catch (Exception ignored) {}
+
+        String schedule = props.getProperty("backup.schedule", "22:00").trim();
+        try {
+            String[] parts = schedule.split(":");
+            LocalTime t = LocalTime.of(
+                Integer.parseInt(parts[0]),
+                parts.length > 1 ? Integer.parseInt(parts[1]) : 0);
+            BackupScheduler.getInstance().setScheduledTime(t);
+        } catch (Exception e) {
+            log.warn("Invalid backup.schedule '{}', using default 22:00", schedule);
+        }
+        // Scheduler is started in MainController once the user logs in
+        log.info("Backup scheduler configured for {}", BackupScheduler.getInstance().getScheduledTime());
     }
 
     private void setupAdmin() {
@@ -82,16 +109,19 @@ public class AutoBankApp extends Application {
 
     private void showLogin(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
-        Scene scene = new Scene(loader.load(), 420, 520);
+        Scene scene = new Scene(loader.load(), 860, 540);
         scene.getStylesheets().add(getClass().getResource("/css/app.css").toExternalForm());
-        stage.setTitle("AutoBank");
+        stage.setTitle("AutoBank — Cooperative Banking System");
         stage.setScene(scene);
-        stage.setResizable(false);
+        stage.setResizable(true);
+        stage.setMinWidth(760);
+        stage.setMinHeight(480);
         stage.show();
     }
 
     @Override
     public void stop() {
+        BackupScheduler.getInstance().stop();
         DatabaseConfig.shutdown();
     }
 

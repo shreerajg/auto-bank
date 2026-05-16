@@ -8,17 +8,15 @@
             xmlns="http://javafx.com/javafx/22">
 
     <left>
-        <VBox styleClass="sidebar" spacing="4" minWidth="210">
-            <padding><Insets top="20" right="10" bottom="16" left="10"/></padding>
-
+        <VBox styleClass="sidebar" spacing="6" minWidth="230">
             <!-- Brand -->
-            <VBox spacing="2" style="-fx-padding: 0 0 12 6;">
+            <VBox spacing="4" styleClass="sidebar-brand-box">
                 <Label text="🏦 AutoBank" styleClass="sidebar-title"/>
                 <Label fx:id="currentUserLabel" styleClass="user-label"/>
             </VBox>
 
             <Separator/>
-            <Region prefHeight="8"/>
+            <Region prefHeight="10"/>
 
             <!-- Nav items -->
             <Button fx:id="dashboardBtn"    text="📊  Dashboard"         onAction="#showDashboard"    styleClass="nav-button"/>
@@ -33,7 +31,7 @@
 
             <Pane VBox.vgrow="ALWAYS"/>
             <Separator/>
-            <Region prefHeight="6"/>
+            <Region prefHeight="8"/>
             <Button text="⬅  Logout" onAction="#handleLogout" styleClass="nav-button, logout-button"/>
             <Region prefHeight="4"/>
         </VBox>
@@ -44,7 +42,7 @@
     </center>
 
     <bottom>
-        <HBox styleClass="status-bar" spacing="20" alignment="CENTER_LEFT">
+        <HBox styleClass="status-bar" spacing="24" alignment="CENTER_LEFT">
             <Label fx:id="dateLabel"/>
             <Pane HBox.hgrow="ALWAYS"/>
             <Label text="AutoBank v1.0  ·  Patsanstha Edition"/>

@@ -5,58 +5,75 @@
 
 <SplitPane xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.autobank.transaction.ui.TransactionController"
-           dividerPositions="0.67"
+           dividerPositions="0.65"
+           style="-fx-background-color: #f0f2f5;"
            xmlns="http://javafx.com/javafx/22">
 
-    <!-- Left: table -->
-    <VBox spacing="14" styleClass="content-pane">
-        <VBox spacing="3">
-            <Label text="Transactions" styleClass="page-title"/>
-            <Label text="Deposit and withdrawal ledger"
-                   style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+    <!-- Left: Transaction History -->
+    <VBox spacing="20" styleClass="content-pane">
+        <VBox spacing="4">
+            <Label text="Transaction Ledger" styleClass="page-title"/>
+            <Label text="Complete history of deposits and withdrawals" styleClass="page-subtitle"/>
         </VBox>
 
-        <TableView fx:id="transactionTable" VBox.vgrow="ALWAYS">
+        <TableView fx:id="transactionTable" VBox.vgrow="ALWAYS" styleClass="chart-card">
             <columns>
-                <TableColumn fx:id="colId"      text="Ref #"        prefWidth="60"/>
+                <TableColumn fx:id="colId"      text="Ref #"        prefWidth="70"/>
                 <TableColumn fx:id="colType"    text="Type"         prefWidth="110"/>
-                <TableColumn fx:id="colAmount"  text="Amount (₹)"   prefWidth="110"/>
-                <TableColumn fx:id="colBalance" text="Balance After" prefWidth="120"/>
-                <TableColumn fx:id="colDesc"    text="Description"  prefWidth="200"/>
-                <TableColumn fx:id="colStatus"  text="Status"       prefWidth="80"/>
+                <TableColumn fx:id="colAmount"  text="Amount (₹)"   prefWidth="120"/>
+                <TableColumn fx:id="colBalance" text="Balance After" prefWidth="130"/>
+                <TableColumn fx:id="colDate"    text="Date/Time"     prefWidth="140"/>
+                <TableColumn fx:id="colStatus"  text="Status"       prefWidth="90"/>
             </columns>
         </TableView>
     </VBox>
 
-    <!-- Right: form -->
-    <VBox spacing="14" styleClass="content-pane form-panel">
+    <!-- Right: Action Panel -->
+    <VBox spacing="20" styleClass="content-pane, chart-card" maxWidth="450">
         <Label text="New Transaction" styleClass="section-title"/>
         <Separator/>
 
-        <VBox spacing="5">
-            <Label text="SEARCH ACCOUNT"/>
-            <TextField fx:id="accountSearchField" promptText="Type name or account #…"/>
+        <!-- Account Selection Card -->
+        <VBox spacing="10" style="-fx-background-color: #f8fafc; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;">
+            <VBox spacing="4">
+                <Label text="SELECT ACCOUNT" styleClass="stat-label"/>
+                <TextField fx:id="accountSearchField" promptText="Search name or account #…" prefHeight="35"/>
+                <ComboBox fx:id="accountCombo" maxWidth="Infinity" promptText="Choose account…" prefHeight="35"/>
+            </VBox>
+            
+            <Separator style="-fx-padding: 5 0;"/>
+            
+            <VBox spacing="4">
+                <Label fx:id="selectedAccountLabel" text="No account selected" style="-fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                <Label text="CURRENT BALANCE" styleClass="stat-label"/>
+                <Label fx:id="balanceValueLabel" text="₹ 0.00" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1e293b;"/>
+            </VBox>
         </VBox>
-        <ComboBox fx:id="accountCombo" maxWidth="Infinity" promptText="Select account…"/>
 
-        <VBox spacing="5">
-            <Label text="AMOUNT (₹)"/>
-            <TextField fx:id="amountField" promptText="0.00"/>
+        <!-- Transaction Details -->
+        <VBox spacing="15">
+            <VBox spacing="6">
+                <Label text="AMOUNT (₹)" styleClass="stat-label"/>
+                <TextField fx:id="amountField" promptText="Enter amount" prefHeight="45" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            </VBox>
+
+            <VBox spacing="6">
+                <Label text="DESCRIPTION / REMARKS" styleClass="stat-label"/>
+                <TextArea fx:id="descriptionField" promptText="Optional notes…" prefHeight="70" wrapText="true"/>
+            </VBox>
         </VBox>
 
-        <VBox spacing="5">
-            <Label text="DESCRIPTION (OPTIONAL)"/>
-            <TextArea fx:id="descriptionField" promptText="Note…" prefRowCount="3"/>
+        <Region VBox.vgrow="ALWAYS"/>
+
+        <!-- Action Buttons -->
+        <VBox spacing="10">
+            <HBox spacing="10">
+                <Button text="⬆  DEPOSIT"  onAction="#handleDeposit"
+                        styleClass="success-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="50"/>
+                <Button text="⬇  WITHDRAW" onAction="#handleWithdrawal"
+                        styleClass="danger-button"  HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="50"/>
+            </HBox>
+            <Label fx:id="statusLabel" alignment="CENTER" maxWidth="Infinity" style="-fx-font-weight: bold;"/>
         </VBox>
-
-        <Pane VBox.vgrow="ALWAYS"/>
-
-        <HBox spacing="10">
-            <Button text="⬆  Deposit"  onAction="#handleDeposit"
-                    styleClass="success-button" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-            <Button text="⬇  Withdraw" onAction="#handleWithdrawal"
-                    styleClass="danger-button"  HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-        </HBox>
-        <Label fx:id="statusLabel" styleClass="status-label" wrapText="true"/>
     </VBox>
 </SplitPane>

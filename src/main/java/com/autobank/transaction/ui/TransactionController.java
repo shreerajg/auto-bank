@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 
 import java.math.BigDecimal;
+import java.time.format.DateTimeFormatter;
 
 public class TransactionController {
 
@@ -19,12 +20,16 @@ public class TransactionController {
     @FXML private TextField amountField;
     @FXML private TextArea descriptionField;
     @FXML private Label statusLabel;
+    
+    @FXML private Label balanceValueLabel;
+    @FXML private Label selectedAccountLabel;
+
     @FXML private TableView<Transaction> transactionTable;
     @FXML private TableColumn<Transaction, Integer> colId;
     @FXML private TableColumn<Transaction, String> colType;
     @FXML private TableColumn<Transaction, BigDecimal> colAmount;
     @FXML private TableColumn<Transaction, BigDecimal> colBalance;
-    @FXML private TableColumn<Transaction, String> colDesc;
+    @FXML private TableColumn<Transaction, String> colDate;
     @FXML private TableColumn<Transaction, String> colStatus;
 
     private final TransactionService txService = new TransactionService();
@@ -32,26 +37,53 @@ public class TransactionController {
 
     @FXML
     public void initialize() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colType.setCellValueFactory(new PropertyValueFactory<>("type"));
-        colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        colBalance.setCellValueFactory(new PropertyValueFactory<>("balanceAfter"));
-        colDesc.setCellValueFactory(new PropertyValueFactory<>("description"));
-        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        accountCombo.setConverter(new StringConverter<>() {
-            @Override public String toString(Account a) { return a == null ? "" : a.toString(); }
-            @Override public Account fromString(String s) { return null; }
-        });
+        setupTable();
+        setupAccountCombo();
 
         accountSearchField.textProperty().addListener((obs, old, val) -> {
             try {
                 accountCombo.setItems(FXCollections.observableArrayList(
                     accountService.searchAccounts(val)));
+                if (!accountCombo.getItems().isEmpty()) {
+                    accountCombo.show();
+                }
             } catch (Exception ignored) {}
         });
 
+        accountCombo.getSelectionModel().selectedItemProperty().addListener((obs, old, val) -> {
+            if (val != null) {
+                balanceValueLabel.setText("₹ " + val.getBalance());
+                selectedAccountLabel.setText(val.getHolderName());
+                amountField.requestFocus();
+            } else {
+                balanceValueLabel.setText("₹ 0.00");
+                selectedAccountLabel.setText("No account selected");
+            }
+        });
+
         loadRecent();
+    }
+
+    private void setupTable() {
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        colBalance.setCellValueFactory(new PropertyValueFactory<>("balanceAfter"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        
+        colDate.setCellValueFactory(cellData -> {
+            var date = cellData.getValue().getCreatedAt();
+            return new javafx.beans.property.SimpleStringProperty(
+                date != null ? date.format(DateTimeFormatter.ofPattern("dd/MM HH:mm")) : "—"
+            );
+        });
+    }
+
+    private void setupAccountCombo() {
+        accountCombo.setConverter(new StringConverter<>() {
+            @Override public String toString(Account a) { return a == null ? "" : a.getAccountNumber() + " - " + a.getHolderName(); }
+            @Override public Account fromString(String s) { return null; }
+        });
     }
 
     @FXML private void handleDeposit()    { perform("DEPOSIT"); }
@@ -60,31 +92,47 @@ public class TransactionController {
     private void perform(String type) {
         Account account = accountCombo.getValue();
         String amtStr = amountField.getText().trim();
-        if (account == null) { statusLabel.setText("Select an account"); return; }
-        if (amtStr.isEmpty()) { statusLabel.setText("Enter amount"); return; }
+        if (account == null) { showError("Select an account first"); return; }
+        if (amtStr.isEmpty()) { showError("Enter an amount"); return; }
 
         try {
             BigDecimal amt = new BigDecimal(amtStr);
-            if (amt.compareTo(BigDecimal.ZERO) <= 0) { statusLabel.setText("Amount must be > 0"); return; }
+            if (amt.compareTo(BigDecimal.ZERO) <= 0) { showError("Amount must be positive"); return; }
 
             Transaction tx = "DEPOSIT".equals(type)
                 ? txService.deposit(account.getId(), amt, descriptionField.getText())
                 : txService.withdraw(account.getId(), amt, descriptionField.getText());
 
-            statusLabel.setText(type + " of ₹" + amt + " successful — Ref #" + tx.getId());
-            amountField.clear();
-            descriptionField.clear();
+            showSuccess(type + " successful: ₹" + amt);
+            clearForm();
             loadRecent();
         } catch (Exception e) {
-            statusLabel.setText("Error: " + e.getMessage());
+            showError(e.getMessage());
         }
+    }
+
+    private void clearForm() {
+        amountField.clear();
+        descriptionField.clear();
+        accountSearchField.clear();
+        accountCombo.getSelectionModel().clearSelection();
+    }
+
+    private void showError(String msg) {
+        statusLabel.setText(msg);
+        statusLabel.setStyle("-fx-text-fill: #e74c3c;");
+    }
+
+    private void showSuccess(String msg) {
+        statusLabel.setText(msg);
+        statusLabel.setStyle("-fx-text-fill: #27ae60;");
     }
 
     private void loadRecent() {
         try {
             transactionTable.setItems(FXCollections.observableArrayList(txService.getRecent(100)));
         } catch (Exception e) {
-            statusLabel.setText("Load error: " + e.getMessage());
+            showError("Load error: " + e.getMessage());
         }
     }
 }

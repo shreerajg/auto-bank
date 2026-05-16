@@ -5,33 +5,33 @@
 
 <SplitPane xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.autobank.account.ui.AccountController"
-           dividerPositions="0.67"
+           dividerPositions="0.65"
+           style="-fx-background-color: #f0f2f5;"
            xmlns="http://javafx.com/javafx/22">
 
     <!-- Left: table area -->
-    <VBox spacing="14" styleClass="content-pane">
+    <VBox spacing="20" styleClass="content-pane">
         <HBox alignment="CENTER_LEFT" spacing="12">
-            <VBox spacing="3" HBox.hgrow="ALWAYS">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
                 <Label text="Account Management" styleClass="page-title"/>
-                <Label text="Manage cooperative member accounts"
-                       style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+                <Label text="View and manage cooperative member records" styleClass="page-subtitle"/>
             </VBox>
         </HBox>
 
-        <HBox spacing="10" alignment="CENTER_LEFT"
-              style="-fx-background-color: #161b27; -fx-padding: 8px 14px; -fx-background-radius: 8px; -fx-border-color: rgba(255,255,255,0.07); -fx-border-radius: 8px;">
-            <Label text="🔍" style="-fx-font-size: 14px; -fx-text-fill: #6b7280;"/>
-            <TextField fx:id="searchField" promptText="Search by name or account number…"
+        <!-- Search Bar -->
+        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="chart-card" style="-fx-padding: 10px 16px;">
+            <Label text="🔍" style="-fx-font-size: 16px;"/>
+            <TextField fx:id="searchField" promptText="Search by name, account number or phone…"
                        HBox.hgrow="ALWAYS"
-                       style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #e5e7eb; -fx-prompt-text-fill: #4b5563;"/>
+                       style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-size: 14px;"/>
         </HBox>
 
-        <TableView fx:id="accountTable" VBox.vgrow="ALWAYS">
+        <TableView fx:id="accountTable" VBox.vgrow="ALWAYS" styleClass="chart-card">
             <columns>
-                <TableColumn fx:id="colAccountNumber" text="Account #"   prefWidth="120"/>
-                <TableColumn fx:id="colHolderName"   text="Holder Name" prefWidth="200"/>
-                <TableColumn fx:id="colPhone"         text="Phone"       prefWidth="120"/>
-                <TableColumn fx:id="colBalance"       text="Balance (₹)" prefWidth="130"/>
+                <TableColumn fx:id="colAccountNumber" text="Account #"   prefWidth="110"/>
+                <TableColumn fx:id="colHolderName"   text="Holder Name" prefWidth="220"/>
+                <TableColumn fx:id="colPhone"         text="Phone"       prefWidth="110"/>
+                <TableColumn fx:id="colBalance"       text="Balance (₹)" prefWidth="120"/>
                 <TableColumn fx:id="colStatus"        text="Status"      prefWidth="90"/>
             </columns>
         </TableView>
@@ -39,27 +39,64 @@
         <Label fx:id="statusLabel" styleClass="status-label"/>
     </VBox>
 
-    <!-- Right: form -->
-    <VBox spacing="14" styleClass="content-pane form-panel">
-        <Label text="New Account" styleClass="section-title"/>
-        <Separator/>
+    <!-- Right: Tabs for Details & Creation -->
+    <TabPane tabClosingPolicy="UNAVAILABLE" styleClass="chart-card">
+        <Tab text="Account Details">
+            <VBox fx:id="detailBox" spacing="20" visible="false">
+                <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+                
+                <VBox spacing="4">
+                    <Label text="HOLDER NAME" styleClass="stat-label"/>
+                    <Label fx:id="detailName" text="—" styleClass="page-title" style="-fx-font-size: 22px;"/>
+                </VBox>
 
-        <VBox spacing="5">
-            <Label text="HOLDER NAME *"/>
-            <TextField fx:id="nameField" promptText="Full name"/>
-        </VBox>
-        <VBox spacing="5">
-            <Label text="PHONE"/>
-            <TextField fx:id="phoneField" promptText="Contact number"/>
-        </VBox>
-        <VBox spacing="5">
-            <Label text="ADDRESS"/>
-            <TextField fx:id="addressField" promptText="Village / address"/>
-        </VBox>
+                <GridPane hgap="20" vgap="15">
+                    <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label text="ACCOUNT NUMBER" styleClass="stat-label"/>
+                        <Label fx:id="detailAcc" text="—" style="-fx-font-weight: bold;"/>
+                    </VBox>
+                    <VBox spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <Label text="STATUS" styleClass="stat-label"/>
+                        <Label fx:id="detailStatus" text="—" style="-fx-font-weight: bold;"/>
+                    </VBox>
+                    <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <Label text="PHONE" styleClass="stat-label"/>
+                        <Label fx:id="detailPhone" text="—"/>
+                    </VBox>
+                    <VBox spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label text="CURRENT BALANCE" styleClass="stat-label"/>
+                        <Label fx:id="detailBalance" text="—" style="-fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
+                    </VBox>
+                </GridPane>
 
-        <Pane VBox.vgrow="ALWAYS"/>
+                <Separator/>
+                <Button text="View Transaction History" maxWidth="Infinity" styleClass="nav-button" style="-fx-border-color: #ddd;"/>
+                <Button text="Edit Details" maxWidth="Infinity" styleClass="nav-button" style="-fx-border-color: #ddd;"/>
+            </VBox>
+        </Tab>
+        <Tab text="Create New">
+            <VBox spacing="20">
+                <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+                
+                <Label text="New Member Registration" styleClass="section-title"/>
+                
+                <VBox spacing="8">
+                    <Label text="FULL NAME *" styleClass="stat-label"/>
+                    <TextField fx:id="nameField" promptText="Enter full name" prefHeight="35"/>
+                </VBox>
+                <VBox spacing="8">
+                    <Label text="PHONE NUMBER" styleClass="stat-label"/>
+                    <TextField fx:id="phoneField" promptText="10-digit mobile" prefHeight="35"/>
+                </VBox>
+                <VBox spacing="8">
+                    <Label text="ADDRESS" styleClass="stat-label"/>
+                    <TextArea fx:id="addressField" promptText="Full address / Village" prefHeight="80" wrapText="true"/>
+                </VBox>
 
-        <Button text="✚  Create Account" onAction="#handleCreateAccount"
-                styleClass="primary-button" maxWidth="Infinity"/>
-    </VBox>
+                <Pane VBox.vgrow="ALWAYS"/>
+                <Button text="✚  Register Member" onAction="#handleCreateAccount"
+                        styleClass="primary-button" maxWidth="Infinity" prefHeight="45"/>
+            </VBox>
+        </Tab>
+    </TabPane>
 </SplitPane>

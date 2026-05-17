@@ -181,6 +181,24 @@ public class DistributionService {
         return list;
     }
 
+    public PaymentDistribution getLatestPendingDistribution() throws SQLException {
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM payment_distributions WHERE status = 'PENDING' ORDER BY imported_at DESC LIMIT 1")) {
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                PaymentDistribution dist = new PaymentDistribution();
+                dist.setId(rs.getInt("id"));
+                dist.setImportFile(rs.getString("import_file"));
+                dist.setTotalAmount(rs.getBigDecimal("total_amount"));
+                dist.setTotalRecords(rs.getInt("total_records"));
+                dist.setMatchedRecords(rs.getInt("matched_records"));
+                dist.setStatus(rs.getString("status"));
+                return dist;
+            }
+        }
+        return null;
+    }
+
     private void updateRecordStatus(int recId, String status, String error, Integer txId) throws SQLException {
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement ps = conn.prepareStatement("UPDATE distribution_records SET status = ?, error_message = ?, transaction_id = ? WHERE id = ?")) {

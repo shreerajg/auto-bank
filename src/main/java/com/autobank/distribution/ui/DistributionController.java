@@ -33,6 +33,21 @@ public class DistributionController {
         colAmount.setCellValueFactory(new PropertyFactory<>("amount"));
         colStatus.setCellValueFactory(new PropertyFactory<>("status"));
         colError.setCellValueFactory(new PropertyFactory<>("errorMessage"));
+
+        loadPendingDraft();
+    }
+
+    private void loadPendingDraft() {
+        try {
+            currentDist = service.getLatestPendingDistribution();
+            if (currentDist != null) {
+                loadRecords();
+                statusLabel.setText(String.format("Unprocessed Draft Found: %d records, %d matched.", 
+                    currentDist.getTotalRecords(), currentDist.getMatchedRecords()));
+                processBtn.setDisable(currentDist.getMatchedRecords() == 0);
+                statusLabel.setStyle("-fx-text-fill: #d97706;");
+            }
+        } catch (Exception ignored) {}
     }
 
     // Helper class since PropertyValueFactory is picky about naming or we need full getters
@@ -51,6 +66,7 @@ public class DistributionController {
         if (file != null) {
             try {
                 statusLabel.setText("Importing " + file.getName() + "...");
+                statusLabel.setStyle("-fx-text-fill: #2563eb;");
                 currentDist = service.parseFile(file.getAbsolutePath());
                 loadRecords();
                 statusLabel.setText(String.format("Loaded: %d records, %d matched. Total: ₹%.2f", 
@@ -58,6 +74,7 @@ public class DistributionController {
                 processBtn.setDisable(currentDist.getMatchedRecords() == 0);
             } catch (Exception e) {
                 statusLabel.setText("Import error: " + e.getMessage());
+                statusLabel.setStyle("-fx-text-fill: #dc2626;");
                 e.printStackTrace();
             }
         }
@@ -76,8 +93,10 @@ public class DistributionController {
                     service.processDistribution(currentDist.getId());
                     loadRecords();
                     statusLabel.setText("Distribution completed for #" + currentDist.getId());
+                    statusLabel.setStyle("-fx-text-fill: #059669;");
                 } catch (Exception e) {
                     statusLabel.setText("Process error: " + e.getMessage());
+                    statusLabel.setStyle("-fx-text-fill: #dc2626;");
                 }
             }
         });

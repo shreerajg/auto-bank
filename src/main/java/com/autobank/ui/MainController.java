@@ -1,8 +1,8 @@
 package com.autobank.ui;
 
 import com.autobank.auth.model.UserSession;
-import com.autobank.backup.BackupScheduler;
 import com.autobank.util.AuditLogger;
+import com.autobank.util.I18n;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
@@ -29,30 +30,62 @@ public class MainController {
     @FXML private Button reportsBtn;
     @FXML private Button settingsBtn;
     @FXML private Button backupBtn;
+    @FXML private Button langBtn;
+
+    private String currentViewFxml = "/fxml/dashboard.fxml";
+    private Button currentActiveBtn;
 
     @FXML
     public void initialize() {
         var user = UserSession.getInstance().getCurrentUser();
         currentUserLabel.setText(user.getUsername() + " (" + user.getRole() + ")");
         dateLabel.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
+        
+        refreshLabels();
         showDashboard();
-
-        // Start the daily backup scheduler in the background
-        BackupScheduler.getInstance().start(
-            path -> {}, // silent success — backup is in ~/AutoBank/backups
-            err  -> {}  // logged by BackupService itself
-        );
     }
 
-    @FXML private void showDashboard()    { load("/fxml/dashboard.fxml");     activate(dashboardBtn); }
-    @FXML private void showAccounts()     { load("/fxml/accounts.fxml");      activate(accountsBtn); }
-    @FXML private void showTransactions() { load("/fxml/transactions.fxml");  activate(transactionsBtn); }
-    @FXML private void showDistributions(){ load("/fxml/distributions.fxml"); activate(distributionBtn); }
-    @FXML private void showLoans()        { load("/fxml/loans.fxml");      activate(loansBtn); }
-    @FXML private void showDailyOps()     { load("/fxml/dailyops.fxml");   activate(dailyOpsBtn); }
-    @FXML private void showReports()      { load("/fxml/reports.fxml");    activate(reportsBtn); }
-    @FXML private void showSettings()     { load("/fxml/settings.fxml");   activate(settingsBtn); }
-    @FXML private void showBackup()        { load("/fxml/backup.fxml");      activate(backupBtn); }
+    private void refreshLabels() {
+        dashboardBtn.setText("📊  " + I18n.t("nav.dashboard"));
+        accountsBtn.setText("👤  " + I18n.t("nav.accounts"));
+        transactionsBtn.setText("💸  " + I18n.t("nav.transactions"));
+        distributionBtn.setText("🥛  " + I18n.t("nav.distributions"));
+        loansBtn.setText("🏠  " + I18n.t("nav.loans"));
+        dailyOpsBtn.setText("📅  " + I18n.t("nav.dailyops"));
+        reportsBtn.setText("📈  " + I18n.t("nav.reports"));
+        backupBtn.setText("🔒  " + I18n.t("nav.backup"));
+        settingsBtn.setText("⚙  " + I18n.t("nav.settings"));
+        langBtn.setText(I18n.getCurrentLang().equals("en") ? "मराठी" : "English");
+    }
+
+    @FXML
+    private void toggleLanguage() {
+        String newLang = I18n.getCurrentLang().equals("en") ? "mr" : "en";
+        I18n.load(newLang);
+        refreshLabels();
+        
+        // Reload current view to apply translations
+        if (currentViewFxml != null) {
+            load(currentViewFxml);
+        } else if (currentActiveBtn != null) {
+            // If it's a placeholder, just call the show method again
+            if (currentActiveBtn == loansBtn) showLoans();
+            else if (currentActiveBtn == dailyOpsBtn) showDailyOps();
+            else if (currentActiveBtn == reportsBtn) showReports();
+            else if (currentActiveBtn == settingsBtn) showSettings();
+            else if (currentActiveBtn == backupBtn) showBackup();
+        }
+    }
+
+    @FXML private void showDashboard()    { currentViewFxml = "/fxml/dashboard.fxml"; load(currentViewFxml); activate(dashboardBtn); }
+    @FXML private void showAccounts()     { currentViewFxml = "/fxml/accounts.fxml";  load(currentViewFxml); activate(accountsBtn); }
+    @FXML private void showTransactions() { currentViewFxml = "/fxml/transactions.fxml"; load(currentViewFxml); activate(transactionsBtn); }
+    @FXML private void showDistributions(){ currentViewFxml = "/fxml/distributions.fxml"; load(currentViewFxml); activate(distributionBtn); }
+    @FXML private void showLoans()        { currentViewFxml = null; placeholder(I18n.t("nav.loans")); activate(loansBtn); }
+    @FXML private void showDailyOps()     { currentViewFxml = null; placeholder(I18n.t("nav.dailyops")); activate(dailyOpsBtn); }
+    @FXML private void showReports()      { currentViewFxml = null; placeholder(I18n.t("nav.reports")); activate(reportsBtn); }
+    @FXML private void showSettings()     { currentViewFxml = null; placeholder(I18n.t("nav.settings")); activate(settingsBtn); }
+    @FXML private void showBackup()       { currentViewFxml = null; placeholder(I18n.t("nav.backup")); activate(backupBtn); }
 
     @FXML
     private void handleLogout() {
@@ -61,7 +94,7 @@ public class MainController {
         UserSession.getInstance().logout();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
-            Scene scene = new Scene(loader.load(), 420, 520);
+            Scene scene = new Scene(loader.load(), 1000, 650);
             scene.getStylesheets().add(getClass().getResource("/css/app.css").toExternalForm());
             Stage stage = (Stage) contentArea.getScene().getWindow();
             stage.setResizable(false);
@@ -105,10 +138,11 @@ public class MainController {
     }
 
     private void activate(Button active) {
+        currentActiveBtn = active;
         for (Button b : new Button[]{dashboardBtn, accountsBtn, transactionsBtn, distributionBtn,
                                      loansBtn, dailyOpsBtn, reportsBtn, settingsBtn, backupBtn}) {
-            b.getStyleClass().remove("active");
+            if (b != null) b.getStyleClass().remove("active");
         }
-        active.getStyleClass().add("active");
+        if (active != null) active.getStyleClass().add("active");
     }
 }

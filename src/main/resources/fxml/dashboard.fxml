@@ -11,30 +11,30 @@
         <!-- Header -->
         <HBox alignment="CENTER_LEFT" spacing="16">
             <VBox spacing="6">
-                <Label text="Dashboard" styleClass="page-title"/>
-                <Label text="Overview of your cooperative banking activity" styleClass="page-subtitle"/>
+                <Label fx:id="dashboardTitle" text="Dashboard" styleClass="page-title"/>
+                <Label fx:id="dashboardSubtitle" text="Overview of your cooperative banking activity" styleClass="page-subtitle"/>
             </VBox>
         </HBox>
 
         <!-- Stat Cards Row -->
         <HBox spacing="20">
             <VBox styleClass="stat-card, stat-card-blue" spacing="12" HBox.hgrow="ALWAYS">
-                <Label text="TOTAL ACCOUNTS" styleClass="stat-label"/>
+                <Label fx:id="totalAccountsHeader" text="TOTAL ACCOUNTS" styleClass="stat-label"/>
                 <Label fx:id="totalAccountsLabel" text="—" styleClass="stat-value"/>
                 <Label text="Active members" styleClass="stat-subtext"/>
             </VBox>
             <VBox styleClass="stat-card, stat-card-green" spacing="12" HBox.hgrow="ALWAYS">
-                <Label text="TOTAL BALANCE" styleClass="stat-label"/>
+                <Label fx:id="totalBalanceHeader" text="TOTAL BALANCE" styleClass="stat-label"/>
                 <Label fx:id="totalBalanceLabel" text="—" styleClass="stat-value"/>
                 <Label text="Funds under management" styleClass="stat-subtext"/>
             </VBox>
             <VBox styleClass="stat-card, stat-card-purple" spacing="12" HBox.hgrow="ALWAYS">
-                <Label text="ACTIVE LOANS" styleClass="stat-label"/>
+                <Label fx:id="activeLoansHeader" text="ACTIVE LOANS" styleClass="stat-label"/>
                 <Label fx:id="activeLoansLabel" text="—" styleClass="stat-value"/>
                 <Label text="Outstanding loan accounts" styleClass="stat-subtext"/>
             </VBox>
             <VBox styleClass="stat-card, stat-card-orange" spacing="12" HBox.hgrow="ALWAYS">
-                <Label text="TODAY'S TRANSACTIONS" styleClass="stat-label"/>
+                <Label fx:id="todayTxHeader" text="TODAY'S TRANSACTIONS" styleClass="stat-label"/>
                 <Label fx:id="todayTxLabel" text="—" styleClass="stat-value"/>
                 <Label text="Deposits &amp; withdrawals" styleClass="stat-subtext"/>
             </VBox>

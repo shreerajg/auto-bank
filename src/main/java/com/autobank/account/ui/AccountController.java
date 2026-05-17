@@ -2,6 +2,7 @@ package com.autobank.account.ui;
 
 import com.autobank.account.model.Account;
 import com.autobank.account.service.AccountService;
+import com.autobank.util.DraftManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -9,6 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AccountController {
 
@@ -33,6 +36,8 @@ public class AccountController {
     @FXML private Label detailStatus;
 
     private final AccountService accountService = new AccountService();
+    private final DraftManager draftManager = DraftManager.getInstance();
+    private static final String FORM_ID = "ACCOUNT_NEW";
 
     @FXML
     public void initialize() {
@@ -49,7 +54,33 @@ public class AccountController {
             if (val != null) showDetails(val);
         });
 
+        setupDraftListeners();
+        loadDraft();
         load("");
+    }
+
+    private void setupDraftListeners() {
+        nameField.textProperty().addListener((obs, old, val) -> saveDraft());
+        phoneField.textProperty().addListener((obs, old, val) -> saveDraft());
+        addressField.textProperty().addListener((obs, old, val) -> saveDraft());
+    }
+
+    private void saveDraft() {
+        Map<String, String> data = new HashMap<>();
+        data.put("name", nameField.getText());
+        data.put("phone", phoneField.getText());
+        data.put("address", addressField.getText());
+        draftManager.saveDraft(FORM_ID, data);
+    }
+
+    private void loadDraft() {
+        Map<String, String> data = draftManager.getDraft(FORM_ID);
+        if (!data.isEmpty()) {
+            nameField.setText(data.getOrDefault("name", ""));
+            phoneField.setText(data.getOrDefault("phone", ""));
+            addressField.setText(data.getOrDefault("address", ""));
+            if (statusLabel != null) statusLabel.setText("Draft loaded automatically");
+        }
     }
 
     private void setupStatusColumn() {
@@ -105,6 +136,7 @@ public class AccountController {
                 phoneField.getText().trim(), addressField.getText().trim());
             statusLabel.setText("Created: " + a.getAccountNumber());
             nameField.clear(); phoneField.clear(); addressField.clear();
+            draftManager.clearDraft(FORM_ID);
             load(searchField.getText());
         } catch (Exception e) {
             statusLabel.setText("Error: " + e.getMessage());

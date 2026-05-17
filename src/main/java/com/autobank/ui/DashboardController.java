@@ -3,6 +3,7 @@ package com.autobank.ui;
 import com.autobank.config.DatabaseConfig;
 import com.autobank.transaction.model.Transaction;
 import com.autobank.transaction.service.TransactionService;
+import com.autobank.util.I18n;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
@@ -22,6 +23,13 @@ import java.util.List;
 
 public class DashboardController {
 
+    @FXML private Label dashboardTitle;
+    @FXML private Label dashboardSubtitle;
+    @FXML private Label totalAccountsHeader;
+    @FXML private Label totalBalanceHeader;
+    @FXML private Label activeLoansHeader;
+    @FXML private Label todayTxHeader;
+
     @FXML private Label totalAccountsLabel;
     @FXML private Label totalBalanceLabel;
     @FXML private Label activeLoansLabel;
@@ -38,9 +46,19 @@ public class DashboardController {
 
     @FXML
     public void initialize() {
+        refreshLabels();
         refreshStats();
         loadChartData();
         loadRecentActivity();
+    }
+
+    private void refreshLabels() {
+        dashboardTitle.setText(I18n.t("dashboard.title"));
+        dashboardSubtitle.setText(I18n.t("dashboard.subtitle"));
+        totalAccountsHeader.setText(I18n.t("dashboard.stats.accounts"));
+        totalBalanceHeader.setText(I18n.t("dashboard.stats.balance"));
+        activeLoansHeader.setText(I18n.t("dashboard.stats.loans"));
+        todayTxHeader.setText(I18n.t("dashboard.stats.today"));
     }
 
     private void refreshStats() {
@@ -59,9 +77,9 @@ public class DashboardController {
 
     private void loadChartData() {
         XYChart.Series<String, Number> depositSeries = new XYChart.Series<>();
-        depositSeries.setName("Deposits");
+        depositSeries.setName(I18n.getCurrentLang().equals("en") ? "Deposits" : "ठेवी");
         XYChart.Series<String, Number> withdrawSeries = new XYChart.Series<>();
-        withdrawSeries.setName("Withdrawals");
+        withdrawSeries.setName(I18n.getCurrentLang().equals("en") ? "Withdrawals" : "काढणे");
 
         String sql = "SELECT created_at::date as d, type, COUNT(*) as c " +
                      "FROM transactions " +

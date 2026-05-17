@@ -4,6 +4,7 @@ import com.autobank.account.model.Account;
 import com.autobank.account.service.AccountService;
 import com.autobank.transaction.model.Transaction;
 import com.autobank.transaction.service.TransactionService;
+import com.autobank.util.DraftManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,6 +13,8 @@ import javafx.util.StringConverter;
 
 import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TransactionController {
 
@@ -34,6 +37,8 @@ public class TransactionController {
 
     private final TransactionService txService = new TransactionService();
     private final AccountService accountService = new AccountService();
+    private final DraftManager draftManager = DraftManager.getInstance();
+    private static final String FORM_ID = "TRANSACTION_NEW";
 
     @FXML
     public void initialize() {
@@ -59,9 +64,44 @@ public class TransactionController {
                 balanceValueLabel.setText("₹ 0.00");
                 selectedAccountLabel.setText("No account selected");
             }
+            saveDraft();
         });
 
+        setupDraftListeners();
+        loadDraft();
         loadRecent();
+    }
+
+    private void setupDraftListeners() {
+        amountField.textProperty().addListener((obs, old, val) -> saveDraft());
+        descriptionField.textProperty().addListener((obs, old, val) -> saveDraft());
+    }
+
+    private void saveDraft() {
+        Map<String, String> data = new HashMap<>();
+        data.put("amount", amountField.getText());
+        data.put("description", descriptionField.getText());
+        Account selected = accountCombo.getValue();
+        if (selected != null) {
+            data.put("accountId", String.valueOf(selected.getId()));
+            data.put("accountNum", selected.getAccountNumber());
+        }
+        draftManager.saveDraft(FORM_ID, data);
+    }
+
+    private void loadDraft() {
+        Map<String, String> data = draftManager.getDraft(FORM_ID);
+        if (!data.isEmpty()) {
+            amountField.setText(data.getOrDefault("amount", ""));
+            descriptionField.setText(data.getOrDefault("description", ""));
+            String accNum = data.get("accountNum");
+            if (accNum != null) {
+                accountSearchField.setText(accNum);
+                // The listener on accountSearchField will populate accountCombo
+                // We'll trust the user to re-select or we could try to auto-select
+            }
+            if (statusLabel != null) showSuccess("Unsaved transaction draft loaded");
+        }
     }
 
     private void setupTable() {
@@ -105,6 +145,7 @@ public class TransactionController {
 
             showSuccess(type + " successful: ₹" + amt);
             clearForm();
+            draftManager.clearDraft(FORM_ID);
             loadRecent();
         } catch (Exception e) {
             showError(e.getMessage());
@@ -120,12 +161,12 @@ public class TransactionController {
 
     private void showError(String msg) {
         statusLabel.setText(msg);
-        statusLabel.setStyle("-fx-text-fill: #e74c3c;");
+        statusLabel.setStyle("-fx-text-fill: #dc2626;");
     }
 
     private void showSuccess(String msg) {
         statusLabel.setText(msg);
-        statusLabel.setStyle("-fx-text-fill: #27ae60;");
+        statusLabel.setStyle("-fx-text-fill: #059669;");
     }
 
     private void loadRecent() {

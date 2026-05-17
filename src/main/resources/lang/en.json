@@ -5,5 +5,21 @@
   "login.password": "Password",
   "login.button": "Login",
   "login.error.empty": "Please enter username and password",
-  "login.error.invalid": "Invalid username or password"
+  "login.error.invalid": "Invalid username or password",
+  "nav.dashboard": "Dashboard",
+  "nav.accounts": "Accounts",
+  "nav.transactions": "Transactions",
+  "nav.distributions": "Distributions",
+  "nav.loans": "Loans",
+  "nav.dailyops": "Daily Operations",
+  "nav.reports": "Reports",
+  "nav.settings": "Settings",
+  "nav.logout": "Logout",
+  "nav.backup": "Backup",
+  "dashboard.title": "Dashboard",
+  "dashboard.subtitle": "Overview of your cooperative banking activity",
+  "dashboard.stats.accounts": "TOTAL ACCOUNTS",
+  "dashboard.stats.balance": "TOTAL BALANCE",
+  "dashboard.stats.loans": "ACTIVE LOANS",
+  "dashboard.stats.today": "TODAY'S TRANSACTIONS"
 }

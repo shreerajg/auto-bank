@@ -5,5 +5,21 @@
   "login.password": "पासवर्ड",
   "login.button": "प्रवेश करा",
   "login.error.empty": "कृपया वापरकर्तानाव आणि पासवर्ड टाका",
-  "login.error.invalid": "चुकीचे वापरकर्तानाव किंवा पासवर्ड"
+  "login.error.invalid": "चुकीचे वापरकर्तानाव किंवा पासवर्ड",
+  "nav.dashboard": "डॅशबोर्ड",
+  "nav.accounts": "खाते व्यवस्थापन",
+  "nav.transactions": "व्यवहार",
+  "nav.distributions": "वितरण",
+  "nav.loans": "कर्ज",
+  "nav.dailyops": "दैनिक कामकाज",
+  "nav.reports": "अहवाल",
+  "nav.settings": "सेटिग्ज",
+  "nav.logout": "बाहेर पडा",
+  "nav.backup": "बॅकअप",
+  "dashboard.title": "डॅशबोर्ड",
+  "dashboard.subtitle": "तुमच्या सहकारी बँकिंग क्रियाकलापांचे विहंगावलोकन",
+  "dashboard.stats.accounts": "एकूण खाती",
+  "dashboard.stats.balance": "एकूण शिल्लक",
+  "dashboard.stats.loans": "सक्रिय कर्जे",
+  "dashboard.stats.today": "आजचे व्यवहार"
 }

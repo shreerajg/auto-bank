@@ -82,9 +82,26 @@ public class MainController {
     }
 
     private void placeholder(String name) {
-        Label lbl = new Label(name + "\n— Coming Soon —");
-        lbl.setStyle("-fx-font-size: 22px; -fx-text-fill: #999; -fx-text-alignment: center;");
-        contentArea.getChildren().setAll(lbl);
+        VBox box = new VBox(20);
+        box.setAlignment(javafx.geometry.Pos.CENTER);
+        box.setStyle("-fx-background-color: white; -fx-padding: 40; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 20, 0, 0, 10);");
+        box.setMaxSize(450, 300);
+        
+        Label icon = new Label("🚀");
+        icon.setStyle("-fx-font-size: 48px;");
+        
+        Label title = new Label(name);
+        title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1e293b;");
+        
+        Label sub = new Label("This module is part of the AutoBank Premium suite.\nWe are currently finalizing its implementation.");
+        sub.setStyle("-fx-text-alignment: center; -fx-text-fill: #64748b; -fx-font-size: 14px;");
+        sub.setWrapText(true);
+        
+        box.getChildren().addAll(icon, title, sub);
+        
+        StackPane wrapper = new StackPane(box);
+        wrapper.setStyle("-fx-background-color: #f8fafc;");
+        contentArea.getChildren().setAll(wrapper);
     }
 
     private void activate(Button active) {

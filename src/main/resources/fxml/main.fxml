@@ -27,9 +27,14 @@
             <Button fx:id="dailyOpsBtn"     text="📅  Daily Operations"  onAction="#showDailyOps"     styleClass="nav-button"/>
             <Button fx:id="reportsBtn"      text="📈  Reports"           onAction="#showReports"      styleClass="nav-button"/>
             <Button fx:id="backupBtn"       text="🔒  Backup &amp; Recovery" onAction="#showBackup"   styleClass="nav-button"/>
-            <Button fx:id="settingsBtn"     text="⚙️  Settings"          onAction="#showSettings"     styleClass="nav-button"/>
+            <Button fx:id="settingsBtn"     text="Settings"          onAction="#showSettings"     styleClass="nav-button"/>
+
+            <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10 16;">
+                <Button fx:id="langBtn" text="मराठी / EN" onAction="#toggleLanguage" styleClass="lang-button" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+            </HBox>
 
             <Pane VBox.vgrow="ALWAYS"/>
+
             <Separator/>
             <Region prefHeight="8"/>
             <Button text="⬅  Logout" onAction="#handleLogout" styleClass="nav-button, logout-button"/>

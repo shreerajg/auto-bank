@@ -1,61 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <SplitPane xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.autobank.loan.ui.LoanController"
-           dividerPositions="0.63"
+           dividerPositions="0.62"
+           style="-fx-background-color: #f1f5f9;"
            xmlns="http://javafx.com/javafx/22">
 
-    <!-- Loan List -->
-    <VBox spacing="10" styleClass="content-pane">
-        <Label text="Loan Management" styleClass="page-title"/>
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="Filter:"/>
-            <ComboBox fx:id="filterCombo" prefWidth="120"/>
+    <!-- LEFT: Loan list -->
+    <VBox spacing="16" styleClass="content-pane">
+
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="Loan Management" styleClass="page-title"/>
+                <Label text="Track disbursements, payments and outstanding balances" styleClass="page-subtitle"/>
+            </VBox>
         </HBox>
+
+        <!-- Filter bar -->
+        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="chart-card" style="-fx-padding: 10px 16px;">
+            <Label text="Filter:" style="-fx-text-fill: #64748b; -fx-font-weight: bold;"/>
+            <ComboBox fx:id="filterCombo" prefWidth="130" promptText="All Loans"/>
+        </HBox>
+
         <TableView fx:id="loanTable" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="colId"          text="Loan #"      prefWidth="60"/>
-                <TableColumn fx:id="colHolder"      text="Holder"       prefWidth="160"/>
-                <TableColumn fx:id="colAmount"      text="Principal (₹)" prefWidth="110"/>
-                <TableColumn fx:id="colOutstanding" text="Outstanding (₹)" prefWidth="120"/>
-                <TableColumn fx:id="colInterest"    text="Rate %"       prefWidth="70"/>
-                <TableColumn fx:id="colStatus"      text="Status"       prefWidth="80"/>
+                <TableColumn fx:id="colId"          text="Loan #"         prefWidth="65"/>
+                <TableColumn fx:id="colHolder"      text="Holder"          prefWidth="170"/>
+                <TableColumn fx:id="colAmount"      text="Principal (₹)"   prefWidth="115"/>
+                <TableColumn fx:id="colOutstanding" text="Outstanding (₹)" prefWidth="125"/>
+                <TableColumn fx:id="colInterest"    text="Rate %"          prefWidth="70"/>
+                <TableColumn fx:id="colStatus"      text="Status"          prefWidth="85"/>
             </columns>
         </TableView>
+
         <Label fx:id="statusLabel" styleClass="status-label" wrapText="true"/>
     </VBox>
 
-    <!-- Right Panel -->
-    <VBox spacing="0" styleClass="content-pane">
-        <!-- Disburse Loan -->
-        <VBox spacing="10" styleClass="form-panel">
-            <Label text="Disburse New Loan" styleClass="section-title"/>
-            <Label text="Search Account"/>
-            <TextField fx:id="loanSearchField" promptText="Type name or account #…"/>
-            <ComboBox fx:id="loanAccountCombo" maxWidth="Infinity"/>
-            <Label text="Loan Amount (₹) *"/>
-            <TextField fx:id="loanAmountField" promptText="e.g. 50000"/>
-            <Label text="Interest Rate (% per annum) *"/>
-            <TextField fx:id="interestRateField" promptText="e.g. 12"/>
-            <Label text="Monthly Installment (₹)"/>
-            <TextField fx:id="installmentField" promptText="e.g. 5000 (optional)"/>
-            <Label text="Due Date (YYYY-MM-DD)"/>
-            <TextField fx:id="dueDateField" promptText="e.g. 2026-12-31"/>
-            <Button text="Disburse Loan" onAction="#handleDisburse"
-                    styleClass="primary-button" maxWidth="Infinity"/>
-        </VBox>
+    <!-- RIGHT: Forms -->
+    <ScrollPane fitToWidth="true" style="-fx-background-color: #f1f5f9; -fx-background: #f1f5f9; -fx-border-color: transparent;">
+        <VBox spacing="16" style="-fx-padding: 28px 24px;">
 
-        <!-- Record Payment -->
-        <VBox spacing="10" styleClass="form-panel">
-            <Label text="Record Payment" styleClass="section-title"/>
-            <Label text="Loan ID (click row to fill)"/>
-            <TextField fx:id="payLoanIdField" promptText="Loan ID"/>
-            <Label text="Payment Amount (₹)"/>
-            <TextField fx:id="payAmountField" promptText="Amount paid"/>
-            <Button text="Record Payment" onAction="#handlePayment"
-                    styleClass="success-button" maxWidth="Infinity"/>
+            <!-- Disburse Loan -->
+            <VBox spacing="12" styleClass="form-panel">
+                <Label text="Disburse New Loan" styleClass="section-title"/>
+                <Separator/>
+
+                <VBox spacing="6">
+                    <Label text="SEARCH ACCOUNT" styleClass="stat-label"/>
+                    <TextField fx:id="loanSearchField" promptText="Type name or account #…"/>
+                    <ComboBox fx:id="loanAccountCombo" maxWidth="Infinity" promptText="Select account…"/>
+                </VBox>
+
+                <HBox spacing="12">
+                    <VBox spacing="6" HBox.hgrow="ALWAYS">
+                        <Label text="LOAN AMOUNT (₹) *" styleClass="stat-label"/>
+                        <TextField fx:id="loanAmountField" promptText="e.g. 50000"/>
+                    </VBox>
+                    <VBox spacing="6" HBox.hgrow="ALWAYS">
+                        <Label text="INTEREST RATE (% p.a.) *" styleClass="stat-label"/>
+                        <TextField fx:id="interestRateField" promptText="e.g. 12"/>
+                    </VBox>
+                </HBox>
+
+                <HBox spacing="12">
+                    <VBox spacing="6" HBox.hgrow="ALWAYS">
+                        <Label text="MONTHLY INSTALLMENT (₹)" styleClass="stat-label"/>
+                        <TextField fx:id="installmentField" promptText="Optional"/>
+                    </VBox>
+                    <VBox spacing="6" HBox.hgrow="ALWAYS">
+                        <Label text="DUE DATE (YYYY-MM-DD)" styleClass="stat-label"/>
+                        <TextField fx:id="dueDateField" promptText="e.g. 2026-12-31"/>
+                    </VBox>
+                </HBox>
+
+                <Button text="💰  Disburse Loan" onAction="#handleDisburse"
+                        styleClass="primary-button" maxWidth="Infinity" prefHeight="42"/>
+            </VBox>
+
+            <!-- Record Payment -->
+            <VBox spacing="12" styleClass="form-panel">
+                <Label text="Record Payment" styleClass="section-title"/>
+                <Separator/>
+
+                <VBox spacing="6">
+                    <Label text="LOAN ID  (click a row to fill)" styleClass="stat-label"/>
+                    <TextField fx:id="payLoanIdField" promptText="Loan ID"/>
+                </VBox>
+                <VBox spacing="6">
+                    <Label text="PAYMENT AMOUNT (₹)" styleClass="stat-label"/>
+                    <TextField fx:id="payAmountField" promptText="Amount paid"/>
+                </VBox>
+
+                <Button text="✔  Record Payment" onAction="#handlePayment"
+                        styleClass="success-button" maxWidth="Infinity" prefHeight="42"/>
+            </VBox>
+
         </VBox>
-    </VBox>
+    </ScrollPane>
+
 </SplitPane>

@@ -11,14 +11,20 @@ AutoBank is currently in the **requirements definition phase** — no implementa
 
 ## Build & Run Commands
 
-*(To be filled in once the Maven project is initialized)*
+No build tool installation required — plain `javac`/`java` via batch files.
 
-```bash
-mvn clean install       # Build
-mvn javafx:run          # Run desktop app
-mvn test                # Run all tests
-mvn test -Dtest=<Name>  # Run a single test class
 ```
+setup.bat   # One-time: downloads all JARs into lib\ (needs internet)
+build.bat   # Compiles src\ → bin\ and copies resources
+run.bat     # Launches com.autobank.Launcher
+```
+
+Run order on a fresh PC:
+1. `setup.bat` (once)
+2. `build.bat`
+3. `run.bat`
+
+After code changes, just re-run `build.bat` then `run.bat`.
 
 Python automation scripts will live in a separate directory and be invoked by the Java layer via process calls or a defined IPC mechanism.
 

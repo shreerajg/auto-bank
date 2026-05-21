@@ -8,37 +8,38 @@
             xmlns="http://javafx.com/javafx/22">
 
     <left>
-        <VBox styleClass="sidebar" spacing="6" minWidth="230">
+        <VBox styleClass="sidebar" spacing="0" minWidth="230">
+
             <!-- Brand -->
             <VBox spacing="4" styleClass="sidebar-brand-box">
-                <Label text="🏦 AutoBank" styleClass="sidebar-title"/>
+                <Label text="🏦  AutoBank" styleClass="sidebar-title"/>
                 <Label fx:id="currentUserLabel" styleClass="user-label"/>
             </VBox>
 
-            <Separator/>
-            <Region prefHeight="10"/>
-
             <!-- Nav items -->
-            <Button fx:id="dashboardBtn"    text="📊  Dashboard"         onAction="#showDashboard"    styleClass="nav-button"/>
-            <Button fx:id="accountsBtn"     text="👤  Accounts"          onAction="#showAccounts"     styleClass="nav-button"/>
-            <Button fx:id="transactionsBtn" text="💸  Transactions"      onAction="#showTransactions" styleClass="nav-button"/>
-            <Button fx:id="distributionBtn" text="🥛  Distributions"     onAction="#showDistributions" styleClass="nav-button"/>
-            <Button fx:id="loansBtn"        text="🏠  Loans"             onAction="#showLoans"        styleClass="nav-button"/>
-            <Button fx:id="dailyOpsBtn"     text="📅  Daily Operations"  onAction="#showDailyOps"     styleClass="nav-button"/>
-            <Button fx:id="reportsBtn"      text="📈  Reports"           onAction="#showReports"      styleClass="nav-button"/>
-            <Button fx:id="backupBtn"       text="🔒  Backup &amp; Recovery" onAction="#showBackup"   styleClass="nav-button"/>
-            <Button fx:id="settingsBtn"     text="Settings"          onAction="#showSettings"     styleClass="nav-button"/>
+            <VBox spacing="4" style="-fx-padding: 16 10 10 10;">
+                <Button fx:id="dashboardBtn"    text="📊  Dashboard"          onAction="#showDashboard"     styleClass="nav-button"/>
+                <Button fx:id="accountsBtn"     text="👤  Accounts"           onAction="#showAccounts"      styleClass="nav-button"/>
+                <Button fx:id="transactionsBtn" text="💸  Transactions"       onAction="#showTransactions"  styleClass="nav-button"/>
+                <Button fx:id="distributionBtn" text="🥛  Distributions"      onAction="#showDistributions" styleClass="nav-button"/>
+                <Button fx:id="loansBtn"        text="🏠  Loans"              onAction="#showLoans"         styleClass="nav-button"/>
+                <Button fx:id="dailyOpsBtn"     text="📅  Daily Operations"   onAction="#showDailyOps"      styleClass="nav-button"/>
+                <Button fx:id="reportsBtn"      text="📈  Reports"            onAction="#showReports"       styleClass="nav-button"/>
+                <Button fx:id="backupBtn"       text="🔒  Backup &amp; Recovery" onAction="#showBackup"    styleClass="nav-button"/>
+                <Button fx:id="settingsBtn"     text="⚙️  Settings"           onAction="#showSettings"      styleClass="nav-button"/>
+            </VBox>
 
-            <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10 16;">
-                <Button fx:id="langBtn" text="मराठी / EN" onAction="#toggleLanguage" styleClass="lang-button" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
-            </HBox>
+            <VBox style="-fx-padding: 0 10;">
+                <Button fx:id="langBtn" text="मराठी / EN" onAction="#toggleLanguage"
+                        styleClass="lang-button" maxWidth="Infinity"/>
+            </VBox>
 
             <Pane VBox.vgrow="ALWAYS"/>
 
-            <Separator/>
-            <Region prefHeight="8"/>
-            <Button text="⬅  Logout" onAction="#handleLogout" styleClass="nav-button, logout-button"/>
-            <Region prefHeight="4"/>
+            <Separator style="-fx-padding: 0 10;"/>
+            <VBox style="-fx-padding: 8 10 10 10;">
+                <Button text="⬅  Logout" onAction="#handleLogout" styleClass="nav-button, logout-button" maxWidth="Infinity"/>
+            </VBox>
         </VBox>
     </left>
 
@@ -53,4 +54,5 @@
             <Label text="AutoBank v1.0  ·  Patsanstha Edition"/>
         </HBox>
     </bottom>
+
 </BorderPane>

@@ -25,7 +25,7 @@
         <VBox spacing="24" styleClass="login-form" maxWidth="400">
             <VBox spacing="8">
                 <Label text="Welcome Back" styleClass="page-title" style="-fx-font-size: 24px;"/>
-                <Label text="Sign in to your AutoBank account" styleClass="page-subtitle"/>
+                <Label fx:id="subtitleLabel" text="Sign in to your AutoBank account" styleClass="page-subtitle"/>
             </VBox>
 
             <VBox spacing="8">

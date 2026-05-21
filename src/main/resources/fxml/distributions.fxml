@@ -1,34 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox spacing="20" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.autobank.distribution.ui.DistributionController">
-    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+<VBox spacing="20" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.autobank.distribution.ui.DistributionController"
+      styleClass="content-pane">
 
-    <HBox spacing="15" alignment="CENTER_LEFT">
-        <Label text="Payment Distribution" styleClass="header-label" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
-        <Region HBox.hgrow="ALWAYS" />
-        <Button text="Import Excel/PDF" onAction="#handleImport" styleClass="primary-button"/>
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="12">
+        <VBox spacing="4" HBox.hgrow="ALWAYS">
+            <Label text="Payment Distribution" styleClass="page-title"/>
+            <Label text="Import dairy payment files and bulk-credit member accounts" styleClass="page-subtitle"/>
+        </VBox>
+        <Button text="📥  Import Excel / PDF" onAction="#handleImport" styleClass="primary-button"/>
     </HBox>
 
-    <VBox spacing="10" VBox.vgrow="ALWAYS" styleClass="card">
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label fx:id="statusLabel" text="Import a file to start distribution" style="-fx-text-fill: #666;"/>
-            <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="processBtn" text="Process Credits" onAction="#handleProcess" disable="true" styleClass="success-button"/>
+    <!-- Main card -->
+    <VBox spacing="14" VBox.vgrow="ALWAYS" styleClass="card">
+
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <Label fx:id="statusLabel" text="Import a file to start distribution"
+                   styleClass="status-label" HBox.hgrow="ALWAYS"/>
+            <Button fx:id="processBtn" text="✔  Process Credits"
+                    onAction="#handleProcess" disable="true" styleClass="success-button"/>
         </HBox>
+
+        <Separator/>
 
         <TableView fx:id="recordTable" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="colName" text="Name" prefWidth="200"/>
-                <TableColumn fx:id="colAcc" text="Account #" prefWidth="120"/>
-                <TableColumn fx:id="colAmount" text="Amount" prefWidth="120"/>
-                <TableColumn fx:id="colStatus" text="Status" prefWidth="100"/>
-                <TableColumn fx:id="colError" text="Error/Message" prefWidth="300"/>
+                <TableColumn fx:id="colName"   text="Name"          prefWidth="200"/>
+                <TableColumn fx:id="colAcc"    text="Account #"     prefWidth="130"/>
+                <TableColumn fx:id="colAmount" text="Amount (₹)"    prefWidth="120"/>
+                <TableColumn fx:id="colStatus" text="Status"        prefWidth="110"/>
+                <TableColumn fx:id="colError"  text="Error / Note"  prefWidth="300"/>
             </columns>
         </TableView>
+
     </VBox>
 </VBox>

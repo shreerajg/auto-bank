@@ -81,11 +81,11 @@ public class MainController {
     @FXML private void showAccounts()     { currentViewFxml = "/fxml/accounts.fxml";  load(currentViewFxml); activate(accountsBtn); }
     @FXML private void showTransactions() { currentViewFxml = "/fxml/transactions.fxml"; load(currentViewFxml); activate(transactionsBtn); }
     @FXML private void showDistributions(){ currentViewFxml = "/fxml/distributions.fxml"; load(currentViewFxml); activate(distributionBtn); }
-    @FXML private void showLoans()        { currentViewFxml = null; placeholder(I18n.t("nav.loans")); activate(loansBtn); }
-    @FXML private void showDailyOps()     { currentViewFxml = null; placeholder(I18n.t("nav.dailyops")); activate(dailyOpsBtn); }
-    @FXML private void showReports()      { currentViewFxml = null; placeholder(I18n.t("nav.reports")); activate(reportsBtn); }
-    @FXML private void showSettings()     { currentViewFxml = null; placeholder(I18n.t("nav.settings")); activate(settingsBtn); }
-    @FXML private void showBackup()       { currentViewFxml = null; placeholder(I18n.t("nav.backup")); activate(backupBtn); }
+    @FXML private void showLoans()        { currentViewFxml = "/fxml/loans.fxml";       load(currentViewFxml); activate(loansBtn); }
+    @FXML private void showDailyOps()     { currentViewFxml = "/fxml/dailyops.fxml";   load(currentViewFxml); activate(dailyOpsBtn); }
+    @FXML private void showReports()      { currentViewFxml = "/fxml/reports.fxml";    load(currentViewFxml); activate(reportsBtn); }
+    @FXML private void showSettings()     { currentViewFxml = "/fxml/settings.fxml";   load(currentViewFxml); activate(settingsBtn); }
+    @FXML private void showBackup()       { currentViewFxml = "/fxml/backup.fxml";     load(currentViewFxml); activate(backupBtn); }
 
     @FXML
     private void handleLogout() {

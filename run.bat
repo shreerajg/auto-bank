@@ -6,4 +6,4 @@ if not exist bin\com\autobank\Launcher.class (
     exit /b 1
 )
 
-java --module-path lib\javafx --add-modules javafx.controls,javafx.fxml -cp "bin;lib\*" com.autobank.Launcher
+java --module-path lib\javafx --add-modules javafx.controls,javafx.fxml --enable-native-access=javafx.graphics -cp "bin;lib\*" com.autobank.Launcher

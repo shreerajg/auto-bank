@@ -98,4 +98,83 @@ public class ReportService {
             return rs.next() ? rs.getBigDecimal(1) : BigDecimal.ZERO;
         }
     }
+
+    public String generateMemberBalanceReport() throws Exception {
+        Map<String, Object> data = new java.util.HashMap<>();
+        data.put("headers", new String[]{"Account #", "Holder Name", "Phone", "Balance (₹)", "Status"});
+        
+        List<List<String>> rows = new java.util.ArrayList<>();
+        try (Connection conn = DatabaseConfig.getConnection();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery("SELECT account_number, holder_name, phone, balance, status FROM accounts ORDER BY holder_name")) {
+            while (rs.next()) {
+                rows.add(java.util.List.of(
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3) != null ? rs.getString(3) : "-",
+                    rs.getBigDecimal(4).toString(),
+                    rs.getString(5)
+                ));
+            }
+        }
+        data.put("rows", rows);
+        return runPythonReport(data, "Member_Balances", "Member Balance Report");
+    }
+
+    public String generateDailyTransactionReport(java.time.LocalDate date) throws Exception {
+        Map<String, Object> data = new java.util.HashMap<>();
+        data.put("headers", new String[]{"ID", "Account", "Type", "Amount (₹)", "Time", "Status"});
+        
+        List<List<String>> rows = new java.util.ArrayList<>();
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                 "SELECT t.id, a.account_number, t.type, t.amount, t.created_at, t.status " +
+                 "FROM transactions t JOIN accounts a ON t.account_id = a.id " +
+                 "WHERE DATE(t.created_at) = ? ORDER BY t.created_at")) {
+            ps.setDate(1, Date.valueOf(date));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                rows.add(java.util.List.of(
+                    String.valueOf(rs.getInt(1)),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getBigDecimal(4).toString(),
+                    rs.getTimestamp(5).toLocalDateTime().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm")),
+                    rs.getString(6)
+                ));
+            }
+        }
+        data.put("rows", rows);
+        return runPythonReport(data, "Daily_Transactions_" + date, "Daily Transaction Report (" + date + ")");
+    }
+
+    private String runPythonReport(Map<String, Object> data, String filePrefix, String title) throws Exception {
+        // Create temp JSON file
+        java.io.File tempJson = java.io.File.createTempFile("report_data_", ".json");
+        try (java.io.FileWriter writer = new java.io.FileWriter(tempJson)) {
+            new com.google.gson.Gson().toJson(data, writer);
+        }
+
+        String fileName = filePrefix + "_" + System.currentTimeMillis() + ".pdf";
+        java.io.File outputDir = new java.io.File(System.getProperty("user.home"), "AutoBank/reports");
+        if (!outputDir.exists()) outputDir.mkdirs();
+        java.io.File outputFile = new java.io.File(outputDir, fileName);
+
+        ProcessBuilder pb = new ProcessBuilder("python", "python/report_generator.py", 
+                tempJson.getAbsolutePath(), outputFile.getAbsolutePath(), title);
+        pb.redirectErrorStream(true);
+        Process p = pb.start();
+        
+        StringBuilder output = new StringBuilder();
+        try (java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()))) {
+            String line;
+            while ((line = reader.readLine()) != null) output.append(line);
+        }
+        
+        if (p.waitFor() != 0) throw new Exception("Python error: " + output.toString());
+        
+        tempJson.delete();
+        return outputFile.getAbsolutePath();
+    }
 }
+

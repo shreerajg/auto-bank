@@ -90,6 +90,22 @@ public class AccountService {
         }
     }
 
+    public void deactivateAccount(int id, String reason) throws SQLException {
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "UPDATE accounts SET status = 'INACTIVE' WHERE id = ?")) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+
+            com.autobank.auth.model.User user = com.autobank.auth.model.UserSession.getInstance().getCurrentUser();
+            Integer opId = (user != null) ? user.getId() : null;
+
+            AuditLogger.log("ACCOUNT_DEACTIVATED", "ACCOUNT", id,
+                            "Deactivated: " + reason, opId);
+        }
+    }
+
+
 
     private Account map(ResultSet rs) throws SQLException {
         Account a = new Account();

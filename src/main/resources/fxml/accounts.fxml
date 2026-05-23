@@ -72,6 +72,7 @@
                 <Separator/>
                 <Button text="View Transaction History" maxWidth="Infinity" styleClass="nav-button" style="-fx-border-color: #ddd;"/>
                 <Button text="Edit Details" onAction="#handleEditDetails" maxWidth="Infinity" styleClass="nav-button" style="-fx-border-color: #ddd;"/>
+                <Button text="Deactivate Account" onAction="#handleDeactivateAccount" maxWidth="Infinity" styleClass="nav-button" style="-fx-border-color: #ddd; -fx-text-fill: #e74c3c;"/>
             </VBox>
         </Tab>
         <Tab fx:id="createTab" text="Create New">
@@ -94,10 +95,14 @@
                 </VBox>
 
                 <Pane VBox.vgrow="ALWAYS"/>
-                <Button fx:id="registerButton" text="✚  Register Member" onAction="#handleCreateAccount"
-                        styleClass="primary-button" maxWidth="Infinity" prefHeight="45"/>
+                <HBox spacing="10">
+                    <Button text="Cancel" onAction="#handleCancelEdit" prefHeight="45" HBox.hgrow="ALWAYS" maxWidth="Infinity" style="-fx-background-color: #eee;"/>
+                    <Button fx:id="registerButton" text="✚  Register Member" onAction="#handleCreateAccount"
+                            styleClass="primary-button" maxWidth="Infinity" prefHeight="45" HBox.hgrow="ALWAYS"/>
+                </HBox>
             </VBox>
         </Tab>
+
     </TabPane>
 
 </SplitPane>

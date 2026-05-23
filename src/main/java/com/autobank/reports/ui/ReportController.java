@@ -93,6 +93,52 @@ public class ReportController {
 
     @FXML private void handleRefresh() { loadAll(); }
 
+    @FXML
+    private void handleExportBalances() {
+        try {
+            statusLabel.setText("Generating Member Balance Report...");
+            String path = service.generateMemberBalanceReport();
+            showSuccess("Report saved: " + path);
+            openFile(path);
+        } catch (Exception e) {
+            showError("Export error: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleExportCashbook() {
+        try {
+            java.time.LocalDate today = java.time.LocalDate.now();
+            statusLabel.setText("Generating Today's Cashbook...");
+            String path = service.generateDailyTransactionReport(today);
+            showSuccess("Cashbook saved: " + path);
+            openFile(path);
+        } catch (Exception e) {
+            showError("Export error: " + e.getMessage());
+        }
+    }
+
+    private void openFile(String path) {
+        try {
+            java.io.File file = new java.io.File(path);
+            if (java.awt.Desktop.isDesktopSupported()) {
+                java.awt.Desktop.getDesktop().open(file);
+            }
+        } catch (Exception e) {
+            statusLabel.setText("Report generated but could not open automatically: " + path);
+        }
+    }
+
+    private void showError(String msg) {
+        statusLabel.setText(msg);
+        statusLabel.setStyle("-fx-text-fill: #dc2626;");
+    }
+
+    private void showSuccess(String msg) {
+        statusLabel.setText(msg);
+        statusLabel.setStyle("-fx-text-fill: #059669;");
+    }
+
     private void loadAll() {
         loadStats();
         loadTrendChart();

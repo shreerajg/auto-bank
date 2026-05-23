@@ -157,6 +157,29 @@ public class AccountController {
     }
 
     @FXML
+    private void handleDeactivateAccount() {
+        Account selected = accountTable.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Deactivate Account");
+        alert.setHeaderText("Are you sure you want to deactivate this account?");
+        alert.setContentText("Account: " + selected.getAccountNumber() + "\nHolder: " + selected.getHolderName());
+
+        if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+            try {
+                accountService.deactivateAccount(selected.getId(), "Manual deactivation by operator");
+                statusLabel.setText("Deactivated: " + selected.getAccountNumber());
+                load(searchField.getText());
+                detailBox.setVisible(false);
+            } catch (Exception e) {
+                statusLabel.setText("Error: " + e.getMessage());
+            }
+        }
+    }
+
+
+    @FXML
     private void handleCreateAccount() {
         String name = nameField.getText().trim();
         if (name.isEmpty()) { 

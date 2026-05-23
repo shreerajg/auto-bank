@@ -40,7 +40,7 @@
     </VBox>
 
     <!-- Right: Tabs for Details & Creation -->
-    <TabPane tabClosingPolicy="UNAVAILABLE" styleClass="chart-card">
+    <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" styleClass="chart-card">
         <Tab text="Account Details">
             <VBox fx:id="detailBox" spacing="20" visible="false">
                 <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
@@ -71,14 +71,14 @@
 
                 <Separator/>
                 <Button text="View Transaction History" maxWidth="Infinity" styleClass="nav-button" style="-fx-border-color: #ddd;"/>
-                <Button text="Edit Details" maxWidth="Infinity" styleClass="nav-button" style="-fx-border-color: #ddd;"/>
+                <Button text="Edit Details" onAction="#handleEditDetails" maxWidth="Infinity" styleClass="nav-button" style="-fx-border-color: #ddd;"/>
             </VBox>
         </Tab>
-        <Tab text="Create New">
+        <Tab fx:id="createTab" text="Create New">
             <VBox spacing="20">
                 <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
                 
-                <Label text="New Member Registration" styleClass="section-title"/>
+                <Label fx:id="registerTitle" text="New Member Registration" styleClass="section-title"/>
                 
                 <VBox spacing="8">
                     <Label text="FULL NAME *" styleClass="stat-label"/>
@@ -94,9 +94,10 @@
                 </VBox>
 
                 <Pane VBox.vgrow="ALWAYS"/>
-                <Button text="✚  Register Member" onAction="#handleCreateAccount"
+                <Button fx:id="registerButton" text="✚  Register Member" onAction="#handleCreateAccount"
                         styleClass="primary-button" maxWidth="Infinity" prefHeight="45"/>
             </VBox>
         </Tab>
     </TabPane>
+
 </SplitPane>

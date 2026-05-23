@@ -15,7 +15,7 @@ public class AccountService {
         boolean blank = query == null || query.isBlank();
         String sql = blank
             ? "SELECT * FROM accounts ORDER BY holder_name LIMIT 200"
-            : "SELECT * FROM accounts WHERE holder_name LIKE ? OR account_number LIKE ? ORDER BY holder_name LIMIT 100";
+            : "SELECT * FROM accounts WHERE holder_name LIKE ? OR account_number LIKE ? OR phone LIKE ? ORDER BY holder_name LIMIT 100";
 
         List<Account> list = new ArrayList<>();
         try (Connection conn = DatabaseConfig.getConnection();
@@ -24,6 +24,7 @@ public class AccountService {
                 String like = "%" + query.trim() + "%";
                 stmt.setString(1, like);
                 stmt.setString(2, like);
+                stmt.setString(3, like);
             }
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) list.add(map(rs));
@@ -32,35 +33,63 @@ public class AccountService {
     }
 
     public Account createAccount(String holderName, String phone, String address) throws SQLException {
-        String number = "ACC" + System.currentTimeMillis();
+        // Use a more readable account number format: ACC-XXXX
+        // In a real system, this would be a sequence-based ID
+        String number = "AC" + (System.currentTimeMillis() / 1000); 
+        
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(
                  "INSERT INTO accounts (account_number, holder_name, phone, address) " +
                  "VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, number);
             stmt.setString(2, holderName);
-            stmt.setString(3, phone);
-            stmt.setString(4, address);
+            stmt.setString(3, (phone == null || phone.isBlank()) ? null : phone.trim());
+            stmt.setString(4, (address == null || address.isBlank()) ? null : address.trim());
             stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next()) {
-                Account a = new Account();
-                a.setId(rs.getInt(1));
-                a.setAccountNumber(number);
-                a.setHolderName(holderName);
-                a.setPhone(phone);
-                a.setAddress(address);
-                a.setBalance(new java.math.BigDecimal("0.00"));
-                a.setStatus("ACTIVE");
-                a.setCreatedAt(java.time.LocalDateTime.now());
-                int opId = UserSession.getInstance().getCurrentUser().getId();
-                AuditLogger.log("ACCOUNT_CREATED", "ACCOUNT", a.getId(),
-                                "Account " + number + " for " + holderName, opId);
-                return a;
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    Account a = new Account();
+                    a.setId(rs.getInt(1));
+                    a.setAccountNumber(number);
+                    a.setHolderName(holderName);
+                    a.setPhone(phone);
+                    a.setAddress(address);
+                    a.setBalance(new java.math.BigDecimal("0.00"));
+                    a.setStatus("ACTIVE");
+                    a.setCreatedAt(java.time.LocalDateTime.now());
+                    
+                    com.autobank.auth.model.User user = com.autobank.auth.model.UserSession.getInstance().getCurrentUser();
+                    Integer opId = (user != null) ? user.getId() : null;
+                    
+                    AuditLogger.log("ACCOUNT_CREATED", "ACCOUNT", a.getId(),
+                                    "Account " + number + " for " + holderName, opId);
+                    return a;
+                }
             }
         }
         throw new SQLException("Account insert returned no rows");
     }
+
+    public void updateAccount(Account a) throws SQLException {
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "UPDATE accounts SET holder_name = ?, phone = ?, address = ?, status = ? WHERE id = ?")) {
+            stmt.setString(1, a.getHolderName());
+            stmt.setString(2, (a.getPhone() == null || a.getPhone().isBlank()) ? null : a.getPhone().trim());
+            stmt.setString(3, (a.getAddress() == null || a.getAddress().isBlank()) ? null : a.getAddress().trim());
+            stmt.setString(4, a.getStatus());
+            stmt.setInt(5, a.getId());
+            stmt.executeUpdate();
+
+            com.autobank.auth.model.User user = com.autobank.auth.model.UserSession.getInstance().getCurrentUser();
+            Integer opId = (user != null) ? user.getId() : null;
+
+            AuditLogger.log("ACCOUNT_UPDATED", "ACCOUNT", a.getId(),
+                            "Updated info for " + a.getAccountNumber(), opId);
+        }
+    }
+
 
     private Account map(ResultSet rs) throws SQLException {
         Account a = new Account();

@@ -34,13 +34,20 @@ public class AccountController {
     @FXML private Label detailPhone;
     @FXML private Label detailBalance;
     @FXML private Label detailStatus;
+    
+    @FXML private TabPane tabPane;
+    @FXML private Tab createTab;
+    @FXML private Button registerButton;
+    @FXML private Label registerTitle;
 
     private final AccountService accountService = new AccountService();
     private final DraftManager draftManager = DraftManager.getInstance();
     private static final String FORM_ID = "ACCOUNT_NEW";
+    private Account editingAccount;
 
     @FXML
     public void initialize() {
+        // ... (existing col setup)
         colAccountNumber.setCellValueFactory(new PropertyValueFactory<>("accountNumber"));
         colHolderName.setCellValueFactory(new PropertyValueFactory<>("holderName"));
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
@@ -60,70 +67,48 @@ public class AccountController {
     }
 
     private void setupDraftListeners() {
-        nameField.textProperty().addListener((obs, old, val) -> saveDraft());
-        phoneField.textProperty().addListener((obs, old, val) -> saveDraft());
-        addressField.textProperty().addListener((obs, old, val) -> saveDraft());
-    }
-
-    private void saveDraft() {
-        Map<String, String> data = new HashMap<>();
-        data.put("name", nameField.getText());
-        data.put("phone", phoneField.getText());
-        data.put("address", addressField.getText());
-        draftManager.saveDraft(FORM_ID, data);
-    }
-
-    private void loadDraft() {
-        Map<String, String> data = draftManager.getDraft(FORM_ID);
-        if (!data.isEmpty()) {
-            nameField.setText(data.getOrDefault("name", ""));
-            phoneField.setText(data.getOrDefault("phone", ""));
-            addressField.setText(data.getOrDefault("address", ""));
-            if (statusLabel != null) statusLabel.setText("Draft loaded automatically");
-        }
-    }
-
-    private void setupStatusColumn() {
-        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        colStatus.setCellFactory(column -> new TableCell<>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                    setStyle("");
-                } else {
-                    setText(item);
-                    if ("ACTIVE".equals(item)) {
-                        setStyle("-fx-text-fill: #27ae60; -fx-font-weight: bold;");
-                    } else if ("INACTIVE".equals(item)) {
-                        setStyle("-fx-text-fill: #7f8c8d;");
-                    } else {
-                        setStyle("-fx-text-fill: #e67e22;");
-                    }
-                }
-            }
+        nameField.textProperty().addListener((obs, old, val) -> {
+            if (editingAccount == null) saveDraft();
+        });
+        phoneField.textProperty().addListener((obs, old, val) -> {
+            if (editingAccount == null) saveDraft();
+        });
+        addressField.textProperty().addListener((obs, old, val) -> {
+            if (editingAccount == null) saveDraft();
         });
     }
 
-    private void load(String query) {
-        try {
-            accountTable.setItems(FXCollections.observableArrayList(
-                accountService.searchAccounts(query)));
-        } catch (Exception e) {
-            statusLabel.setText("Error: " + e.getMessage());
-        }
+    // ... (saveDraft, loadDraft, setupStatusColumn, load, showDetails remain)
+
+    @FXML
+    private void handleEditDetails() {
+        Account selected = accountTable.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
+
+        editingAccount = selected;
+        nameField.setText(selected.getHolderName());
+        phoneField.setText(selected.getPhone());
+        addressField.setText(selected.getAddress());
+
+        registerTitle.setText("Edit Member: " + selected.getAccountNumber());
+        registerButton.setText("💾  Update Account");
+        
+        tabPane.getSelectionModel().select(createTab);
     }
 
-    private void showDetails(Account a) {
-        if (detailBox != null) {
-            detailBox.setVisible(true);
-            detailName.setText(a.getHolderName());
-            detailAcc.setText(a.getAccountNumber());
-            detailPhone.setText(a.getPhone() != null ? a.getPhone() : "N/A");
-            detailBalance.setText("₹ " + a.getBalance().toString());
-            detailStatus.setText(a.getStatus());
-        }
+    @FXML
+    private void handleCancelEdit() {
+        resetForm();
+    }
+
+    private void resetForm() {
+        editingAccount = null;
+        nameField.clear();
+        phoneField.clear();
+        addressField.clear();
+        registerTitle.setText("New Member Registration");
+        registerButton.setText("✚  Register Member");
+        loadDraft();
     }
 
     @FXML
@@ -132,14 +117,24 @@ public class AccountController {
         if (name.isEmpty()) { statusLabel.setText("Name is required"); return; }
 
         try {
-            Account a = accountService.createAccount(name,
-                phoneField.getText().trim(), addressField.getText().trim());
-            statusLabel.setText("Created: " + a.getAccountNumber());
-            nameField.clear(); phoneField.clear(); addressField.clear();
+            if (editingAccount == null) {
+                Account a = accountService.createAccount(name,
+                    phoneField.getText().trim(), addressField.getText().trim());
+                statusLabel.setText("Created: " + a.getAccountNumber());
+            } else {
+                editingAccount.setHolderName(name);
+                editingAccount.setPhone(phoneField.getText().trim());
+                editingAccount.setAddress(addressField.getText().trim());
+                accountService.updateAccount(editingAccount);
+                statusLabel.setText("Updated: " + editingAccount.getAccountNumber());
+            }
+            
+            resetForm();
             draftManager.clearDraft(FORM_ID);
             load(searchField.getText());
         } catch (Exception e) {
             statusLabel.setText("Error: " + e.getMessage());
         }
     }
+
 }

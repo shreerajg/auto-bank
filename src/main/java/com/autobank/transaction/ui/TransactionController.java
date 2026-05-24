@@ -141,6 +141,51 @@ public class TransactionController {
         });
     }
 
+    private void setupContextMenu() {
+        ContextMenu menu = new ContextMenu();
+        MenuItem reverseItem = new MenuItem("⚠️ Reverse Transaction");
+        reverseItem.setOnAction(e -> handleReverseTransaction());
+        menu.getItems().add(reverseItem);
+
+        transactionTable.setRowFactory(tv -> {
+            TableRow<Transaction> row = new TableRow<>();
+            row.contextMenuProperty().bind(
+                javafx.beans.binding.Bindings.when(row.emptyProperty())
+                    .then((ContextMenu) null)
+                    .otherwise(menu));
+            return row;
+        });
+    }
+
+    private void handleReverseTransaction() {
+        Transaction selected = transactionTable.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
+        
+        if (!"ACTIVE".equals(selected.getStatus())) {
+            showError("Only ACTIVE transactions can be reversed");
+            return;
+        }
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Reverse Transaction");
+        dialog.setHeaderText("Reversing Transaction #" + selected.getId());
+        dialog.setContentText("Please provide a reason for reversal:");
+        
+        dialog.showAndWait().ifPresent(reason -> {
+            if (reason.trim().isEmpty()) {
+                showError("Reason is required for reversal");
+                return;
+            }
+            try {
+                txService.reverseTransaction(selected.getId(), reason);
+                showSuccess("Transaction #" + selected.getId() + " reversed");
+                loadRecent();
+            } catch (Exception e) {
+                showError(e.getMessage());
+            }
+        });
+    }
+
     private void setupAccountCombo() {
         accountCombo.setConverter(new StringConverter<>() {
             @Override public String toString(Account a) { return a == null ? "" : a.getAccountNumber() + " - " + a.getHolderName(); }

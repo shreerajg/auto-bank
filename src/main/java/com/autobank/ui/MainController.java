@@ -49,6 +49,7 @@ public class MainController {
         dashboardBtn.setText("📊  " + I18n.t("nav.dashboard"));
         accountsBtn.setText("👤  " + I18n.t("nav.accounts"));
         transactionsBtn.setText("💸  " + I18n.t("nav.transactions"));
+        interestBtn.setText("📈  " + I18n.t("nav.interest"));
         distributionBtn.setText("🥛  " + I18n.t("nav.distributions"));
         loansBtn.setText("🏠  " + I18n.t("nav.loans"));
         dailyOpsBtn.setText("📅  " + I18n.t("nav.dailyops"));
@@ -144,5 +145,8 @@ public class MainController {
             if (b != null) b.getStyleClass().remove("active");
         }
         if (active != null) active.getStyleClass().add("active");
+    }
+}
+       if (active != null) active.getStyleClass().add("active");
     }
 }

@@ -108,6 +108,22 @@ public class MainController {
         }
     }
 
+    @FXML
+    private void handleGlobalSearch() {
+        String query = globalSearchField.getText();
+        if (query != null && !query.isBlank()) {
+            pendingSearchQuery = query.trim();
+            showAccounts();
+            globalSearchField.clear();
+        }
+    }
+
+    public static String getPendingSearchQuery() {
+        String q = pendingSearchQuery;
+        pendingSearchQuery = null;
+        return q;
+    }
+
     private void load(String fxml) {
         try {
             Node view = FXMLLoader.load(getClass().getResource(fxml));

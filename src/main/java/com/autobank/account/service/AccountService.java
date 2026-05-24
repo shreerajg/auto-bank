@@ -115,6 +115,7 @@ public class AccountService {
         a.setPhone(rs.getString("phone"));
         a.setAddress(rs.getString("address"));
         a.setBalance(rs.getBigDecimal("balance"));
+        a.setInterestRate(rs.getBigDecimal("interest_rate"));
         a.setStatus(rs.getString("status"));
         Timestamp ts = rs.getTimestamp("created_at");
         if (ts != null) a.setCreatedAt(ts.toLocalDateTime());

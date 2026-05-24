@@ -137,3 +137,16 @@ CREATE TABLE IF NOT EXISTS audit_log (
     FOREIGN KEY (operator_id) REFERENCES users(id),
     INDEX idx_audit_date (created_at)
 );
+
+CREATE TABLE IF NOT EXISTS interest_batches (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    month INT NOT NULL,
+    year INT NOT NULL,
+    batch_type VARCHAR(20) NOT NULL, -- 'SAVINGS' or 'LOAN'
+    total_amount NUMERIC(15,2) NOT NULL,
+    record_count INT NOT NULL,
+    processed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    operator_id INT,
+    FOREIGN KEY (operator_id) REFERENCES users(id),
+    UNIQUE INDEX idx_batch_period (month, year, batch_type)
+);

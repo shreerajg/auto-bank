@@ -25,6 +25,8 @@ public class Account {
     public void setAddress(String v) { this.address = v; }
     public BigDecimal getBalance() { return balance; }
     public void setBalance(BigDecimal v) { this.balance = v; }
+    public BigDecimal getInterestRate() { return interestRate; }
+    public void setInterestRate(BigDecimal v) { this.interestRate = v; }
     public String getStatus() { return status; }
     public void setStatus(String v) { this.status = v; }
     public LocalDateTime getCreatedAt() { return createdAt; }

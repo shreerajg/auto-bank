@@ -111,6 +111,28 @@ public class TransactionController {
         colBalance.setCellValueFactory(new PropertyValueFactory<>("balanceAfter"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         
+        colStatus.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    if ("ACTIVE".equals(item)) {
+                        setStyle("-fx-text-fill: #27ae60; -fx-font-weight: bold;");
+                    } else if ("REVERSED".equals(item)) {
+                        setStyle("-fx-text-fill: #e74c3c; -fx-font-style: italic;");
+                    } else {
+                        setStyle("-fx-text-fill: #7f8c8d;");
+                    }
+                }
+            }
+        });
+        
+        setupContextMenu();
+        
         colDate.setCellValueFactory(cellData -> {
             var date = cellData.getValue().getCreatedAt();
             return new javafx.beans.property.SimpleStringProperty(

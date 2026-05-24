@@ -62,7 +62,14 @@ public class AccountController {
 
         setupDraftListeners();
         loadDraft();
-        load("");
+
+        String globalQuery = MainController.getPendingSearchQuery();
+        if (globalQuery != null) {
+            searchField.setText(globalQuery);
+            load(globalQuery);
+        } else {
+            load("");
+        }
     }
 
     private void setupDraftListeners() {

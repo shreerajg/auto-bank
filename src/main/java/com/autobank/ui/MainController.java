@@ -31,7 +31,9 @@ public class MainController {
     @FXML private Button settingsBtn;
     @FXML private Button backupBtn;
     @FXML private Button langBtn;
+    @FXML private TextField globalSearchField;
 
+    private static String pendingSearchQuery = null;
     private String currentViewFxml = "/fxml/dashboard.fxml";
     private Button currentActiveBtn;
 

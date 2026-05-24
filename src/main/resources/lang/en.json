@@ -9,6 +9,7 @@
   "nav.dashboard": "Dashboard",
   "nav.accounts": "Accounts",
   "nav.transactions": "Transactions",
+  "nav.interest": "Interest Engine",
   "nav.distributions": "Distributions",
   "nav.loans": "Loans",
   "nav.dailyops": "Daily Operations",

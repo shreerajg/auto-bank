@@ -51,6 +51,11 @@
     <bottom>
         <HBox styleClass="status-bar" spacing="24" alignment="CENTER_LEFT">
             <Label fx:id="dateLabel"/>
+            <Separator orientation="VERTICAL" />
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <TextField fx:id="globalSearchField" promptText="Quick Search (Account/Name)..." prefWidth="250" onAction="#handleGlobalSearch" />
+                <Button text="🔍" onAction="#handleGlobalSearch" styleClass="icon-button" />
+            </HBox>
             <Pane HBox.hgrow="ALWAYS"/>
             <Label text="AutoBank v1.0  ·  Patsanstha Edition"/>
         </HBox>

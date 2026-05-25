@@ -625,3 +625,26 @@
 .default-color1.chart-pie { -fx-pie-color: #ef4444; }
 .default-color2.chart-pie { -fx-pie-color: #10b981; }
 .default-color3.chart-pie { -fx-pie-color: #f59e0b; }
+
+/* ═══════════════ TOAST ═════════════════════════════════ */
+.toast {
+    -fx-background-color: #1e293b;
+    -fx-text-fill: white;
+    -fx-padding: 12px 24px;
+    -fx-background-radius: 40px;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 0, 8);
+}
+
+.toast-success {
+    -fx-background-color: #059669;
+}
+
+.toast-error {
+    -fx-background-color: #dc2626;
+}
+
+.toast-info {
+    -fx-background-color: #2563eb;
+}

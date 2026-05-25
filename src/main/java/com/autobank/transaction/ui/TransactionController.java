@@ -199,23 +199,23 @@ public class TransactionController {
     private void perform(String type) {
         Account account = accountCombo.getValue();
         String amtStr = amountField.getText().trim();
-        if (account == null) { showError("Select an account first"); return; }
-        if (amtStr.isEmpty()) { showError("Enter an amount"); return; }
+        if (account == null) { MainController.showToast("Select an account first", Toast.Type.ERROR); return; }
+        if (amtStr.isEmpty()) { MainController.showToast("Enter an amount", Toast.Type.ERROR); return; }
 
         try {
             BigDecimal amt = new BigDecimal(amtStr);
-            if (amt.compareTo(BigDecimal.ZERO) <= 0) { showError("Amount must be positive"); return; }
+            if (amt.compareTo(BigDecimal.ZERO) <= 0) { MainController.showToast("Amount must be positive", Toast.Type.ERROR); return; }
 
             Transaction tx = "DEPOSIT".equals(type)
                 ? txService.deposit(account.getId(), amt, descriptionField.getText())
                 : txService.withdraw(account.getId(), amt, descriptionField.getText());
 
-            showSuccess(type + " successful: ₹" + amt);
+            MainController.showToast(type + " successful: ₹" + amt, Toast.Type.SUCCESS);
             clearForm();
             draftManager.clearDraft(FORM_ID);
             loadRecent();
         } catch (Exception e) {
-            showError(e.getMessage());
+            MainController.showToast(e.getMessage(), Toast.Type.ERROR);
         }
     }
 
@@ -226,21 +226,11 @@ public class TransactionController {
         accountCombo.getSelectionModel().clearSelection();
     }
 
-    private void showError(String msg) {
-        statusLabel.setText(msg);
-        statusLabel.setStyle("-fx-text-fill: #dc2626;");
-    }
-
-    private void showSuccess(String msg) {
-        statusLabel.setText(msg);
-        statusLabel.setStyle("-fx-text-fill: #059669;");
-    }
-
     private void loadRecent() {
         try {
             transactionTable.setItems(FXCollections.observableArrayList(txService.getRecent(100)));
         } catch (Exception e) {
-            showError("Load error: " + e.getMessage());
+            MainController.showToast("Load error: " + e.getMessage(), Toast.Type.ERROR);
         }
     }
 }

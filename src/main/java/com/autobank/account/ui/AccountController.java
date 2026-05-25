@@ -192,7 +192,7 @@ public class AccountController {
     private void handleCreateAccount() {
         String name = nameField.getText().trim();
         if (name.isEmpty()) { 
-            if (statusLabel != null) statusLabel.setText("Name is required"); 
+            MainController.showToast("Name is required", Toast.Type.ERROR); 
             return; 
         }
 
@@ -200,20 +200,20 @@ public class AccountController {
             if (editingAccount == null) {
                 Account a = accountService.createAccount(name,
                     phoneField.getText().trim(), addressField.getText().trim());
-                if (statusLabel != null) statusLabel.setText("Created: " + a.getAccountNumber());
+                MainController.showToast("Account Created: " + a.getAccountNumber(), Toast.Type.SUCCESS);
             } else {
                 editingAccount.setHolderName(name);
                 editingAccount.setPhone(phoneField.getText().trim());
                 editingAccount.setAddress(addressField.getText().trim());
                 accountService.updateAccount(editingAccount);
-                if (statusLabel != null) statusLabel.setText("Updated: " + editingAccount.getAccountNumber());
+                MainController.showToast("Account Updated: " + editingAccount.getAccountNumber(), Toast.Type.SUCCESS);
             }
             
             resetForm();
             draftManager.clearDraft(FORM_ID);
             load(searchField.getText());
         } catch (Exception e) {
-            if (statusLabel != null) statusLabel.setText("Error: " + e.getMessage());
+            MainController.showToast("Error: " + e.getMessage(), Toast.Type.ERROR);
         }
     }
 

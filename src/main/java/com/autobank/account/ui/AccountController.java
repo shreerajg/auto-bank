@@ -132,7 +132,7 @@ public class AccountController {
             accountTable.setItems(FXCollections.observableArrayList(
                 accountService.searchAccounts(query)));
         } catch (Exception e) {
-            if (statusLabel != null) statusLabel.setText("Error: " + e.getMessage());
+            MainController.showToast("Search Error: " + e.getMessage(), Toast.Type.ERROR);
         }
     }
 

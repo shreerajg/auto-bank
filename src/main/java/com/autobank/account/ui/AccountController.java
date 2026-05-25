@@ -100,7 +100,7 @@ public class AccountController {
             nameField.setText(data.getOrDefault("name", ""));
             phoneField.setText(data.getOrDefault("phone", ""));
             addressField.setText(data.getOrDefault("address", ""));
-            if (statusLabel != null) statusLabel.setText("Draft loaded automatically");
+            MainController.showToast("Draft loaded automatically", Toast.Type.INFO);
         }
     }
 

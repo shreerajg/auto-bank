@@ -4,7 +4,9 @@ import com.autobank.account.model.Account;
 import com.autobank.account.service.AccountService;
 import com.autobank.transaction.model.Transaction;
 import com.autobank.transaction.service.TransactionService;
+import com.autobank.ui.MainController;
 import com.autobank.util.DraftManager;
+import com.autobank.util.Toast;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -97,10 +99,8 @@ public class TransactionController {
             String accNum = data.get("accountNum");
             if (accNum != null) {
                 accountSearchField.setText(accNum);
-                // The listener on accountSearchField will populate accountCombo
-                // We'll trust the user to re-select or we could try to auto-select
             }
-            if (statusLabel != null) showSuccess("Unsaved transaction draft loaded");
+            MainController.showToast("Unsaved transaction draft loaded", Toast.Type.INFO);
         }
     }
 
@@ -162,7 +162,7 @@ public class TransactionController {
         if (selected == null) return;
         
         if (!"ACTIVE".equals(selected.getStatus())) {
-            showError("Only ACTIVE transactions can be reversed");
+            MainController.showToast("Only ACTIVE transactions can be reversed", Toast.Type.ERROR);
             return;
         }
 
@@ -173,15 +173,15 @@ public class TransactionController {
         
         dialog.showAndWait().ifPresent(reason -> {
             if (reason.trim().isEmpty()) {
-                showError("Reason is required for reversal");
+                MainController.showToast("Reason is required for reversal", Toast.Type.ERROR);
                 return;
             }
             try {
                 txService.reverseTransaction(selected.getId(), reason);
-                showSuccess("Transaction #" + selected.getId() + " reversed");
+                MainController.showToast("Transaction #" + selected.getId() + " reversed", Toast.Type.SUCCESS);
                 loadRecent();
             } catch (Exception e) {
-                showError(e.getMessage());
+                MainController.showToast(e.getMessage(), Toast.Type.ERROR);
             }
         });
     }

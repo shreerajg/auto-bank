@@ -3,12 +3,17 @@ package com.autobank.ui;
 import com.autobank.auth.model.UserSession;
 import com.autobank.util.AuditLogger;
 import com.autobank.util.I18n;
+import com.autobank.util.Toast;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -45,13 +50,41 @@ public class MainController {
         
         refreshLabels();
         showDashboard();
+        setupShortcuts();
+    }
+
+    private void setupShortcuts() {
+        contentArea.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                newScene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                    if (event.isControlDown() && event.getCode() == KeyCode.F) {
+                        globalSearchField.requestFocus();
+                        event.consume();
+                    } else if (event.isAltDown()) {
+                        switch (event.getCode()) {
+                            case DIGIT1: showDashboard(); event.consume(); break;
+                            case DIGIT2: showAccounts(); event.consume(); break;
+                            case DIGIT3: showTransactions(); event.consume(); break;
+                            case DIGIT4: showDistributions(); event.consume(); break;
+                            case DIGIT5: showLoans(); event.consume(); break;
+                            case DIGIT6: showDailyOps(); event.consume(); break;
+                            case DIGIT7: showReports(); event.consume(); break;
+                            case DIGIT8: showBackup(); event.consume(); break;
+                            case DIGIT9: showSettings(); event.consume(); break;
+                        }
+                    } else if (event.isControlDown() && event.getCode() == KeyCode.L) {
+                        toggleLanguage();
+                        event.consume();
+                    }
+                });
+            }
+        });
     }
 
     private void refreshLabels() {
         dashboardBtn.setText("📊  " + I18n.t("nav.dashboard"));
         accountsBtn.setText("👤  " + I18n.t("nav.accounts"));
         transactionsBtn.setText("💸  " + I18n.t("nav.transactions"));
-        interestBtn.setText("📈  " + I18n.t("nav.interest"));
         distributionBtn.setText("🥛  " + I18n.t("nav.distributions"));
         loansBtn.setText("🏠  " + I18n.t("nav.loans"));
         dailyOpsBtn.setText("📅  " + I18n.t("nav.dailyops"));
@@ -67,16 +100,12 @@ public class MainController {
         I18n.load(newLang);
         refreshLabels();
         
+        String msg = newLang.equals("en") ? "Switched to English" : "मराठी भाषा निवडली";
+        Toast.success(contentArea, msg);
+        
         // Reload current view to apply translations
         if (currentViewFxml != null) {
             load(currentViewFxml);
-        } else if (currentActiveBtn != null) {
-            // If it's a placeholder, just call the show method again
-            if (currentActiveBtn == loansBtn) showLoans();
-            else if (currentActiveBtn == dailyOpsBtn) showDailyOps();
-            else if (currentActiveBtn == reportsBtn) showReports();
-            else if (currentActiveBtn == settingsBtn) showSettings();
-            else if (currentActiveBtn == backupBtn) showBackup();
         }
     }
 

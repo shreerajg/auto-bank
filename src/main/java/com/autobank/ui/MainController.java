@@ -39,12 +39,14 @@ public class MainController {
     @FXML private Button langBtn;
     @FXML private TextField globalSearchField;
 
+    private static StackPane staticContentArea;
     private static String pendingSearchQuery = null;
     private String currentViewFxml = "/fxml/dashboard.fxml";
     private Button currentActiveBtn;
 
     @FXML
     public void initialize() {
+        staticContentArea = contentArea;
         var user = UserSession.getInstance().getCurrentUser();
         currentUserLabel.setText(user.getUsername() + " (" + user.getRole() + ")");
         dateLabel.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
@@ -52,6 +54,16 @@ public class MainController {
         refreshLabels();
         showDashboard();
         setupShortcuts();
+    }
+
+    public static void showToast(String message, Toast.Type type) {
+        if (staticContentArea != null) {
+            switch (type) {
+                case SUCCESS: Toast.success(staticContentArea, message); break;
+                case ERROR:   Toast.error(staticContentArea, message); break;
+                case INFO:    Toast.show(staticContentArea, message); break;
+            }
+        }
     }
 
     private void setupShortcuts() {

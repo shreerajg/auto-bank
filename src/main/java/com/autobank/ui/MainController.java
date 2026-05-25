@@ -29,6 +29,7 @@ public class MainController {
     @FXML private Button dashboardBtn;
     @FXML private Button accountsBtn;
     @FXML private Button transactionsBtn;
+    @FXML private Button interestBtn;
     @FXML private Button distributionBtn;
     @FXML private Button loansBtn;
     @FXML private Button dailyOpsBtn;
@@ -65,12 +66,13 @@ public class MainController {
                             case DIGIT1: showDashboard(); event.consume(); break;
                             case DIGIT2: showAccounts(); event.consume(); break;
                             case DIGIT3: showTransactions(); event.consume(); break;
-                            case DIGIT4: showDistributions(); event.consume(); break;
-                            case DIGIT5: showLoans(); event.consume(); break;
-                            case DIGIT6: showDailyOps(); event.consume(); break;
-                            case DIGIT7: showReports(); event.consume(); break;
-                            case DIGIT8: showBackup(); event.consume(); break;
-                            case DIGIT9: showSettings(); event.consume(); break;
+                            case DIGIT4: showInterest(); event.consume(); break;
+                            case DIGIT5: showDistributions(); event.consume(); break;
+                            case DIGIT6: showLoans(); event.consume(); break;
+                            case DIGIT7: showDailyOps(); event.consume(); break;
+                            case DIGIT8: showReports(); event.consume(); break;
+                            case DIGIT9: showBackup(); event.consume(); break;
+                            case DIGIT0: showSettings(); event.consume(); break;
                         }
                     } else if (event.isControlDown() && event.getCode() == KeyCode.L) {
                         toggleLanguage();
@@ -85,6 +87,7 @@ public class MainController {
         dashboardBtn.setText("📊  " + I18n.t("nav.dashboard"));
         accountsBtn.setText("👤  " + I18n.t("nav.accounts"));
         transactionsBtn.setText("💸  " + I18n.t("nav.transactions"));
+        interestBtn.setText("📈  " + I18n.t("nav.interest"));
         distributionBtn.setText("🥛  " + I18n.t("nav.distributions"));
         loansBtn.setText("🏠  " + I18n.t("nav.loans"));
         dailyOpsBtn.setText("📅  " + I18n.t("nav.dailyops"));
@@ -112,12 +115,13 @@ public class MainController {
     @FXML private void showDashboard()    { currentViewFxml = "/fxml/dashboard.fxml"; load(currentViewFxml); activate(dashboardBtn); }
     @FXML private void showAccounts()     { currentViewFxml = "/fxml/accounts.fxml";  load(currentViewFxml); activate(accountsBtn); }
     @FXML private void showTransactions() { currentViewFxml = "/fxml/transactions.fxml"; load(currentViewFxml); activate(transactionsBtn); }
+    @FXML private void showInterest()     { currentViewFxml = "/fxml/interest.fxml";     load(currentViewFxml); activate(interestBtn); }
     @FXML private void showDistributions(){ currentViewFxml = "/fxml/distributions.fxml"; load(currentViewFxml); activate(distributionBtn); }
     @FXML private void showLoans()        { currentViewFxml = "/fxml/loans.fxml";       load(currentViewFxml); activate(loansBtn); }
     @FXML private void showDailyOps()     { currentViewFxml = "/fxml/dailyops.fxml";   load(currentViewFxml); activate(dailyOpsBtn); }
     @FXML private void showReports()      { currentViewFxml = "/fxml/reports.fxml";    load(currentViewFxml); activate(reportsBtn); }
-    @FXML private void showSettings()     { currentViewFxml = "/fxml/settings.fxml";   load(currentViewFxml); activate(settingsBtn); }
     @FXML private void showBackup()       { currentViewFxml = "/fxml/backup.fxml";     load(currentViewFxml); activate(backupBtn); }
+    @FXML private void showSettings()     { currentViewFxml = "/fxml/settings.fxml";   load(currentViewFxml); activate(settingsBtn); }
 
     @FXML
     private void handleLogout() {
@@ -187,13 +191,11 @@ public class MainController {
 
     private void activate(Button active) {
         currentActiveBtn = active;
-        for (Button b : new Button[]{dashboardBtn, accountsBtn, transactionsBtn, distributionBtn,
-                                     loansBtn, dailyOpsBtn, reportsBtn, settingsBtn, backupBtn}) {
+        for (Button b : new Button[]{dashboardBtn, accountsBtn, transactionsBtn, interestBtn,
+                                     distributionBtn, loansBtn, dailyOpsBtn, reportsBtn, 
+                                     settingsBtn, backupBtn}) {
             if (b != null) b.getStyleClass().remove("active");
         }
         if (active != null) active.getStyleClass().add("active");
-    }
-}
-       if (active != null) active.getStyleClass().add("active");
     }
 }

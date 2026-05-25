@@ -178,11 +178,11 @@ public class AccountController {
         if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
             try {
                 accountService.deactivateAccount(selected.getId(), "Manual deactivation by operator");
-                statusLabel.setText("Deactivated: " + selected.getAccountNumber());
+                MainController.showToast("Deactivated: " + selected.getAccountNumber(), Toast.Type.SUCCESS);
                 load(searchField.getText());
                 detailBox.setVisible(false);
             } catch (Exception e) {
-                statusLabel.setText("Error: " + e.getMessage());
+                MainController.showToast("Error: " + e.getMessage(), Toast.Type.ERROR);
             }
         }
     }

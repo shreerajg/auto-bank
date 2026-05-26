@@ -217,6 +217,14 @@ public class AccountController {
         }
     }
 
+    @FXML
+    private void handleCancelEdit() {
+        resetForm();
+        if (tabPane != null) {
+            tabPane.getSelectionModel().select(0);
+        }
+    }
+
     private void resetForm() {
         editingAccount = null;
         nameField.clear();

@@ -9,10 +9,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.math.BigDecimal;
 
 public class DistributionController {
+
+    private static final Logger log = LoggerFactory.getLogger(DistributionController.class);
 
     @FXML private Label statusLabel;
     @FXML private Button processBtn;
@@ -75,7 +80,7 @@ public class DistributionController {
             } catch (Exception e) {
                 statusLabel.setText("Import error: " + e.getMessage());
                 statusLabel.setStyle("-fx-text-fill: #dc2626;");
-                e.printStackTrace();
+                log.error("File import failed", e);
             }
         }
     }

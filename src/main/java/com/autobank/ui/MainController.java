@@ -154,7 +154,7 @@ public class MainController {
             stage.setTitle("AutoBank");
             stage.setScene(scene);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Failed to return to login screen", e);
         }
     }
 
@@ -179,7 +179,7 @@ public class MainController {
             Node view = FXMLLoader.load(getClass().getResource(fxml));
             contentArea.getChildren().setAll(view);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Failed to load view: {}", fxml, e);
             showErrorView(fxml, e);
         }
     }

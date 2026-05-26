@@ -10,6 +10,7 @@ public class Account {
     private String phone;
     private String address;
     private BigDecimal balance;
+    private BigDecimal interestRate;
     private String status;
     private LocalDateTime createdAt;
 

@@ -33,9 +33,10 @@ public class AccountService {
     }
 
     public Account createAccount(String holderName, String phone, String address) throws SQLException {
-        // Use a more readable account number format: ACC-XXXX
-        // In a real system, this would be a sequence-based ID
-        String number = "AC" + (System.currentTimeMillis() / 1000); 
+        // Generate a more robust account number: AC-Timestamp-Random
+        long ts = System.currentTimeMillis() / 1000;
+        int rnd = new java.util.Random().nextInt(900) + 100; // 3-digit random
+        String number = "AC" + ts + rnd; 
         
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(

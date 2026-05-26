@@ -13,16 +13,26 @@ import java.util.List;
 public class TransactionService {
 
     public Transaction deposit(int accountId, BigDecimal amount, String desc) throws Exception {
-        return execute(accountId, "DEPOSIT", amount, desc);
+        return execute(accountId, "DEPOSIT", amount, desc, null);
+    }
+
+    public Transaction deposit(int accountId, BigDecimal amount, String desc, Connection conn) throws Exception {
+        return execute(accountId, "DEPOSIT", amount, desc, conn);
     }
 
     public Transaction withdraw(int accountId, BigDecimal amount, String desc) throws Exception {
-        return execute(accountId, "WITHDRAWAL", amount, desc);
+        return execute(accountId, "WITHDRAWAL", amount, desc, null);
     }
 
-    private Transaction execute(int accountId, String type, BigDecimal amount, String desc) throws Exception {
-        Connection conn = DatabaseConfig.getConnection();
-        conn.setAutoCommit(false);
+    public Transaction withdraw(int accountId, BigDecimal amount, String desc, Connection conn) throws Exception {
+        return execute(accountId, "WITHDRAWAL", amount, desc, conn);
+    }
+
+    private Transaction execute(int accountId, String type, BigDecimal amount, String desc, Connection externalConn) throws Exception {
+        Connection conn = (externalConn != null) ? externalConn : DatabaseConfig.getConnection();
+        boolean isInternal = (externalConn == null);
+        
+        if (isInternal) conn.setAutoCommit(false);
         try {
             PreparedStatement lockStmt = conn.prepareStatement(
                 "SELECT balance FROM accounts WHERE id = ? AND status = 'ACTIVE' FOR UPDATE");
@@ -56,7 +66,7 @@ public class TransactionService {
             ins.executeUpdate();
             ResultSet idRs = ins.getGeneratedKeys();
 
-            conn.commit();
+            if (isInternal) conn.commit();
 
             Transaction tx = new Transaction();
             if (idRs.next()) tx.setId(idRs.getInt(1));
@@ -73,11 +83,13 @@ public class TransactionService {
             return tx;
 
         } catch (Exception e) {
-            conn.rollback();
+            if (isInternal) conn.rollback();
             throw e;
         } finally {
-            conn.setAutoCommit(true);
-            conn.close();
+            if (isInternal) {
+                conn.setAutoCommit(true);
+                conn.close();
+            }
         }
     }
 

@@ -174,27 +174,32 @@ public class MainController {
             Node view = FXMLLoader.load(getClass().getResource(fxml));
             contentArea.getChildren().setAll(view);
         } catch (Exception e) {
-            placeholder(fxml + " — error: " + e.getMessage());
+            e.printStackTrace();
+            showErrorView(fxml, e);
         }
     }
 
-    private void placeholder(String name) {
+    private void showErrorView(String fxml, Exception e) {
         VBox box = new VBox(20);
         box.setAlignment(javafx.geometry.Pos.CENTER);
         box.setStyle("-fx-background-color: white; -fx-padding: 40; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 20, 0, 0, 10);");
-        box.setMaxSize(450, 300);
+        box.setMaxSize(500, 350);
         
-        Label icon = new Label("🚀");
+        Label icon = new Label("⚠️");
         icon.setStyle("-fx-font-size: 48px;");
         
-        Label title = new Label(name);
-        title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1e293b;");
+        Label title = new Label("Module Load Error");
+        title.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #e11d48;");
         
-        Label sub = new Label("This module is part of the AutoBank Premium suite.\nWe are currently finalizing its implementation.");
-        sub.setStyle("-fx-text-alignment: center; -fx-text-fill: #64748b; -fx-font-size: 14px;");
+        Label sub = new Label("Could not load view: " + fxml + "\n\nError details:\n" + e.getMessage());
+        sub.setStyle("-fx-text-alignment: center; -fx-text-fill: #64748b; -fx-font-size: 13px; -fx-font-family: 'Segoe UI';");
         sub.setWrapText(true);
         
-        box.getChildren().addAll(icon, title, sub);
+        Button retryBtn = new Button("⟳  Retry Loading");
+        retryBtn.getStyleClass().add("primary-button");
+        retryBtn.setOnAction(evt -> load(fxml));
+        
+        box.getChildren().addAll(icon, title, sub, retryBtn);
         
         StackPane wrapper = new StackPane(box);
         wrapper.setStyle("-fx-background-color: #f8fafc;");

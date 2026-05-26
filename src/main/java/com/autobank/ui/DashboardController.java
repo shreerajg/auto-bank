@@ -54,7 +54,8 @@ public class DashboardController {
 
     private void refreshLabels() {
         dashboardTitle.setText(I18n.t("dashboard.title"));
-        dashboardSubtitle.setText(I18n.t("dashboard.subtitle"));
+        String user = com.autobank.auth.model.UserSession.getInstance().getCurrentUser().getUsername();
+        dashboardSubtitle.setText(I18n.t("dashboard.subtitle") + ", " + user + "!");
         totalAccountsHeader.setText(I18n.t("dashboard.stats.accounts"));
         totalBalanceHeader.setText(I18n.t("dashboard.stats.balance"));
         activeLoansHeader.setText(I18n.t("dashboard.stats.loans"));

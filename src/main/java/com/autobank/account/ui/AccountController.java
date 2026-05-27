@@ -157,8 +157,8 @@ public class AccountController {
         phoneField.setText(selected.getPhone() != null ? selected.getPhone() : "");
         addressField.setText(selected.getAddress() != null ? selected.getAddress() : "");
 
-        if (registerTitle != null) registerTitle.setText("Edit Member: " + selected.getAccountNumber());
-        if (registerButton != null) registerButton.setText("💾  Update Account");
+        if (registerTitle != null) registerTitle.setText(I18n.t("accounts.button.edit") + ": " + selected.getAccountNumber());
+        if (registerButton != null) registerButton.setText(I18n.t("accounts.button.update"));
         
         if (tabPane != null && createTab != null) {
             tabPane.getSelectionModel().select(createTab);

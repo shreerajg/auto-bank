@@ -230,8 +230,8 @@ public class AccountController {
         nameField.clear();
         phoneField.clear();
         addressField.clear();
-        if (registerTitle != null) registerTitle.setText("New Member Registration");
-        if (registerButton != null) registerButton.setText("✚  Register Member");
+        if (registerTitle != null) registerTitle.setText(I18n.t("accounts.label.register_title"));
+        if (registerButton != null) registerButton.setText(I18n.t("accounts.button.register"));
         loadDraft();
     }
 }

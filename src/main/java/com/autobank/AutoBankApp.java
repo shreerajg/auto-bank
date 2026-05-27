@@ -109,6 +109,7 @@ public class AutoBankApp extends Application {
 
     private void showLogin(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
+        loader.setResources(I18n.getBundle());
         Scene scene = new Scene(loader.load(), 860, 540);
         scene.getStylesheets().add(getClass().getResource("/css/app.css").toExternalForm());
         stage.setTitle("AutoBank — Cooperative Banking System");

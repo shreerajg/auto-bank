@@ -49,6 +49,6 @@
             </HBox>
         </VBox>
 
-        <Label text="AutoBank v1.0  ·  Patsanstha Edition" styleClass="login-footer-text"/>
+        <Label text="%login.footer" styleClass="login-footer-text"/>
     </VBox>
 </HBox>

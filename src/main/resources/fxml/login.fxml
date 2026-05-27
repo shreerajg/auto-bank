@@ -12,8 +12,8 @@
     <VBox alignment="CENTER" spacing="16" HBox.hgrow="ALWAYS"
           styleClass="login-accent-panel">
         <Label text="🏦" styleClass="login-brand-icon"/>
-        <Label text="AutoBank" styleClass="login-brand-title"/>
-        <Label text="Cooperative Banking System" styleClass="login-brand-subtitle"/>
+        <Label text="%app.title" styleClass="login-brand-title"/>
+        <Label text="%app.subtitle" styleClass="login-brand-subtitle"/>
         <Region prefHeight="20"/>
         <Label text="✦  Secure  ·  Reliable  ·  Offline-First  ✦" styleClass="login-brand-tagline"/>
     </VBox>
@@ -24,23 +24,23 @@
 
         <VBox spacing="24" styleClass="login-form" maxWidth="400">
             <VBox spacing="8">
-                <Label text="Welcome Back" styleClass="page-title" style="-fx-font-size: 24px;"/>
-                <Label fx:id="subtitleLabel" text="Sign in to your AutoBank account" styleClass="page-subtitle"/>
+                <Label text="%login.welcome" styleClass="page-title" style="-fx-font-size: 24px;"/>
+                <Label fx:id="subtitleLabel" text="%app.subtitle" styleClass="page-subtitle"/>
             </VBox>
 
             <VBox spacing="8">
-                <Label fx:id="usernameLabel" text="USERNAME"/>
-                <TextField fx:id="usernameField" promptText="Enter your username"/>
+                <Label fx:id="usernameLabel" text="%login.username"/>
+                <TextField fx:id="usernameField" promptText="%login.username"/>
             </VBox>
 
             <VBox spacing="8">
-                <Label fx:id="passwordLabel" text="PASSWORD"/>
-                <PasswordField fx:id="passwordField" promptText="Enter your password"/>
+                <Label fx:id="passwordLabel" text="%login.password"/>
+                <PasswordField fx:id="passwordField" promptText="%login.password"/>
             </VBox>
 
             <Label fx:id="errorLabel" styleClass="error-label" visible="false" managed="false" wrapText="true"/>
 
-            <Button fx:id="loginButton" text="Sign In →" onAction="#handleLogin"
+            <Button fx:id="loginButton" text="%login.button" onAction="#handleLogin"
                     defaultButton="true" styleClass="primary-button" maxWidth="Infinity"/>
 
             <HBox alignment="CENTER" spacing="12">

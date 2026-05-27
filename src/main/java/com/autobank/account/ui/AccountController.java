@@ -100,7 +100,7 @@ public class AccountController {
             nameField.setText(data.getOrDefault("name", ""));
             phoneField.setText(data.getOrDefault("phone", ""));
             addressField.setText(data.getOrDefault("address", ""));
-            MainController.showToast("Draft loaded automatically", Toast.Type.INFO);
+            MainController.showToast(I18n.t("msg.draft_loaded"), Toast.Type.INFO);
         }
     }
 
@@ -171,18 +171,19 @@ public class AccountController {
         if (selected == null) return;
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Deactivate Account");
-        alert.setHeaderText("Are you sure you want to deactivate this account?");
-        alert.setContentText("Account: " + selected.getAccountNumber() + "\nHolder: " + selected.getHolderName());
+        alert.setTitle(I18n.t("accounts.button.deactivate"));
+        alert.setHeaderText(I18n.t("msg.deactivate_confirm"));
+        alert.setContentText(I18n.t("accounts.table.acc_no") + ": " + selected.getAccountNumber() + "\n" +
+                            I18n.t("accounts.table.name") + ": " + selected.getHolderName());
 
         if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
             try {
                 accountService.deactivateAccount(selected.getId(), "Manual deactivation by operator");
-                MainController.showToast("Deactivated: " + selected.getAccountNumber(), Toast.Type.SUCCESS);
+                MainController.showToast(I18n.t("common.success") + ": " + selected.getAccountNumber(), Toast.Type.SUCCESS);
                 load(searchField.getText());
                 detailBox.setVisible(false);
             } catch (Exception e) {
-                MainController.showToast("Error: " + e.getMessage(), Toast.Type.ERROR);
+                MainController.showToast(I18n.t("common.error") + ": " + e.getMessage(), Toast.Type.ERROR);
             }
         }
     }

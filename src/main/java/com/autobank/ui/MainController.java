@@ -112,6 +112,12 @@ public class MainController {
         backupBtn.setText("🔒  " + I18n.t("nav.backup"));
         settingsBtn.setText("⚙  " + I18n.t("nav.settings"));
         langBtn.setText(I18n.getCurrentLang().equals("en") ? "मराठी" : "English");
+
+        globalSearchField.setPromptText(I18n.t("search.global.prompt"));
+        
+        // Update date with locale-aware formatting if needed, or just refresh
+        dateLabel.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy", 
+            I18n.getCurrentLang().equals("mr") ? new java.util.Locale("mr", "IN") : java.util.Locale.ENGLISH)));
     }
 
     @FXML

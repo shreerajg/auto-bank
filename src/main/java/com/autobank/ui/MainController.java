@@ -176,7 +176,9 @@ public class MainController {
 
     private void load(String fxml) {
         try {
-            Node view = FXMLLoader.load(getClass().getResource(fxml));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+            loader.setResources(I18n.getBundle());
+            Node view = loader.load();
             contentArea.getChildren().setAll(view);
         } catch (Exception e) {
             log.error("Failed to load view: {}", fxml, e);

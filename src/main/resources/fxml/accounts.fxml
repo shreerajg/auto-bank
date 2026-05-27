@@ -13,26 +13,26 @@
     <VBox spacing="20" styleClass="content-pane">
         <HBox alignment="CENTER_LEFT" spacing="12">
             <VBox spacing="4" HBox.hgrow="ALWAYS">
-                <Label text="Account Management" styleClass="page-title"/>
-                <Label text="View and manage cooperative member records" styleClass="page-subtitle"/>
+                <Label text="%accounts.title" styleClass="page-title"/>
+                <Label text="%accounts.subtitle" styleClass="page-subtitle"/>
             </VBox>
         </HBox>
 
         <!-- Search Bar -->
         <HBox spacing="10" alignment="CENTER_LEFT" styleClass="chart-card" style="-fx-padding: 10px 16px;">
             <Label text="🔍" style="-fx-font-size: 16px;"/>
-            <TextField fx:id="searchField" promptText="Search by name, account number or phone…"
+            <TextField fx:id="searchField" promptText="%accounts.search.prompt"
                        HBox.hgrow="ALWAYS"
                        style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-size: 14px;"/>
         </HBox>
 
         <TableView fx:id="accountTable" VBox.vgrow="ALWAYS" styleClass="chart-card">
             <columns>
-                <TableColumn fx:id="colAccountNumber" text="Account #"   prefWidth="110"/>
-                <TableColumn fx:id="colHolderName"   text="Holder Name" prefWidth="220"/>
-                <TableColumn fx:id="colPhone"         text="Phone"       prefWidth="110"/>
-                <TableColumn fx:id="colBalance"       text="Balance (₹)" prefWidth="120"/>
-                <TableColumn fx:id="colStatus"        text="Status"      prefWidth="90"/>
+                <TableColumn fx:id="colAccountNumber" text="%accounts.table.acc_no"   prefWidth="110"/>
+                <TableColumn fx:id="colHolderName"   text="%accounts.table.name" prefWidth="220"/>
+                <TableColumn fx:id="colPhone"         text="%accounts.table.phone"       prefWidth="110"/>
+                <TableColumn fx:id="colBalance"       text="%accounts.table.balance" prefWidth="120"/>
+                <TableColumn fx:id="colStatus"        text="%accounts.table.status"      prefWidth="90"/>
             </columns>
         </TableView>
 
@@ -41,63 +41,63 @@
 
     <!-- Right: Tabs for Details & Creation -->
     <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" styleClass="chart-card">
-        <Tab text="Account Details">
+        <Tab text="%accounts.tab.details">
             <VBox fx:id="detailBox" spacing="20" visible="false">
                 <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
                 
                 <VBox spacing="4">
-                    <Label text="HOLDER NAME" styleClass="stat-label"/>
+                    <Label text="%accounts.label.name" styleClass="stat-label"/>
                     <Label fx:id="detailName" text="—" styleClass="page-title" style="-fx-font-size: 22px;"/>
                 </VBox>
 
                 <GridPane hgap="20" vgap="15">
                     <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                        <Label text="ACCOUNT NUMBER" styleClass="stat-label"/>
+                        <Label text="%accounts.label.acc_no" styleClass="stat-label"/>
                         <Label fx:id="detailAcc" text="—" style="-fx-font-weight: bold;"/>
                     </VBox>
                     <VBox spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                        <Label text="STATUS" styleClass="stat-label"/>
+                        <Label text="%accounts.label.status" styleClass="stat-label"/>
                         <Label fx:id="detailStatus" text="—" style="-fx-font-weight: bold;"/>
                     </VBox>
                     <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                        <Label text="PHONE" styleClass="stat-label"/>
+                        <Label text="%accounts.label.phone" styleClass="stat-label"/>
                         <Label fx:id="detailPhone" text="—"/>
                     </VBox>
                     <VBox spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                        <Label text="CURRENT BALANCE" styleClass="stat-label"/>
+                        <Label text="%accounts.label.balance" styleClass="stat-label"/>
                         <Label fx:id="detailBalance" text="—" style="-fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
                     </VBox>
                 </GridPane>
 
                 <Separator/>
-                <Button text="View Transaction History" maxWidth="Infinity" styleClass="nav-button" style="-fx-border-color: #ddd;"/>
-                <Button text="Edit Details" onAction="#handleEditDetails" maxWidth="Infinity" styleClass="nav-button" style="-fx-border-color: #ddd;"/>
-                <Button text="Deactivate Account" onAction="#handleDeactivateAccount" maxWidth="Infinity" styleClass="nav-button" style="-fx-border-color: #ddd; -fx-text-fill: #e74c3c;"/>
+                <Button text="%accounts.button.history" maxWidth="Infinity" styleClass="nav-button" style="-fx-border-color: #ddd;"/>
+                <Button text="%accounts.button.edit" onAction="#handleEditDetails" maxWidth="Infinity" styleClass="nav-button" style="-fx-border-color: #ddd;"/>
+                <Button text="%accounts.button.deactivate" onAction="#handleDeactivateAccount" maxWidth="Infinity" styleClass="nav-button" style="-fx-border-color: #ddd; -fx-text-fill: #e74c3c;"/>
             </VBox>
         </Tab>
-        <Tab fx:id="createTab" text="Create New">
+        <Tab fx:id="createTab" text="%accounts.tab.create">
             <VBox spacing="20">
                 <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
                 
-                <Label fx:id="registerTitle" text="New Member Registration" styleClass="section-title"/>
+                <Label fx:id="registerTitle" text="%accounts.label.register_title" styleClass="section-title"/>
                 
                 <VBox spacing="8">
-                    <Label text="FULL NAME *" styleClass="stat-label"/>
-                    <TextField fx:id="nameField" promptText="Enter full name" prefHeight="35"/>
+                    <Label text="%accounts.label.full_name" styleClass="stat-label"/>
+                    <TextField fx:id="nameField" promptText="%accounts.label.full_name" prefHeight="35"/>
                 </VBox>
                 <VBox spacing="8">
-                    <Label text="PHONE NUMBER" styleClass="stat-label"/>
-                    <TextField fx:id="phoneField" promptText="10-digit mobile" prefHeight="35"/>
+                    <Label text="%accounts.label.phone" styleClass="stat-label"/>
+                    <TextField fx:id="phoneField" promptText="%accounts.label.phone" prefHeight="35"/>
                 </VBox>
                 <VBox spacing="8">
-                    <Label text="ADDRESS" styleClass="stat-label"/>
-                    <TextArea fx:id="addressField" promptText="Full address / Village" prefHeight="80" wrapText="true"/>
+                    <Label text="%accounts.label.address" styleClass="stat-label"/>
+                    <TextArea fx:id="addressField" promptText="%accounts.label.address" prefHeight="80" wrapText="true"/>
                 </VBox>
 
                 <Pane VBox.vgrow="ALWAYS"/>
                 <HBox spacing="10">
-                    <Button text="Cancel" onAction="#handleCancelEdit" prefHeight="45" HBox.hgrow="ALWAYS" maxWidth="Infinity" style="-fx-background-color: #eee;"/>
-                    <Button fx:id="registerButton" text="✚  Register Member" onAction="#handleCreateAccount"
+                    <Button text="%accounts.button.cancel" onAction="#handleCancelEdit" prefHeight="45" HBox.hgrow="ALWAYS" maxWidth="Infinity" style="-fx-background-color: #eee;"/>
+                    <Button fx:id="registerButton" text="%accounts.button.register" onAction="#handleCreateAccount"
                             styleClass="primary-button" maxWidth="Infinity" prefHeight="45" HBox.hgrow="ALWAYS"/>
                 </HBox>
             </VBox>

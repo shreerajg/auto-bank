@@ -31,6 +31,8 @@ public class MainController {
     @FXML private StackPane contentArea;
     @FXML private Label currentUserLabel;
     @FXML private Label dateLabel;
+    @FXML private Label viewTitleLabel;
+    @FXML private Label viewSubtitleLabel;
     @FXML private Button dashboardBtn;
     @FXML private Button accountsBtn;
     @FXML private Button transactionsBtn;
@@ -78,6 +80,9 @@ public class MainController {
                     if (event.isControlDown() && event.getCode() == KeyCode.F) {
                         globalSearchField.requestFocus();
                         event.consume();
+                    } else if (event.isControlDown() && event.getCode() == KeyCode.K) {
+                        showCommandPalette();
+                        event.consume();
                     } else if (event.isAltDown()) {
                         switch (event.getCode()) {
                             case DIGIT1: showDashboard(); event.consume(); break;
@@ -100,6 +105,10 @@ public class MainController {
         });
     }
 
+    private void showCommandPalette() {
+        // Implementation will follow
+    }
+
     private void refreshLabels() {
         dashboardBtn.setText("📊  " + I18n.t("nav.dashboard"));
         accountsBtn.setText("👤  " + I18n.t("nav.accounts"));
@@ -118,6 +127,55 @@ public class MainController {
         // Update date with locale-aware formatting if needed, or just refresh
         dateLabel.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy", 
             I18n.getCurrentLang().equals("mr") ? new java.util.Locale("mr", "IN") : java.util.Locale.ENGLISH)));
+
+        // Update titles for current view
+        updateHeaderTitles();
+    }
+
+    private void updateHeaderTitles() {
+        if (currentViewFxml == null) return;
+        switch (currentViewFxml) {
+            case "/fxml/dashboard.fxml":
+                viewTitleLabel.setText(I18n.t("nav.dashboard"));
+                viewSubtitleLabel.setText("System overview and performance metrics");
+                break;
+            case "/fxml/accounts.fxml":
+                viewTitleLabel.setText(I18n.t("nav.accounts"));
+                viewSubtitleLabel.setText("Manage customer profiles and bank accounts");
+                break;
+            case "/fxml/transactions.fxml":
+                viewTitleLabel.setText(I18n.t("nav.transactions"));
+                viewSubtitleLabel.setText("Execute deposits, withdrawals and transfers");
+                break;
+            case "/fxml/interest.fxml":
+                viewTitleLabel.setText(I18n.t("nav.interest"));
+                viewSubtitleLabel.setText("Calculate and apply periodic interest");
+                break;
+            case "/fxml/distributions.fxml":
+                viewTitleLabel.setText(I18n.t("nav.distributions"));
+                viewSubtitleLabel.setText("Process dairy payments and rural distributions");
+                break;
+            case "/fxml/loans.fxml":
+                viewTitleLabel.setText(I18n.t("nav.loans"));
+                viewSubtitleLabel.setText("Track and manage loan disbursements and EMI");
+                break;
+            case "/fxml/dailyops.fxml":
+                viewTitleLabel.setText(I18n.t("nav.dailyops"));
+                viewSubtitleLabel.setText("Day opening/closing and cashbook verification");
+                break;
+            case "/fxml/reports.fxml":
+                viewTitleLabel.setText(I18n.t("nav.reports"));
+                viewSubtitleLabel.setText("Generate financial statements and audit reports");
+                break;
+            case "/fxml/backup.fxml":
+                viewTitleLabel.setText(I18n.t("nav.backup"));
+                viewSubtitleLabel.setText("System data backup and disaster recovery");
+                break;
+            case "/fxml/settings.fxml":
+                viewTitleLabel.setText(I18n.t("nav.settings"));
+                viewSubtitleLabel.setText("Configure application preferences and system logs");
+                break;
+        }
     }
 
     @FXML
@@ -135,16 +193,16 @@ public class MainController {
         }
     }
 
-    @FXML private void showDashboard()    { currentViewFxml = "/fxml/dashboard.fxml"; load(currentViewFxml); activate(dashboardBtn); }
-    @FXML private void showAccounts()     { currentViewFxml = "/fxml/accounts.fxml";  load(currentViewFxml); activate(accountsBtn); }
-    @FXML private void showTransactions() { currentViewFxml = "/fxml/transactions.fxml"; load(currentViewFxml); activate(transactionsBtn); }
-    @FXML private void showInterest()     { currentViewFxml = "/fxml/interest.fxml";     load(currentViewFxml); activate(interestBtn); }
-    @FXML private void showDistributions(){ currentViewFxml = "/fxml/distributions.fxml"; load(currentViewFxml); activate(distributionBtn); }
-    @FXML private void showLoans()        { currentViewFxml = "/fxml/loans.fxml";       load(currentViewFxml); activate(loansBtn); }
-    @FXML private void showDailyOps()     { currentViewFxml = "/fxml/dailyops.fxml";   load(currentViewFxml); activate(dailyOpsBtn); }
-    @FXML private void showReports()      { currentViewFxml = "/fxml/reports.fxml";    load(currentViewFxml); activate(reportsBtn); }
-    @FXML private void showBackup()       { currentViewFxml = "/fxml/backup.fxml";     load(currentViewFxml); activate(backupBtn); }
-    @FXML private void showSettings()     { currentViewFxml = "/fxml/settings.fxml";   load(currentViewFxml); activate(settingsBtn); }
+    @FXML private void showDashboard()    { currentViewFxml = "/fxml/dashboard.fxml"; load(currentViewFxml); activate(dashboardBtn); updateHeaderTitles(); }
+    @FXML private void showAccounts()     { currentViewFxml = "/fxml/accounts.fxml";  load(currentViewFxml); activate(accountsBtn); updateHeaderTitles(); }
+    @FXML private void showTransactions() { currentViewFxml = "/fxml/transactions.fxml"; load(currentViewFxml); activate(transactionsBtn); updateHeaderTitles(); }
+    @FXML private void showInterest()     { currentViewFxml = "/fxml/interest.fxml";     load(currentViewFxml); activate(interestBtn); updateHeaderTitles(); }
+    @FXML private void showDistributions(){ currentViewFxml = "/fxml/distributions.fxml"; load(currentViewFxml); activate(distributionBtn); updateHeaderTitles(); }
+    @FXML private void showLoans()        { currentViewFxml = "/fxml/loans.fxml";       load(currentViewFxml); activate(loansBtn); updateHeaderTitles(); }
+    @FXML private void showDailyOps()     { currentViewFxml = "/fxml/dailyops.fxml";   load(currentViewFxml); activate(dailyOpsBtn); updateHeaderTitles(); }
+    @FXML private void showReports()      { currentViewFxml = "/fxml/reports.fxml";    load(currentViewFxml); activate(reportsBtn); updateHeaderTitles(); }
+    @FXML private void showBackup()       { currentViewFxml = "/fxml/backup.fxml";     load(currentViewFxml); activate(backupBtn); updateHeaderTitles(); }
+    @FXML private void showSettings()     { currentViewFxml = "/fxml/settings.fxml";   load(currentViewFxml); activate(settingsBtn); updateHeaderTitles(); }
 
     @FXML
     private void handleLogout() {

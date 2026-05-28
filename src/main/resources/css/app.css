@@ -645,6 +645,111 @@
     -fx-background-color: #dc2626;
 }
 
-.toast-info {
-    -fx-background-color: #2563eb;
+/* ═══════════════ VIEW HEADER ══════════════════════════ */
+.view-header {
+    -fx-background-color: white;
+    -fx-padding: 16px 32px;
+    -fx-border-color: #e9eef5;
+    -fx-border-width: 0 0 1 0;
+}
+
+.view-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f172a;
+}
+
+.view-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #64748b;
+}
+
+.keyboard-hint-box {
+    -fx-background-color: #f8fafc;
+    -fx-padding: 6px 12px;
+    -fx-background-radius: 6px;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 6px;
+}
+
+.keyboard-hint-key {
+    -fx-background-color: white;
+    -fx-padding: 2px 6px;
+    -fx-background-radius: 4px;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 4px;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #334155;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 2, 0, 0, 1);
+}
+
+.keyboard-hint-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748b;
+}
+
+/* ═══════════════ COMMAND PALETTE ══════════════════════ */
+.command-palette-overlay {
+    -fx-background-color: rgba(15, 23, 42, 0.4);
+}
+
+.command-palette {
+    -fx-background-color: white;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 40, 0, 0, 20);
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+}
+
+.command-search-box {
+    -fx-padding: 16px;
+    -fx-border-color: #e9eef5;
+    -fx-border-width: 0 0 1 0;
+}
+
+.command-search-field {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 16px;
+    -fx-padding: 0;
+}
+.command-search-field:focused {
+    -fx-border-color: transparent;
+    -fx-effect: none;
+}
+
+.command-list {
+    -fx-background-color: transparent;
+}
+
+.command-item {
+    -fx-padding: 10px 16px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+.command-item:hover, .command-item.selected {
+    -fx-background-color: #f1f5f9;
+}
+
+.command-icon {
+    -fx-font-size: 18px;
+    -fx-text-fill: #64748b;
+}
+
+.command-text-box {
+    -fx-padding: 0 0 0 12px;
+}
+
+.command-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1e293b;
+}
+
+.command-shortcut {
+    -fx-font-size: 11px;
+    -fx-text-fill: #94a3b8;
+    -fx-font-family: monospace;
 }

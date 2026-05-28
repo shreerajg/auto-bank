@@ -13,55 +13,55 @@
 
     <!-- Header -->
     <HBox alignment="CENTER_LEFT" spacing="10">
-        <Label text="Reports &amp; Analytics" styleClass="page-title" HBox.hgrow="ALWAYS"/>
+        <Label text="%reports.title" styleClass="page-title" HBox.hgrow="ALWAYS"/>
         
         <HBox spacing="5" alignment="CENTER_LEFT" style="-fx-padding: 0 20 0 0;">
-            <Button text="📄 Member Balances PDF" onAction="#handleExportBalances" styleClass="nav-button" style="-fx-font-size: 12px;"/>
-            <Button text="📄 Today's Cashbook PDF" onAction="#handleExportCashbook" styleClass="nav-button" style="-fx-font-size: 12px;"/>
+            <Button text="%reports.button.balances" onAction="#handleExportBalances" styleClass="nav-button" style="-fx-font-size: 12px;"/>
+            <Button text="%reports.button.cashbook" onAction="#handleExportCashbook" styleClass="nav-button" style="-fx-font-size: 12px;"/>
         </HBox>
 
-        <Label text="Period:"/>
+        <Label text="%reports.label.period"/>
         <ComboBox fx:id="dayRangeCombo" prefWidth="80"/>
-        <Label text="days"/>
-        <Button text="⟳ Refresh" onAction="#handleRefresh" styleClass="primary-button"/>
+        <Label text="%reports.label.days"/>
+        <Button text="%reports.button.refresh" onAction="#handleRefresh" styleClass="primary-button"/>
     </HBox>
 
     <!-- Stat Row 1 -->
     <HBox spacing="10">
         <VBox styleClass="stat-card, stat-card-blue" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-            <Label text="Active Accounts" styleClass="stat-label"/>
+            <Label text="%dashboard.stats.accounts" styleClass="stat-label"/>
             <Label fx:id="statAccounts" text="—" styleClass="stat-value"/>
         </VBox>
         <VBox styleClass="stat-card, stat-card-green" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-            <Label text="Total Balance" styleClass="stat-label"/>
+            <Label text="%dashboard.stats.balance" styleClass="stat-label"/>
             <Label fx:id="statTotalBal" text="—" styleClass="stat-value"/>
         </VBox>
         <VBox styleClass="stat-card, stat-card-teal" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-            <Label text="Today Txns" styleClass="stat-label"/>
+            <Label text="%reports.stat.today_txn" styleClass="stat-label"/>
             <Label fx:id="statTodayTx" text="—" styleClass="stat-value"/>
         </VBox>
         <VBox styleClass="stat-card, stat-card-purple" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-            <Label text="Today Volume" styleClass="stat-label"/>
+            <Label text="%reports.stat.today_vol" styleClass="stat-label"/>
             <Label fx:id="statTodayVol" text="—" styleClass="stat-value"/>
         </VBox>
         <VBox styleClass="stat-card, stat-card-orange" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-            <Label text="Total Txns" styleClass="stat-label"/>
+            <Label text="%reports.stat.total_txn" styleClass="stat-label"/>
             <Label fx:id="statTxCount" text="—" styleClass="stat-value"/>
         </VBox>
         <VBox styleClass="stat-card, stat-card-red" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-            <Label text="Deposits" styleClass="stat-label"/>
+            <Label text="%dashboard.recent.type" styleClass="stat-label"/>
             <Label fx:id="statDeposits" text="—" styleClass="stat-value"/>
         </VBox>
         <VBox styleClass="stat-card, stat-card-blue" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-            <Label text="Withdrawals" styleClass="stat-label"/>
+            <Label text="%dashboard.recent.type" styleClass="stat-label"/>
             <Label fx:id="statWithdrawals" text="—" styleClass="stat-value"/>
         </VBox>
         <VBox styleClass="stat-card, stat-card-orange" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-            <Label text="Active Loans" styleClass="stat-label"/>
+            <Label text="%dashboard.stats.loans" styleClass="stat-label"/>
             <Label fx:id="statActiveLoans" text="—" styleClass="stat-value"/>
         </VBox>
         <VBox styleClass="stat-card, stat-card-green" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-            <Label text="Loan Pending" styleClass="stat-label"/>
+            <Label text="%reports.stat.loan_pending" styleClass="stat-label"/>
             <Label fx:id="statLoanOutstanding" text="—" styleClass="stat-value"/>
         </VBox>
     </HBox>
@@ -70,15 +70,15 @@
     <VBox styleClass="chart-card">
         <LineChart fx:id="trendChart" prefHeight="240" animated="false"
                    createSymbols="false" legendVisible="true">
-            <xAxis><CategoryAxis fx:id="trendXAxis" label="Date"/></xAxis>
-            <yAxis><NumberAxis fx:id="trendYAxis" label="Amount (₹)"/></yAxis>
+            <xAxis><CategoryAxis fx:id="trendXAxis" label="%reports.chart.trend_x"/></xAxis>
+            <yAxis><NumberAxis fx:id="trendYAxis" label="%reports.chart.trend_y"/></yAxis>
         </LineChart>
     </VBox>
 
     <!-- Row: Pie + Monthly Bar -->
     <HBox spacing="10">
         <VBox styleClass="chart-card" HBox.hgrow="ALWAYS">
-            <Label text="Deposit vs Withdrawal Split" styleClass="section-title"
+            <Label text="%reports.chart.split_title" styleClass="section-title"
                    style="-fx-padding: 4 8 0 8;"/>
             <PieChart fx:id="splitPieChart" prefHeight="270" animated="false"
                       labelsVisible="false" legendVisible="true"
@@ -86,8 +86,8 @@
         </VBox>
         <VBox styleClass="chart-card" HBox.hgrow="ALWAYS">
             <BarChart fx:id="monthlyBarChart" prefHeight="290" animated="false">
-                <xAxis><CategoryAxis fx:id="monthXAxis" label="Month"/></xAxis>
-                <yAxis><NumberAxis fx:id="monthYAxis" label="Volume (₹)"/></yAxis>
+                <xAxis><CategoryAxis fx:id="monthXAxis" label="%reports.chart.monthly_x"/></xAxis>
+                <yAxis><NumberAxis fx:id="monthYAxis" label="%reports.chart.monthly_y"/></yAxis>
             </BarChart>
         </VBox>
     </HBox>
@@ -96,19 +96,19 @@
     <HBox spacing="10">
         <VBox styleClass="chart-card" minWidth="300" maxWidth="340">
             <BarChart fx:id="loanStatusChart" prefHeight="260" animated="false" legendVisible="false">
-                <xAxis><CategoryAxis fx:id="loanXAxis" label="Loan Status"/></xAxis>
-                <yAxis><NumberAxis fx:id="loanYAxis" label="Count"/></yAxis>
+                <xAxis><CategoryAxis fx:id="loanXAxis" label="%reports.chart.loan_x"/></xAxis>
+                <yAxis><NumberAxis fx:id="loanYAxis" label="%reports.chart.loan_y"/></yAxis>
             </BarChart>
         </VBox>
 
         <VBox spacing="8" HBox.hgrow="ALWAYS" styleClass="chart-card">
-            <Label text="Top 10 Accounts by Balance" styleClass="section-title"
+            <Label text="%reports.table.top_accounts" styleClass="section-title"
                    style="-fx-padding: 4 0 0 4;"/>
             <TableView fx:id="topAccountsTable" prefHeight="240" VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn fx:id="colAccNum"  text="Account #"   prefWidth="110"/>
-                    <TableColumn fx:id="colAccName" text="Holder Name" prefWidth="200"/>
-                    <TableColumn fx:id="colAccBal"  text="Balance (₹)" prefWidth="120"/>
+                    <TableColumn fx:id="colAccNum"  text="%accounts.table.acc_no"   prefWidth="110"/>
+                    <TableColumn fx:id="colAccName" text="%accounts.table.name" prefWidth="200"/>
+                    <TableColumn fx:id="colAccBal"  text="%accounts.table.balance" prefWidth="120"/>
                 </columns>
             </TableView>
         </VBox>

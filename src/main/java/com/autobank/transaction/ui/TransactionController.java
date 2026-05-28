@@ -143,7 +143,7 @@ public class TransactionController {
 
     private void setupContextMenu() {
         ContextMenu menu = new ContextMenu();
-        MenuItem reverseItem = new MenuItem("⚠️ Reverse Transaction");
+        MenuItem reverseItem = new MenuItem(I18n.t("tx.menu.reverse"));
         reverseItem.setOnAction(e -> handleReverseTransaction());
         menu.getItems().add(reverseItem);
 
@@ -162,23 +162,23 @@ public class TransactionController {
         if (selected == null) return;
         
         if (!"ACTIVE".equals(selected.getStatus())) {
-            MainController.showToast("Only ACTIVE transactions can be reversed", Toast.Type.ERROR);
+            MainController.showToast(I18n.t("tx.msg.reverse_only_active"), Toast.Type.ERROR);
             return;
         }
 
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Reverse Transaction");
-        dialog.setHeaderText("Reversing Transaction #" + selected.getId());
-        dialog.setContentText("Please provide a reason for reversal:");
+        dialog.setTitle(I18n.t("tx.msg.reverse_title"));
+        dialog.setHeaderText(I18n.t("tx.msg.reverse_header") + selected.getId());
+        dialog.setContentText(I18n.t("tx.msg.reverse_reason"));
         
         dialog.showAndWait().ifPresent(reason -> {
             if (reason.trim().isEmpty()) {
-                MainController.showToast("Reason is required for reversal", Toast.Type.ERROR);
+                MainController.showToast(I18n.t("tx.msg.reverse_reason_req"), Toast.Type.ERROR);
                 return;
             }
             try {
                 txService.reverseTransaction(selected.getId(), reason);
-                MainController.showToast("Transaction #" + selected.getId() + " reversed", Toast.Type.SUCCESS);
+                MainController.showToast(I18n.t("tx.msg.reversed") + " #" + selected.getId(), Toast.Type.SUCCESS);
                 loadRecent();
             } catch (Exception e) {
                 MainController.showToast(e.getMessage(), Toast.Type.ERROR);

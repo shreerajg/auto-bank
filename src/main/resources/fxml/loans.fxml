@@ -14,25 +14,25 @@
 
         <HBox alignment="CENTER_LEFT" spacing="12">
             <VBox spacing="4" HBox.hgrow="ALWAYS">
-                <Label text="Loan Management" styleClass="page-title"/>
-                <Label text="Track disbursements, payments and outstanding balances" styleClass="page-subtitle"/>
+                <Label text="%loans.title" styleClass="page-title"/>
+                <Label text="%loans.subtitle" styleClass="page-subtitle"/>
             </VBox>
         </HBox>
 
         <!-- Filter bar -->
         <HBox spacing="10" alignment="CENTER_LEFT" styleClass="chart-card" style="-fx-padding: 10px 16px;">
-            <Label text="Filter:" style="-fx-text-fill: #64748b; -fx-font-weight: bold;"/>
-            <ComboBox fx:id="filterCombo" prefWidth="130" promptText="All Loans"/>
+            <Label text="%loans.filter" style="-fx-text-fill: #64748b; -fx-font-weight: bold;"/>
+            <ComboBox fx:id="filterCombo" prefWidth="130" promptText="%loans.filter.all"/>
         </HBox>
 
         <TableView fx:id="loanTable" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="colId"          text="Loan #"         prefWidth="65"/>
-                <TableColumn fx:id="colHolder"      text="Holder"          prefWidth="170"/>
-                <TableColumn fx:id="colAmount"      text="Principal (₹)"   prefWidth="115"/>
-                <TableColumn fx:id="colOutstanding" text="Outstanding (₹)" prefWidth="125"/>
-                <TableColumn fx:id="colInterest"    text="Rate %"          prefWidth="70"/>
-                <TableColumn fx:id="colStatus"      text="Status"          prefWidth="85"/>
+                <TableColumn fx:id="colId"          text="%loans.table.id"         prefWidth="65"/>
+                <TableColumn fx:id="colHolder"      text="%loans.table.holder"          prefWidth="170"/>
+                <TableColumn fx:id="colAmount"      text="%loans.table.principal"   prefWidth="115"/>
+                <TableColumn fx:id="colOutstanding" text="%loans.table.outstanding" prefWidth="125"/>
+                <TableColumn fx:id="colInterest"    text="%loans.table.rate"          prefWidth="70"/>
+                <TableColumn fx:id="colStatus"      text="%accounts.table.status"          prefWidth="85"/>
             </columns>
         </TableView>
 
@@ -45,56 +45,56 @@
 
             <!-- Disburse Loan -->
             <VBox spacing="12" styleClass="form-panel">
-                <Label text="Disburse New Loan" styleClass="section-title"/>
+                <Label text="%loans.section.disburse" styleClass="section-title"/>
                 <Separator/>
 
                 <VBox spacing="6">
-                    <Label text="SEARCH ACCOUNT" styleClass="stat-label"/>
-                    <TextField fx:id="loanSearchField" promptText="Type name or account #…"/>
-                    <ComboBox fx:id="loanAccountCombo" maxWidth="Infinity" promptText="Select account…"/>
+                    <Label text="%tx.label.select_account" styleClass="stat-label"/>
+                    <TextField fx:id="loanSearchField" promptText="%tx.label.search_acc"/>
+                    <ComboBox fx:id="loanAccountCombo" maxWidth="Infinity" promptText="%tx.label.choose_acc"/>
                 </VBox>
 
                 <HBox spacing="12">
                     <VBox spacing="6" HBox.hgrow="ALWAYS">
-                        <Label text="LOAN AMOUNT (₹) *" styleClass="stat-label"/>
+                        <Label text="%loans.label.amount" styleClass="stat-label"/>
                         <TextField fx:id="loanAmountField" promptText="e.g. 50000"/>
                     </VBox>
                     <VBox spacing="6" HBox.hgrow="ALWAYS">
-                        <Label text="INTEREST RATE (% p.a.) *" styleClass="stat-label"/>
+                        <Label text="%loans.label.rate" styleClass="stat-label"/>
                         <TextField fx:id="interestRateField" promptText="e.g. 12"/>
                     </VBox>
                 </HBox>
 
                 <HBox spacing="12">
                     <VBox spacing="6" HBox.hgrow="ALWAYS">
-                        <Label text="MONTHLY INSTALLMENT (₹)" styleClass="stat-label"/>
+                        <Label text="%loans.label.installment" styleClass="stat-label"/>
                         <TextField fx:id="installmentField" promptText="Optional"/>
                     </VBox>
                     <VBox spacing="6" HBox.hgrow="ALWAYS">
-                        <Label text="DUE DATE (YYYY-MM-DD)" styleClass="stat-label"/>
+                        <Label text="%loans.label.due_date" styleClass="stat-label"/>
                         <TextField fx:id="dueDateField" promptText="e.g. 2026-12-31"/>
                     </VBox>
                 </HBox>
 
-                <Button text="💰  Disburse Loan" onAction="#handleDisburse"
+                <Button text="%loans.button.disburse" onAction="#handleDisburse"
                         styleClass="primary-button" maxWidth="Infinity" prefHeight="42"/>
             </VBox>
 
             <!-- Record Payment -->
             <VBox spacing="12" styleClass="form-panel">
-                <Label text="Record Payment" styleClass="section-title"/>
+                <Label text="%loans.section.payment" styleClass="section-title"/>
                 <Separator/>
 
                 <VBox spacing="6">
-                    <Label text="LOAN ID  (click a row to fill)" styleClass="stat-label"/>
+                    <Label text="%loans.label.loan_id" styleClass="stat-label"/>
                     <TextField fx:id="payLoanIdField" promptText="Loan ID"/>
                 </VBox>
                 <VBox spacing="6">
-                    <Label text="PAYMENT AMOUNT (₹)" styleClass="stat-label"/>
+                    <Label text="%tx.label.amount" styleClass="stat-label"/>
                     <TextField fx:id="payAmountField" promptText="Amount paid"/>
                 </VBox>
 
-                <Button text="✔  Record Payment" onAction="#handlePayment"
+                <Button text="%loans.button.payment" onAction="#handlePayment"
                         styleClass="success-button" maxWidth="Infinity" prefHeight="42"/>
             </VBox>
 

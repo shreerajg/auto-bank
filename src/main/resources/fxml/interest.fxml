@@ -12,10 +12,10 @@
 
     <HBox alignment="CENTER_LEFT" spacing="15.0">
         <VBox HBox.hgrow="ALWAYS">
-            <Label text="Interest Calculation Engine" styleClass="header-title">
+            <Label text="%interest.title" styleClass="header-title">
                 <font><Font name="System Bold" size="24.0" /></font>
             </Label>
-            <Label text="Batch process monthly interest for savings and loans" styleClass="header-subtitle" />
+            <Label text="%interest.subtitle" styleClass="header-subtitle" />
         </VBox>
     </HBox>
 
@@ -27,36 +27,36 @@
             <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
         </columnConstraints>
 
-        <Label text="Select Year:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Label text="%interest.label.year" GridPane.columnIndex="0" GridPane.rowIndex="0" />
         <ComboBox fx:id="yearCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-        <Label text="Select Month:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <Label text="%interest.label.month" GridPane.columnIndex="0" GridPane.rowIndex="1" />
         <ComboBox fx:id="monthCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-        <Label text="Batch Type:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <Label text="%interest.label.type" GridPane.columnIndex="0" GridPane.rowIndex="2" />
         <HBox spacing="15.0" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
-            <RadioButton fx:id="savingsRadio" text="Savings Interest (Credit)" selected="true">
+            <RadioButton fx:id="savingsRadio" text="%interest.type.savings" selected="true">
                 <toggleGroup><ToggleGroup fx:id="batchTypeGroup"/></toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="loanRadio" text="Loan Accrual (Debit)" toggleGroup="$batchTypeGroup" />
+            <RadioButton fx:id="loanRadio" text="%interest.type.loans" toggleGroup="$batchTypeGroup" />
         </HBox>
     </GridPane>
 
     <HBox spacing="15.0">
-        <Button fx:id="previewBtn" onAction="#handlePreview" text="Preview Batch" styleClass="button-primary" prefWidth="150.0" />
-        <Button fx:id="executeBtn" onAction="#handleExecute" text="Execute Batch" styleClass="button-danger" prefWidth="150.0" disable="true" />
+        <Button fx:id="previewBtn" onAction="#handlePreview" text="%interest.button.preview" styleClass="button-primary" prefWidth="150.0" />
+        <Button fx:id="executeBtn" onAction="#handleExecute" text="%interest.button.execute" styleClass="button-danger" prefWidth="150.0" disable="true" />
     </HBox>
 
     <VBox fx:id="previewArea" spacing="10.0" visible="false" styleClass="info-panel">
-        <Label text="Batch Preview Summary" style="-fx-font-weight: bold;" />
+        <Label text="%interest.preview.title" style="-fx-font-weight: bold;" />
         <GridPane hgap="10.0" vgap="5.0">
-            <Label text="Accounts/Loans Affected:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <Label text="%interest.preview.count" GridPane.rowIndex="0" GridPane.columnIndex="0" />
             <Label fx:id="countLabel" text="0" style="-fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="1" />
             
-            <Label text="Total Interest Amount:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <Label text="%interest.preview.total" GridPane.rowIndex="1" GridPane.columnIndex="0" />
             <Label fx:id="totalAmountLabel" text="₹ 0.00" style="-fx-font-weight: bold; -fx-text-fill: #27ae60;" GridPane.rowIndex="1" GridPane.columnIndex="1" />
         </GridPane>
-        <Label text="Warning: This action cannot be undone. Please verify the numbers before executing." style="-fx-text-fill: #e67e22; -fx-font-size: 11px;" />
+        <Label text="%interest.preview.warning" style="-fx-text-fill: #e67e22; -fx-font-size: 11px;" />
     </VBox>
 
     <VBox fx:id="statusArea" spacing="5.0" />

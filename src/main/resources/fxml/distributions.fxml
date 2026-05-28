@@ -10,19 +10,19 @@
     <!-- Header -->
     <HBox alignment="CENTER_LEFT" spacing="12">
         <VBox spacing="4" HBox.hgrow="ALWAYS">
-            <Label text="Payment Distribution" styleClass="page-title"/>
-            <Label text="Import dairy payment files and bulk-credit member accounts" styleClass="page-subtitle"/>
+            <Label text="%dist.title" styleClass="page-title"/>
+            <Label text="%dist.subtitle" styleClass="page-subtitle"/>
         </VBox>
-        <Button text="📥  Import Excel / PDF" onAction="#handleImport" styleClass="primary-button"/>
+        <Button text="%dist.button.import" onAction="#handleImport" styleClass="primary-button"/>
     </HBox>
 
     <!-- Main card -->
     <VBox spacing="14" VBox.vgrow="ALWAYS" styleClass="card">
 
         <HBox alignment="CENTER_LEFT" spacing="12">
-            <Label fx:id="statusLabel" text="Import a file to start distribution"
+            <Label fx:id="statusLabel" text="%dist.label.start"
                    styleClass="status-label" HBox.hgrow="ALWAYS"/>
-            <Button fx:id="processBtn" text="✔  Process Credits"
+            <Button fx:id="processBtn" text="%dist.button.process"
                     onAction="#handleProcess" disable="true" styleClass="success-button"/>
         </HBox>
 
@@ -30,11 +30,11 @@
 
         <TableView fx:id="recordTable" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="colName"   text="Name"          prefWidth="200"/>
-                <TableColumn fx:id="colAcc"    text="Account #"     prefWidth="130"/>
-                <TableColumn fx:id="colAmount" text="Amount (₹)"    prefWidth="120"/>
-                <TableColumn fx:id="colStatus" text="Status"        prefWidth="110"/>
-                <TableColumn fx:id="colError"  text="Error / Note"  prefWidth="300"/>
+                <TableColumn fx:id="colName"   text="%accounts.table.name"          prefWidth="200"/>
+                <TableColumn fx:id="colAcc"    text="%accounts.table.acc_no"     prefWidth="130"/>
+                <TableColumn fx:id="colAmount" text="%tx.table.amount"    prefWidth="120"/>
+                <TableColumn fx:id="colStatus" text="%accounts.table.status"        prefWidth="110"/>
+                <TableColumn fx:id="colError"  text="%dist.table.error"  prefWidth="300"/>
             </columns>
         </TableView>
 

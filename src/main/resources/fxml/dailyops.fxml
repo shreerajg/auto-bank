@@ -11,7 +11,7 @@
     <!-- Header -->
     <HBox alignment="CENTER_LEFT" spacing="12">
         <VBox spacing="4" HBox.hgrow="ALWAYS">
-            <Label text="Daily Operations" styleClass="page-title"/>
+            <Label text="%dailyops.title" styleClass="page-title"/>
             <Label fx:id="todayDateLabel" styleClass="page-subtitle"/>
         </VBox>
     </HBox>
@@ -21,19 +21,19 @@
 
         <!-- Day Status Card -->
         <VBox spacing="14" styleClass="form-panel" HBox.hgrow="ALWAYS">
-            <Label text="Today's Status" styleClass="section-title"/>
+            <Label text="%dailyops.status.title" styleClass="section-title"/>
             <Separator/>
             <HBox spacing="0">
                 <VBox spacing="6" HBox.hgrow="ALWAYS">
-                    <Label text="SESSION" styleClass="stat-label"/>
+                    <Label text="%dailyops.label.session" styleClass="stat-label"/>
                     <Label fx:id="sessionStatusLabel" text="—" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #0f172a;"/>
                 </VBox>
                 <VBox spacing="6" HBox.hgrow="ALWAYS">
-                    <Label text="OPENING BALANCE" styleClass="stat-label"/>
+                    <Label text="%dailyops.label.opening_bal" styleClass="stat-label"/>
                     <Label fx:id="openingBalLabel" text="—" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #0f172a;"/>
                 </VBox>
                 <VBox spacing="6" HBox.hgrow="ALWAYS">
-                    <Label text="EXPECTED CASH" styleClass="stat-label"/>
+                    <Label text="%dailyops.label.expected_cash" styleClass="stat-label"/>
                     <Label fx:id="expectedCashLabel" text="—" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #059669;"/>
                 </VBox>
             </HBox>
@@ -41,25 +41,25 @@
 
         <!-- Open Day Card -->
         <VBox spacing="12" styleClass="form-panel" HBox.hgrow="ALWAYS">
-            <Label text="Open Day" styleClass="section-title"/>
+            <Label text="%dailyops.section.open" styleClass="section-title"/>
             <Separator/>
             <VBox spacing="6">
-                <Label text="OPENING CASH (₹)" styleClass="stat-label"/>
-                <TextField fx:id="openingBalField" promptText="Cash on hand at opening"/>
+                <Label text="%dailyops.label.opening_cash" styleClass="stat-label"/>
+                <TextField fx:id="openingBalField" promptText="%dailyops.label.opening_cash"/>
             </VBox>
-            <Button fx:id="openDayBtn" text="▶  Open Day" onAction="#handleOpenDay"
+            <Button fx:id="openDayBtn" text="%dailyops.button.open" onAction="#handleOpenDay"
                     styleClass="success-button" maxWidth="Infinity" prefHeight="40"/>
         </VBox>
 
         <!-- Close Day Card -->
         <VBox spacing="12" styleClass="form-panel" HBox.hgrow="ALWAYS">
-            <Label text="Close Day" styleClass="section-title"/>
+            <Label text="%dailyops.section.close" styleClass="section-title"/>
             <Separator/>
             <VBox spacing="6">
-                <Label text="ACTUAL CASH IN HAND (₹)" styleClass="stat-label"/>
-                <TextField fx:id="actualCashField" promptText="Count and enter cash"/>
+                <Label text="%dailyops.label.actual_cash" styleClass="stat-label"/>
+                <TextField fx:id="actualCashField" promptText="%dailyops.label.actual_cash"/>
             </VBox>
-            <Button fx:id="closeDayBtn" text="■  Close Day" onAction="#handleCloseDay"
+            <Button fx:id="closeDayBtn" text="%dailyops.button.close" onAction="#handleCloseDay"
                     styleClass="danger-button" maxWidth="Infinity" prefHeight="40"/>
         </VBox>
 
@@ -69,14 +69,14 @@
 
     <!-- History -->
     <VBox spacing="10">
-        <Label text="Session History — Last 30 Days" styleClass="section-title"/>
+        <Label text="%dailyops.history.title" styleClass="section-title"/>
         <TableView fx:id="historyTable" VBox.vgrow="ALWAYS" prefHeight="320">
             <columns>
-                <TableColumn fx:id="colDate"          text="Date"              prefWidth="120"/>
-                <TableColumn fx:id="colOpening"       text="Opening Bal (₹)"   prefWidth="140"/>
-                <TableColumn fx:id="colExpected"      text="Expected Cash (₹)" prefWidth="150"/>
-                <TableColumn fx:id="colActual"        text="Actual Cash (₹)"   prefWidth="140"/>
-                <TableColumn fx:id="colSessionStatus" text="Status"            prefWidth="90"/>
+                <TableColumn fx:id="colDate"          text="%dailyops.table.date"              prefWidth="120"/>
+                <TableColumn fx:id="colOpening"       text="%dailyops.table.opening"   prefWidth="140"/>
+                <TableColumn fx:id="colExpected"      text="%dailyops.table.expected" prefWidth="150"/>
+                <TableColumn fx:id="colActual"        text="%dailyops.table.actual"   prefWidth="140"/>
+                <TableColumn fx:id="colSessionStatus" text="%accounts.table.status"            prefWidth="90"/>
             </columns>
         </TableView>
     </VBox>

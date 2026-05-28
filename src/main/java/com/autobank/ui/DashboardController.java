@@ -78,9 +78,9 @@ public class DashboardController {
 
     private void loadChartData() {
         XYChart.Series<String, Number> depositSeries = new XYChart.Series<>();
-        depositSeries.setName(I18n.getCurrentLang().equals("en") ? "Deposits" : "ठेवी");
+        depositSeries.setName(I18n.t("common.deposits"));
         XYChart.Series<String, Number> withdrawSeries = new XYChart.Series<>();
-        withdrawSeries.setName(I18n.getCurrentLang().equals("en") ? "Withdrawals" : "काढणे");
+        withdrawSeries.setName(I18n.t("common.withdrawals"));
 
         String sql = "SELECT created_at::date as d, type, COUNT(*) as c " +
                      "FROM transactions " +

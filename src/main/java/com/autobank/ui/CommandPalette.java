@@ -1,5 +1,7 @@
 package com.autobank.ui;
 
+import com.autobank.account.model.Account;
+import com.autobank.account.service.AccountService;
 import com.autobank.util.I18n;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -26,6 +28,7 @@ public class CommandPalette extends StackPane {
     private final ListView<CommandItem> listView;
     private final List<CommandItem> allCommands = new ArrayList<>();
     private final ObservableList<CommandItem> filteredCommands = FXCollections.observableArrayList();
+    private final AccountService accountService = new AccountService();
 
     public CommandPalette(MainController mainController) {
         this.mainController = mainController;

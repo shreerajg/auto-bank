@@ -226,6 +226,10 @@ public class MainController {
     @FXML
     private void handleGlobalSearch() {
         String query = globalSearchField.getText();
+        handleGlobalSearchWithQuery(query);
+    }
+
+    public void handleGlobalSearchWithQuery(String query) {
         if (query != null && !query.isBlank()) {
             pendingSearchQuery = query.trim();
             showAccounts();

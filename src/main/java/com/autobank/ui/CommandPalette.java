@@ -117,9 +117,25 @@ public class CommandPalette extends StackPane {
             filteredCommands.setAll(allCommands);
         } else {
             String q = query.toLowerCase();
-            filteredCommands.setAll(allCommands.stream()
+            List<CommandItem> matches = allCommands.stream()
                 .filter(c -> c.label.toLowerCase().contains(q) || I18n.t(c.i18nKey).toLowerCase().contains(q))
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+            
+            if (q.length() >= 2) {
+                try {
+                    List<Account> accounts = accountService.searchAccounts(q);
+                    for (Account a : accounts) {
+                        matches.add(new CommandItem("👤", a.getHolderName(), "nav.accounts", a.getAccountNumber(), () -> {
+                            // This is a bit of a hack to pass search query to AccountController
+                            // We can use the existing global search mechanism
+                            mainController.handleGlobalSearchWithQuery(a.getAccountNumber());
+                        }));
+                        if (matches.size() > 15) break; // Limit results
+                    }
+                } catch (Exception ignored) {}
+            }
+            
+            filteredCommands.setAll(matches);
         }
         listView.getSelectionModel().selectFirst();
     }

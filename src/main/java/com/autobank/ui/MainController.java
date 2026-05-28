@@ -106,7 +106,8 @@ public class MainController {
     }
 
     private void showCommandPalette() {
-        // Implementation will follow
+        CommandPalette palette = new CommandPalette(this);
+        palette.show(staticContentArea);
     }
 
     private void refreshLabels() {

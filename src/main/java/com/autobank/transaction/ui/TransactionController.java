@@ -72,6 +72,8 @@ public class TransactionController {
         setupDraftListeners();
         loadDraft();
         loadRecent();
+
+        Platform.runLater(accountSearchField::requestFocus);
     }
 
     private void setupDraftListeners() {

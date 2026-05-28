@@ -72,6 +72,8 @@ public class AccountController {
         } else {
             load("");
         }
+
+        Platform.runLater(searchField::requestFocus);
     }
 
     private void setupDraftListeners() {

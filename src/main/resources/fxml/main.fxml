@@ -45,7 +45,21 @@
     </left>
 
     <center>
-        <StackPane fx:id="contentArea" styleClass="content-area"/>
+        <VBox>
+            <!-- Top Header / Breadcrumbs -->
+            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="view-header">
+                <Label fx:id="viewTitleLabel" text="Dashboard" styleClass="view-title"/>
+                <Separator orientation="VERTICAL" maxHeight="20"/>
+                <Label fx:id="viewSubtitleLabel" text="Overview &amp; Statistics" styleClass="view-subtitle"/>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <HBox alignment="CENTER" spacing="8" styleClass="keyboard-hint-box">
+                    <Label text="⌘ K" styleClass="keyboard-hint-key"/>
+                    <Label text="Quick Actions" styleClass="keyboard-hint-text"/>
+                </HBox>
+            </HBox>
+
+            <StackPane fx:id="contentArea" styleClass="content-area" VBox.vgrow="ALWAYS"/>
+        </VBox>
     </center>
 
     <bottom>

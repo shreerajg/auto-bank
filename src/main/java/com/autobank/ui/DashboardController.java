@@ -20,9 +20,15 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
+import javafx.util.Duration;
+import javafx.scene.layout.VBox;
+import com.autobank.util.Toast;
 
 public class DashboardController {
 
+    @FXML private VBox mainContainer;
     @FXML private Label dashboardTitle;
     @FXML private Label dashboardSubtitle;
     @FXML private Label totalAccountsHeader;

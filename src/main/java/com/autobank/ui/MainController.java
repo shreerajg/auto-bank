@@ -236,6 +236,12 @@ public class MainController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
             Scene scene = new Scene(loader.load(), 1000, 650);
             scene.getStylesheets().add(getClass().getResource("/css/app.css").toExternalForm());
+            
+            // Apply current theme to login screen
+            if (!currentTheme.equals("light")) {
+                scene.getRoot().getStyleClass().add("theme-" + currentTheme);
+            }
+
             Stage stage = (Stage) contentArea.getScene().getWindow();
             stage.setResizable(false);
             stage.setTitle("AutoBank");

@@ -42,20 +42,31 @@ public class MainController {
     
     private final Preferences prefs = Preferences.userNodeForPackage(MainController.class);
     private String currentTheme = "light";
+    private static MainController instance;
 
     @FXML
     public void initialize() {
+        instance = this;
         staticContentArea = contentArea;
         var user = UserSession.getInstance().getCurrentUser();
         currentUserLabel.setText(user.getUsername() + " (" + user.getRole() + ")");
         dateLabel.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
-        
+
         loadTheme();
         refreshLabels();
         showDashboard();
         setupShortcuts();
     }
 
+    public static void setTheme(String themeName) {
+        if (instance != null) {
+            instance.currentTheme = themeName;
+            instance.prefs.put("theme", themeName);
+            instance.applyTheme();
+        }
+    }
+
+    private void loadTheme() {
     private void loadTheme() {
         currentTheme = prefs.get("theme", "light");
         applyTheme();

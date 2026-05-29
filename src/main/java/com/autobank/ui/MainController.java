@@ -23,33 +23,25 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.prefs.Preferences;
 
 public class MainController {
 
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
     @FXML private StackPane contentArea;
-    @FXML private Label currentUserLabel;
-    @FXML private Label dateLabel;
-    @FXML private Label viewTitleLabel;
-    @FXML private Label viewSubtitleLabel;
-    @FXML private Button dashboardBtn;
-    @FXML private Button accountsBtn;
-    @FXML private Button transactionsBtn;
-    @FXML private Button interestBtn;
-    @FXML private Button distributionBtn;
-    @FXML private Button loansBtn;
-    @FXML private Button dailyOpsBtn;
-    @FXML private Button reportsBtn;
-    @FXML private Button settingsBtn;
-    @FXML private Button backupBtn;
+    // ... rest of fields until langBtn
     @FXML private Button langBtn;
+    @FXML private Button themeBtn;
     @FXML private TextField globalSearchField;
 
     private static StackPane staticContentArea;
     private static String pendingSearchQuery = null;
     private String currentViewFxml = "/fxml/dashboard.fxml";
     private Button currentActiveBtn;
+    
+    private final Preferences prefs = Preferences.userNodeForPackage(MainController.class);
+    private String currentTheme = "light";
 
     @FXML
     public void initialize() {

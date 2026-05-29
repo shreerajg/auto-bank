@@ -41,7 +41,7 @@
             <Label fx:id="errorLabel" styleClass="error-label" visible="false" managed="false" wrapText="true"/>
 
             <Button fx:id="loginButton" text="%login.button" onAction="#handleLogin"
-                    defaultButton="true" styleClass="primary-button" maxWidth="Infinity"/>
+                    defaultButton="true" styleClass="primary-button, pulse-action" maxWidth="Infinity"/>
 
             <HBox alignment="CENTER" spacing="12">
                 <Button text="English" onAction="#switchToEnglish" styleClass="lang-button"/>

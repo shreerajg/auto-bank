@@ -10,8 +10,9 @@ import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Properties;
+import com.autobank.util.AuditLogger;
+import com.autobank.ui.MainController;
+import javafx.fxml.FXML;
 
 public class SettingsController {
 
@@ -30,6 +31,15 @@ public class SettingsController {
     @FXML private Label versionLabel;
     @FXML private Label currentUserLabel;
     @FXML private TextArea auditLogArea;
+
+    @FXML
+    private void setLightTheme() { MainController.setTheme("light"); }
+
+    @FXML
+    private void setDarkTheme() { MainController.setTheme("dark"); }
+
+    @FXML
+    private void setBlueTheme() { MainController.setTheme("blue"); }
 
     @FXML
     public void initialize() {

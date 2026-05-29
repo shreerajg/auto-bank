@@ -67,7 +67,6 @@ public class MainController {
     }
 
     private void loadTheme() {
-    private void loadTheme() {
         currentTheme = prefs.get("theme", "light");
         applyTheme();
     }

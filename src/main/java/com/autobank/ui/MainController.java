@@ -50,9 +50,39 @@ public class MainController {
         currentUserLabel.setText(user.getUsername() + " (" + user.getRole() + ")");
         dateLabel.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
         
+        loadTheme();
         refreshLabels();
         showDashboard();
         setupShortcuts();
+    }
+
+    private void loadTheme() {
+        currentTheme = prefs.get("theme", "light");
+        applyTheme();
+    }
+
+    @FXML
+    private void cycleTheme() {
+        switch (currentTheme) {
+            case "light": currentTheme = "dark"; break;
+            case "dark":  currentTheme = "blue"; break;
+            case "blue":  currentTheme = "light"; break;
+            default:      currentTheme = "light";
+        }
+        prefs.put("theme", currentTheme);
+        applyTheme();
+        Toast.show(contentArea, "Theme: " + currentTheme.toUpperCase());
+    }
+
+    private void applyTheme() {
+        Platform.runLater(() -> {
+            if (contentArea.getScene() == null) return;
+            var root = contentArea.getScene().getRoot();
+            root.getStyleClass().removeAll("theme-dark", "theme-blue");
+            if (!currentTheme.equals("light")) {
+                root.getStyleClass().add("theme-" + currentTheme);
+            }
+        });
     }
 
     public static void showToast(String message, Toast.Type type) {

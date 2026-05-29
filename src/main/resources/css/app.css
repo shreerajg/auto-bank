@@ -125,10 +125,28 @@
 .primary-button:hover {
     -fx-background-color: #1d4ed8;
     -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.42), 14, 0, 0, 4);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
 }
+
 .primary-button:pressed {
     -fx-background-color: #1e40af;
     -fx-effect: none;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* Pulse animation for important actions */
+@keyframes pulse {
+    0% { -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.4), 10, 0, 0, 0); }
+    50% { -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.6), 20, 0, 0, 0); }
+    100% { -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.4), 10, 0, 0, 0); }
+}
+
+.pulse-action {
+    -fx-animation-name: pulse;
+    -fx-animation-duration: 2s;
+    -fx-animation-iteration-count: infinite;
 }
 
 .success-button {

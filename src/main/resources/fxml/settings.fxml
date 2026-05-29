@@ -60,6 +60,17 @@
                 </HBox>
             </VBox>
 
+            <!-- Theme Settings -->
+            <VBox spacing="10" styleClass="form-panel">
+                <Label text="Appearance &amp; Themes" styleClass="section-title"/>
+                <Label text="Select application color theme:"/>
+                <HBox spacing="10">
+                    <Button text="☀ Light" onAction="#setLightTheme" styleClass="primary-button" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <Button text="🌙 Dark"  onAction="#setDarkTheme"  styleClass="primary-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" style="-fx-background-color: #334155;"/>
+                    <Button text="🔵 Blue"  onAction="#setBlueTheme"  styleClass="primary-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" style="-fx-background-color: #1e3a8a;"/>
+                </HBox>
+            </VBox>
+
             <!-- Audit Log Viewer -->
             <VBox spacing="8" styleClass="form-panel" VBox.vgrow="ALWAYS">
                 <HBox alignment="CENTER_LEFT" spacing="10">

@@ -30,7 +30,9 @@
                 <Button fx:id="settingsBtn"     text="⚙️  Settings"           onAction="#showSettings"      styleClass="nav-button"/>
             </VBox>
 
-            <VBox style="-fx-padding: 0 10;">
+            <VBox style="-fx-padding: 0 10;" spacing="8">
+                <Button fx:id="themeBtn" text="🌓 Theme" onAction="#cycleTheme"
+                        styleClass="lang-button" maxWidth="Infinity"/>
                 <Button fx:id="langBtn" text="मराठी / EN" onAction="#toggleLanguage"
                         styleClass="lang-button" maxWidth="Infinity"/>
             </VBox>

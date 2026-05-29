@@ -583,6 +583,54 @@
     -fx-text-fill: #93c5fd;
 }
 
+/* ═══════════════ QUICK ACTIONS ═════════════════════════ */
+.quick-action-card {
+    -fx-background-color: white;
+    -fx-padding: 24px;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.07), 20, 0, 0, 4);
+    -fx-border-color: #e9eef5;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+    -fx-cursor: hand;
+    -fx-transition: 0.3s;
+}
+
+.quick-action-card:hover {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #3b82f6;
+    -fx-translate-y: -4px;
+    -fx-effect: dropshadow(gaussian, rgba(59,130,246,0.15), 25, 0, 0, 8);
+}
+
+.quick-action-icon {
+    -fx-font-size: 32px;
+    -fx-padding: 0 0 12 0;
+}
+
+.quick-action-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1e293b;
+}
+
+.quick-action-desc {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748b;
+}
+
+/* ═══════════════ ANIMATIONS ═══════════════════════════ */
+@keyframes fadeIn {
+    from { opacity: 0; -fx-translate-y: 10; }
+    to { opacity: 1; -fx-translate-y: 0; }
+}
+
+.fade-in {
+    -fx-animation-name: fadeIn;
+    -fx-animation-duration: 0.5s;
+    -fx-animation-fill-mode: both;
+}
+
 /* ═══════════════ CHARTS ════════════════════════════════ */
 .chart {
     -fx-background-color: transparent;

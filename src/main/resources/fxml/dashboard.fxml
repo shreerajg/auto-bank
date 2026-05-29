@@ -6,7 +6,7 @@
 
 <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #f0f2f5;" 
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.autobank.ui.DashboardController">
-    <VBox spacing="32" styleClass="content-pane">
+    <VBox fx:id="mainContainer" spacing="32" styleClass="content-pane">
         
         <!-- Header -->
         <HBox alignment="CENTER_LEFT" spacing="16">
@@ -39,6 +39,28 @@
                 <Label text="%dashboard.stats.today_sub" styleClass="stat-subtext"/>
             </VBox>
         </HBox>
+
+        <!-- Quick Actions Row -->
+        <VBox spacing="16">
+            <Label text="Quick Actions" styleClass="section-title"/>
+            <HBox spacing="20">
+                <VBox styleClass="quick-action-card" spacing="4" HBox.hgrow="ALWAYS" onMouseClicked="#handleNewAccount">
+                    <Label text="👤" styleClass="quick-action-icon"/>
+                    <Label text="New Account" styleClass="quick-action-title"/>
+                    <Label text="Register a new customer/farmer" styleClass="quick-action-desc"/>
+                </VBox>
+                <VBox styleClass="quick-action-card" spacing="4" HBox.hgrow="ALWAYS" onMouseClicked="#handleDeposit">
+                    <Label text="💰" styleClass="quick-action-icon"/>
+                    <Label text="Cash Deposit" styleClass="quick-action-title"/>
+                    <Label text="Add money to an existing account" styleClass="quick-action-desc"/>
+                </VBox>
+                <VBox styleClass="quick-action-card" spacing="4" HBox.hgrow="ALWAYS" onMouseClicked="#handleWithdraw">
+                    <Label text="🏧" styleClass="quick-action-icon"/>
+                    <Label text="Withdrawal" styleClass="quick-action-title"/>
+                    <Label text="Debit money from an account" styleClass="quick-action-desc"/>
+                </VBox>
+            </HBox>
+        </VBox>
 
         <!-- Charts and Activity Row -->
         <HBox spacing="24">

@@ -26,6 +26,10 @@ import javafx.util.Duration;
 import javafx.scene.layout.VBox;
 import com.autobank.util.Toast;
 
+import com.autobank.ui.service.AnalyticsService;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
+
 public class DashboardController {
 
     @FXML private VBox mainContainer;
@@ -43,25 +47,31 @@ public class DashboardController {
     @FXML private Label systemStatusLabel;
 
     @FXML private BarChart<String, Number> txChart;
+    @FXML private PieChart loanPieChart;
+    @FXML private LineChart<String, Number> cashFlowChart;
+    
     @FXML private TableView<Transaction> recentTable;
     @FXML private TableColumn<Transaction, String> colType;
     @FXML private TableColumn<Transaction, BigDecimal> colAmount;
     @FXML private TableColumn<Transaction, String> colDate;
 
     private final TransactionService txService = new TransactionService();
+    private final AnalyticsService analyticsService = new AnalyticsService();
 
     @FXML
     public void initialize() {
         refreshLabels();
         refreshStats();
         loadChartData();
+        loadAnalyticsCharts();
         loadRecentActivity();
     }
 
     private void refreshLabels() {
         dashboardTitle.setText(I18n.t("dashboard.title"));
-        String user = com.autobank.auth.model.UserSession.getInstance().getCurrentUser().getUsername();
-        dashboardSubtitle.setText(I18n.t("dashboard.subtitle") + ", " + user + "!");
+        var user = com.autobank.auth.model.UserSession.getInstance().getCurrentUser();
+        String name = (user != null) ? user.getUsername() : "User";
+        dashboardSubtitle.setText(I18n.t("dashboard.subtitle") + ", " + name + "!");
         totalAccountsHeader.setText(I18n.t("dashboard.stats.accounts"));
         totalBalanceHeader.setText(I18n.t("dashboard.stats.balance"));
         activeLoansHeader.setText(I18n.t("dashboard.stats.loans"));
@@ -78,7 +88,7 @@ public class DashboardController {
         run("SELECT COUNT(*) FROM loans WHERE status = 'ACTIVE'",
             rs -> { if (rs.next()) activeLoansLabel.setText(String.valueOf(rs.getInt(1))); });
         
-        run("SELECT COUNT(*) FROM transactions WHERE created_at::date = CURRENT_DATE",
+        run("SELECT COUNT(*) FROM transactions WHERE DATE(created_at) = CURDATE()",
             rs -> { if (rs.next()) todayTxLabel.setText(String.valueOf(rs.getInt(1))); });
     }
 
@@ -88,16 +98,16 @@ public class DashboardController {
         XYChart.Series<String, Number> withdrawSeries = new XYChart.Series<>();
         withdrawSeries.setName(I18n.t("common.withdrawals"));
 
-        String sql = "SELECT created_at::date as d, type, COUNT(*) as c " +
+        String sql = "SELECT DATE(created_at) as d, type, COUNT(*) as c " +
                      "FROM transactions " +
-                     "WHERE created_at >= CURRENT_DATE - INTERVAL '7 days' " +
+                     "WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) " +
                      "GROUP BY d, type ORDER BY d";
 
         run(sql, rs -> {
             while (rs.next()) {
                 String date = rs.getDate("d").toString();
                 int count = rs.getInt("c");
-                if ("DEPOSIT".equals(rs.getString("type"))) {
+                if (rs.getString("type").contains("DEPOSIT")) {
                     depositSeries.getData().add(new XYChart.Data<>(date, count));
                 } else {
                     withdrawSeries.getData().add(new XYChart.Data<>(date, count));
@@ -105,7 +115,36 @@ public class DashboardController {
             }
         });
 
+        txChart.getData().clear();
         txChart.getData().addAll(depositSeries, withdrawSeries);
+    }
+
+    private void loadAnalyticsCharts() {
+        try {
+            // 1. Loan Distribution
+            var loanDist = analyticsService.getLoanDistribution();
+            loanPieChart.getData().clear();
+            loanDist.forEach((status, count) -> 
+                loanPieChart.getData().add(new PieChart.Data(status, count)));
+
+            // 2. Cash Flow
+            var cashFlow = analyticsService.getMonthlyCashFlow(6);
+            XYChart.Series<String, Number> depSeries = new XYChart.Series<>();
+            depSeries.setName("Deposits");
+            XYChart.Series<String, Number> wthSeries = new XYChart.Series<>();
+            wthSeries.setName("Withdrawals");
+
+            for (var data : cashFlow) {
+                depSeries.getData().add(new XYChart.Data<>(data.month, data.deposits));
+                wthSeries.getData().add(new XYChart.Data<>(data.month, data.withdrawals));
+            }
+
+            cashFlowChart.getData().clear();
+            cashFlowChart.getData().addAll(depSeries, wthSeries);
+
+        } catch (Exception e) {
+            log.error("Failed to load analytics charts", e);
+        }
     }
 
     private void loadRecentActivity() {

@@ -30,7 +30,22 @@ public class MainController {
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
     @FXML private StackPane contentArea;
-    // ... rest of fields until langBtn
+    @FXML private Label currentUserLabel;
+    @FXML private Label dateLabel;
+    @FXML private Label viewTitleLabel;
+    @FXML private Label viewSubtitleLabel;
+    
+    @FXML private Button dashboardBtn;
+    @FXML private Button accountsBtn;
+    @FXML private Button transactionsBtn;
+    @FXML private Button interestBtn;
+    @FXML private Button distributionBtn;
+    @FXML private Button loansBtn;
+    @FXML private Button dailyOpsBtn;
+    @FXML private Button reportsBtn;
+    @FXML private Button backupBtn;
+    @FXML private Button settingsBtn;
+    
     @FXML private Button langBtn;
     @FXML private Button themeBtn;
     @FXML private TextField globalSearchField;

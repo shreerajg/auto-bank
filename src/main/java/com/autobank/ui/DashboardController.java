@@ -32,6 +32,8 @@ import javafx.scene.chart.PieChart;
 
 public class DashboardController {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DashboardController.class);
+
     @FXML private VBox mainContainer;
     @FXML private Label dashboardTitle;
     @FXML private Label dashboardSubtitle;

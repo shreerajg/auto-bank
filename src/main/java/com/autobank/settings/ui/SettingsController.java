@@ -10,6 +10,8 @@ import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Properties;
 import com.autobank.util.AuditLogger;
 import com.autobank.ui.MainController;
 import javafx.fxml.FXML;

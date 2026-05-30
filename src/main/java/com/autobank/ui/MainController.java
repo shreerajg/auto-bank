@@ -227,7 +227,7 @@ public class MainController {
     }
 
     @FXML
-    private void toggleLanguage() {
+    public void toggleLanguage() {
         String newLang = I18n.getCurrentLang().equals("en") ? "mr" : "en";
         I18n.load(newLang);
         refreshLabels();
@@ -241,19 +241,19 @@ public class MainController {
         }
     }
 
-    @FXML private void showDashboard()    { currentViewFxml = "/fxml/dashboard.fxml"; load(currentViewFxml); activate(dashboardBtn); updateHeaderTitles(); }
-    @FXML private void showAccounts()     { currentViewFxml = "/fxml/accounts.fxml";  load(currentViewFxml); activate(accountsBtn); updateHeaderTitles(); }
-    @FXML private void showTransactions() { currentViewFxml = "/fxml/transactions.fxml"; load(currentViewFxml); activate(transactionsBtn); updateHeaderTitles(); }
-    @FXML private void showInterest()     { currentViewFxml = "/fxml/interest.fxml";     load(currentViewFxml); activate(interestBtn); updateHeaderTitles(); }
-    @FXML private void showDistributions(){ currentViewFxml = "/fxml/distributions.fxml"; load(currentViewFxml); activate(distributionBtn); updateHeaderTitles(); }
-    @FXML private void showLoans()        { currentViewFxml = "/fxml/loans.fxml";       load(currentViewFxml); activate(loansBtn); updateHeaderTitles(); }
-    @FXML private void showDailyOps()     { currentViewFxml = "/fxml/dailyops.fxml";   load(currentViewFxml); activate(dailyOpsBtn); updateHeaderTitles(); }
-    @FXML private void showReports()      { currentViewFxml = "/fxml/reports.fxml";    load(currentViewFxml); activate(reportsBtn); updateHeaderTitles(); }
-    @FXML private void showBackup()       { currentViewFxml = "/fxml/backup.fxml";     load(currentViewFxml); activate(backupBtn); updateHeaderTitles(); }
-    @FXML private void showSettings()     { currentViewFxml = "/fxml/settings.fxml";   load(currentViewFxml); activate(settingsBtn); updateHeaderTitles(); }
+    @FXML public void showDashboard()    { currentViewFxml = "/fxml/dashboard.fxml"; load(currentViewFxml); activate(dashboardBtn); updateHeaderTitles(); }
+    @FXML public void showAccounts()     { currentViewFxml = "/fxml/accounts.fxml";  load(currentViewFxml); activate(accountsBtn); updateHeaderTitles(); }
+    @FXML public void showTransactions() { currentViewFxml = "/fxml/transactions.fxml"; load(currentViewFxml); activate(transactionsBtn); updateHeaderTitles(); }
+    @FXML public void showInterest()     { currentViewFxml = "/fxml/interest.fxml";     load(currentViewFxml); activate(interestBtn); updateHeaderTitles(); }
+    @FXML public void showDistributions(){ currentViewFxml = "/fxml/distributions.fxml"; load(currentViewFxml); activate(distributionBtn); updateHeaderTitles(); }
+    @FXML public void showLoans()        { currentViewFxml = "/fxml/loans.fxml";       load(currentViewFxml); activate(loansBtn); updateHeaderTitles(); }
+    @FXML public void showDailyOps()     { currentViewFxml = "/fxml/dailyops.fxml";   load(currentViewFxml); activate(dailyOpsBtn); updateHeaderTitles(); }
+    @FXML public void showReports()      { currentViewFxml = "/fxml/reports.fxml";    load(currentViewFxml); activate(reportsBtn); updateHeaderTitles(); }
+    @FXML public void showBackup()       { currentViewFxml = "/fxml/backup.fxml";     load(currentViewFxml); activate(backupBtn); updateHeaderTitles(); }
+    @FXML public void showSettings()     { currentViewFxml = "/fxml/settings.fxml";   load(currentViewFxml); activate(settingsBtn); updateHeaderTitles(); }
 
     @FXML
-    private void handleLogout() {
+    public void handleLogout() {
         var user = UserSession.getInstance().getCurrentUser();
         AuditLogger.log("LOGOUT", "USER", user.getId(), "Logout: " + user.getUsername(), user.getId());
         UserSession.getInstance().logout();

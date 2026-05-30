@@ -62,15 +62,33 @@
             </HBox>
         </VBox>
 
-        <!-- Charts and Activity Row -->
+        <!-- Charts Row 1: Transaction Trends and Loan Distribution -->
         <HBox spacing="24">
             <!-- Transaction Trend Chart -->
-            <VBox styleClass="chart-card" HBox.hgrow="ALWAYS" prefWidth="600">
+            <VBox styleClass="chart-card" HBox.hgrow="ALWAYS">
                 <Label text="%dashboard.chart.title" styleClass="chart-title"/>
                 <BarChart fx:id="txChart" prefHeight="300" animated="false">
                     <xAxis><CategoryAxis side="BOTTOM" /></xAxis>
                     <yAxis><NumberAxis side="LEFT" /></yAxis>
                 </BarChart>
+            </VBox>
+
+            <!-- Loan Distribution Pie Chart -->
+            <VBox styleClass="chart-card" prefWidth="350">
+                <Label text="Loan Distribution" styleClass="chart-title"/>
+                <PieChart fx:id="loanPieChart" prefHeight="300" animated="true"/>
+            </VBox>
+        </HBox>
+
+        <!-- Charts Row 2: Cash Flow and Recent Activity -->
+        <HBox spacing="24">
+            <!-- Cash Flow Line Chart -->
+            <VBox styleClass="chart-card" HBox.hgrow="ALWAYS">
+                <Label text="Monthly Cash Flow" styleClass="chart-title"/>
+                <LineChart fx:id="cashFlowChart" prefHeight="300" animated="false">
+                    <xAxis><CategoryAxis side="BOTTOM" /></xAxis>
+                    <yAxis><NumberAxis side="LEFT" /></yAxis>
+                </LineChart>
             </VBox>
 
             <!-- Recent Activity Table -->

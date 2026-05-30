@@ -1,5 +1,5 @@
 """
-AutoBank Excel/PDF import handler.
+AutoBank Excel/PDF import handler. dashboard
 Called by Java via: python excel_handler.py <file_path>
 Returns JSON to stdout.
 """

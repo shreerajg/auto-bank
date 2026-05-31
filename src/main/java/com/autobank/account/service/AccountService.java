@@ -1,13 +1,17 @@
 package com.autobank.account.service;
 
-import com.autobank.account.model.Account;
-import com.autobank.auth.model.UserSession;
-import com.autobank.config.DatabaseConfig;
-import com.autobank.util.AuditLogger;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.autobank.account.model.Account;
+import com.autobank.config.DatabaseConfig;
+import com.autobank.util.AuditLogger;
 
 public class AccountService {
 

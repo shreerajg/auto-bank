@@ -63,6 +63,7 @@
   "accounts.button.cancel": "रद्द करा",
   "accounts.button.register": "✚  सभासद नोंदणी करा",
   "accounts.button.update": "💾  खाते अपडेट करा",
+  "accounts.count_msg": "%d खाती दिसत आहेत",
   "tx.title": "व्यवहार खातेवही",
   "tx.subtitle": "ठेवी आणि काढण्यांचा संपूर्ण इतिहास",
   "tx.table.ref": "संदर्भ क्र.",

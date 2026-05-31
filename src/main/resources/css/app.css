@@ -8,186 +8,186 @@
     -fx-font-size: 13px;
     
     /* DEFAULT LIGHT THEME */
-    -fx-bg-base: #f1f5f9;
-    -fx-bg-sidebar: #0d1117;
-    -fx-bg-sidebar-accent: #161b27;
-    -fx-bg-card: white;
-    -fx-bg-input: #f8fafc;
-    -fx-bg-header: white;
-    -fx-bg-status: #161b27;
+    app-bg-base: #f1f5f9;
+    app-bg-sidebar: #0d1117;
+    app-bg-sidebar-accent: #161b27;
+    app-bg-card: white;
+    app-bg-input: #f8fafc;
+    app-bg-header: white;
+    app-bg-status: #161b27;
     
-    -fx-text-main: #0f172a;
-    -fx-text-muted: #64748b;
-    -fx-text-sidebar: #64748b;
-    -fx-text-sidebar-hover: #cbd5e1;
-    -fx-text-on-accent: white;
+    app-text-main: #0f172a;
+    app-text-muted: #64748b;
+    app-text-sidebar: #64748b;
+    app-text-sidebar-hover: #cbd5e1;
+    app-text-on-accent: white;
     
-    -fx-accent-primary: #2563eb;
-    -fx-accent-primary-hover: #1d4ed8;
-    -fx-accent-success: #059669;
-    -fx-accent-danger: #dc2626;
+    app-accent-primary: #2563eb;
+    app-accent-primary-hover: #1d4ed8;
+    app-accent-success: #059669;
+    app-accent-danger: #dc2626;
     
-    -fx-border-color: #e9eef5;
-    -fx-border-sidebar: rgba(255,255,255,0.07);
-    -fx-shadow: rgba(15,23,42,0.07);
+    app-border-color: #e9eef5;
+    app-border-sidebar: rgba(255,255,255,0.07);
+    app-shadow: rgba(15,23,42,0.07);
 
-    -fx-background-color: -fx-bg-base;
+    -fx-background-color: app-bg-base;
 }
 
 .theme-dark {
-    -fx-bg-base: #020617;
-    -fx-bg-sidebar: #020617;
-    -fx-bg-sidebar-accent: #0f172a;
-    -fx-bg-card: #0f172a;
-    -fx-bg-input: #1e293b;
-    -fx-bg-header: #0f172a;
-    -fx-bg-status: #020617;
+    app-bg-base: #020617;
+    app-bg-sidebar: #020617;
+    app-bg-sidebar-accent: #0f172a;
+    app-bg-card: #0f172a;
+    app-bg-input: #1e293b;
+    app-bg-header: #0f172a;
+    app-bg-status: #020617;
     
-    -fx-text-main: #f1f5f9;
-    -fx-text-muted: #94a3b8;
-    -fx-text-sidebar: #94a3b8;
-    -fx-text-sidebar-hover: #f8fafc;
+    app-text-main: #f1f5f9;
+    app-text-muted: #94a3b8;
+    app-text-sidebar: #94a3b8;
+    app-text-sidebar-hover: #f8fafc;
     
-    -fx-accent-primary: #3b82f6;
-    -fx-accent-primary-hover: #60a5fa;
-    -fx-border-color: #1e293b;
-    -fx-border-sidebar: #1e293b;
-    -fx-shadow: rgba(0,0,0,0.4);
+    app-accent-primary: #3b82f6;
+    app-accent-primary-hover: #60a5fa;
+    app-border-color: #1e293b;
+    app-border-sidebar: #1e293b;
+    app-shadow: rgba(0,0,0,0.4);
 }
 
 .theme-blue {
-    -fx-bg-base: #f0f7ff;
-    -fx-bg-sidebar: #1e3a8a;
-    -fx-bg-sidebar-accent: #172554;
-    -fx-bg-card: white;
-    -fx-accent-primary: #1d4ed8;
-    -fx-accent-primary-hover: #1e40af;
+    app-bg-base: #f0f7ff;
+    app-bg-sidebar: #1e3a8a;
+    app-bg-sidebar-accent: #172554;
+    app-bg-card: white;
+    app-accent-primary: #1d4ed8;
+    app-accent-primary-hover: #1e40af;
 }
 
 /* ═══════════════ LOGIN ════════════════════════════════ */
-.login-root { -fx-background-color: -fx-bg-sidebar; }
+.login-root { -fx-background-color: app-bg-sidebar; }
 .login-accent-panel {
-    -fx-background-color: linear-gradient(to bottom, -fx-bg-sidebar, -fx-bg-sidebar-accent);
+    -fx-background-color: linear-gradient(to bottom, app-bg-sidebar, app-bg-sidebar-accent);
     -fx-padding: 64px 52px; -fx-min-width: 400px;
 }
 .login-brand-icon { -fx-font-size: 68px; -fx-padding: 0 0 8 0; }
-.login-brand-title { -fx-font-size: 38px; -fx-font-weight: bold; -fx-text-fill: -fx-bg-base; }
-.login-brand-subtitle { -fx-font-size: 14px; -fx-text-fill: -fx-text-sidebar; -fx-padding: 6 0 0 0; }
-.login-brand-tagline { -fx-font-size: 11px; -fx-text-fill: -fx-text-sidebar; -fx-font-style: italic; }
-.login-form-panel { -fx-background-color: -fx-bg-base; -fx-padding: 0 64px; }
+.login-brand-title { -fx-font-size: 38px; -fx-font-weight: bold; -fx-text-fill: app-bg-base; }
+.login-brand-subtitle { -fx-font-size: 14px; -fx-text-fill: app-text-sidebar; -fx-padding: 6 0 0 0; }
+.login-brand-tagline { -fx-font-size: 11px; -fx-text-fill: app-text-sidebar; -fx-font-style: italic; }
+.login-form-panel { -fx-background-color: app-bg-base; -fx-padding: 0 64px; }
 .login-form {
-    -fx-background-color: -fx-bg-card; -fx-padding: 44px 40px; -fx-background-radius: 16px;
-    -fx-effect: dropshadow(gaussian, -fx-shadow, 48, 0, 0, 8); -fx-max-width: 420px;
+    -fx-background-color: app-bg-card; -fx-padding: 44px 40px; -fx-background-radius: 16px;
+    -fx-effect: dropshadow(gaussian, app-shadow, 48, 0, 0, 8); -fx-max-width: 420px;
 }
-.login-footer-text { -fx-font-size: 11px; -fx-text-fill: -fx-text-muted; -fx-padding: 32px 0 0 0; }
+.login-footer-text { -fx-font-size: 11px; -fx-text-fill: app-text-muted; -fx-padding: 32px 0 0 0; }
 
 /* ═══════════════ TYPOGRAPHY ═══════════════════════════ */
-.page-title { -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: -fx-text-main; }
-.page-subtitle { -fx-font-size: 13px; -fx-text-fill: -fx-text-muted; }
-.section-title { -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: -fx-text-main; }
-.chart-title { -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: -fx-text-main; -fx-padding: 0 0 10 0; }
-.header-label { -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: -fx-text-main; }
-.status-label { -fx-font-size: 12px; -fx-text-fill: -fx-text-muted; -fx-padding: 2 0; }
+.page-title { -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: app-text-main; }
+.page-subtitle { -fx-font-size: 13px; -fx-text-fill: app-text-muted; }
+.section-title { -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: app-text-main; }
+.chart-title { -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: app-text-main; -fx-padding: 0 0 10 0; }
+.header-label { -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: app-text-main; }
+.status-label { -fx-font-size: 12px; -fx-text-fill: app-text-muted; -fx-padding: 2 0; }
 .error-label {
-    -fx-text-fill: -fx-accent-danger; -fx-font-size: 13px; -fx-background-color: rgba(220,38,38,0.1);
+    -fx-text-fill: app-accent-danger; -fx-font-size: 13px; -fx-background-color: rgba(220,38,38,0.1);
     -fx-padding: 10px 14px; -fx-background-radius: 8px; -fx-border-color: rgba(220,38,38,0.2);
     -fx-border-width: 1px; -fx-border-radius: 8px;
 }
 
 /* ═══════════════ BUTTONS ══════════════════════════════ */
 .primary-button {
-    -fx-background-color: -fx-accent-primary; -fx-text-fill: white; -fx-font-weight: bold;
+    -fx-background-color: app-accent-primary; -fx-text-fill: white; -fx-font-weight: bold;
     -fx-font-size: 13px; -fx-padding: 10px 18px; -fx-background-radius: 8px; -fx-cursor: hand;
 }
-.primary-button:hover { -fx-background-color: -fx-accent-primary-hover; -fx-scale-x: 1.02; -fx-scale-y: 1.02; }
+.primary-button:hover { -fx-background-color: app-accent-primary-hover; -fx-scale-x: 1.02; -fx-scale-y: 1.02; }
 .primary-button:pressed { -fx-scale-x: 0.98; -fx-scale-y: 0.98; }
 
 .success-button {
-    -fx-background-color: -fx-accent-success; -fx-text-fill: white; -fx-font-weight: bold;
+    -fx-background-color: app-accent-success; -fx-text-fill: white; -fx-font-weight: bold;
     -fx-padding: 10px 18px; -fx-background-radius: 8px; -fx-cursor: hand;
 }
 .danger-button {
-    -fx-background-color: -fx-accent-danger; -fx-text-fill: white; -fx-font-weight: bold;
+    -fx-background-color: app-accent-danger; -fx-text-fill: white; -fx-font-weight: bold;
     -fx-padding: 10px 18px; -fx-background-radius: 8px; -fx-cursor: hand;
 }
 
 .lang-button {
-    -fx-background-color: rgba(255,255,255,0.07); -fx-text-fill: -fx-text-sidebar;
-    -fx-border-color: -fx-border-sidebar; -fx-border-radius: 8px; -fx-background-radius: 8px;
+    -fx-background-color: rgba(255,255,255,0.07); -fx-text-fill: app-text-sidebar;
+    -fx-border-color: app-border-sidebar; -fx-border-radius: 8px; -fx-background-radius: 8px;
     -fx-padding: 8px 14px; -fx-cursor: hand; -fx-font-size: 12px;
 }
-.lang-button:hover { -fx-background-color: rgba(255,255,255,0.12); -fx-text-fill: -fx-text-sidebar-hover; }
+.lang-button:hover { -fx-background-color: rgba(255,255,255,0.12); -fx-text-fill: app-text-sidebar-hover; }
 
 /* ═══════════════ SIDEBAR ══════════════════════════════ */
-.sidebar { -fx-background-color: -fx-bg-sidebar; -fx-padding: 0; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 16, 0, 3, 0); }
-.sidebar-brand-box { -fx-background-color: -fx-bg-sidebar-accent; -fx-padding: 22px 20px 18px 20px; -fx-border-color: -fx-border-sidebar; -fx-border-width: 0 0 1 0; }
-.sidebar-title { -fx-font-size: 19px; -fx-font-weight: bold; -fx-text-fill: -fx-text-sidebar-hover; }
-.user-label { -fx-font-size: 11px; -fx-text-fill: -fx-text-sidebar; -fx-padding: 0; }
+.sidebar { -fx-background-color: app-bg-sidebar; -fx-padding: 0; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 16, 0, 3, 0); }
+.sidebar-brand-box { -fx-background-color: app-bg-sidebar-accent; -fx-padding: 22px 20px 18px 20px; -fx-border-color: app-border-sidebar; -fx-border-width: 0 0 1 0; }
+.sidebar-title { -fx-font-size: 19px; -fx-font-weight: bold; -fx-text-fill: app-text-sidebar-hover; }
+.user-label { -fx-font-size: 11px; -fx-text-fill: app-text-sidebar; -fx-padding: 0; }
 
 .nav-button {
-    -fx-background-color: transparent; -fx-text-fill: -fx-text-sidebar;
+    -fx-background-color: transparent; -fx-text-fill: app-text-sidebar;
     -fx-alignment: CENTER-LEFT; -fx-padding: 10px 16px; -fx-max-width: Infinity; -fx-cursor: hand; -fx-background-radius: 8px;
 }
-.nav-button:hover { -fx-background-color: rgba(255,255,255,0.06); -fx-text-fill: -fx-text-sidebar-hover; }
-.nav-button.active { -fx-background-color: -fx-accent-primary; -fx-text-fill: white; }
+.nav-button:hover { -fx-background-color: rgba(255,255,255,0.06); -fx-text-fill: app-text-sidebar-hover; }
+.nav-button.active { -fx-background-color: app-accent-primary; -fx-text-fill: white; }
 
 .logout-button { -fx-text-fill: #ef4444; -fx-padding: 10px 16px; }
 .logout-button:hover { -fx-background-color: rgba(239,68,68,0.10); -fx-text-fill: #f87171; }
 
 /* ═══════════════ STATUS BAR ═══════════════════════════ */
-.status-bar { -fx-background-color: -fx-bg-status; -fx-padding: 7px 20px; -fx-border-color: -fx-border-sidebar; -fx-border-width: 1 0 0 0; }
-.status-bar .label { -fx-text-fill: -fx-text-sidebar; -fx-font-size: 11px; }
+.status-bar { -fx-background-color: app-bg-status; -fx-padding: 7px 20px; -fx-border-color: app-border-sidebar; -fx-border-width: 1 0 0 0; }
+.status-bar .label { -fx-text-fill: app-text-sidebar; -fx-font-size: 11px; }
 
 /* ═══════════════ CONTENT AREA ═════════════════════════ */
-.content-area { -fx-background-color: -fx-bg-base; }
+.content-area { -fx-background-color: app-bg-base; }
 .content-pane { -fx-padding: 28px 32px; }
-.view-header { -fx-background-color: -fx-bg-header; -fx-padding: 16px 32px; -fx-border-color: -fx-border-color; -fx-border-width: 0 0 1 0; }
-.view-title { -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: -fx-text-main; }
-.view-subtitle { -fx-font-size: 13px; -fx-text-fill: -fx-text-muted; }
+.view-header { -fx-background-color: app-bg-header; -fx-padding: 16px 32px; -fx-border-color: app-border-color; -fx-border-width: 0 0 1 0; }
+.view-title { -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: app-text-main; }
+.view-subtitle { -fx-font-size: 13px; -fx-text-fill: app-text-muted; }
 
 /* ═══════════════ CARDS ════════════════════════════════ */
 .chart-card, .form-panel, .card {
-    -fx-background-color: -fx-bg-card; -fx-padding: 20px 24px; -fx-background-radius: 12px;
-    -fx-effect: dropshadow(gaussian, -fx-shadow, 20, 0, 0, 4); -fx-border-color: -fx-border-color; -fx-border-width: 1px; -fx-border-radius: 12px;
+    -fx-background-color: app-bg-card; -fx-padding: 20px 24px; -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, app-shadow, 20, 0, 0, 4); -fx-border-color: app-border-color; -fx-border-width: 1px; -fx-border-radius: 12px;
 }
 
-.stat-card { -fx-background-color: -fx-bg-card; -fx-padding: 18px 20px; -fx-background-radius: 12px; -fx-effect: dropshadow(gaussian, -fx-shadow, 20, 0, 0, 4); }
-.stat-card-blue { -fx-background-color: #3b82f6, -fx-bg-card; -fx-background-insets: 0, 4 0 0 0; -fx-background-radius: 12, 0 0 12 12; }
-.stat-card-green { -fx-background-color: #10b981, -fx-bg-card; -fx-background-insets: 0, 4 0 0 0; -fx-background-radius: 12, 0 0 12 12; }
-.stat-card-purple { -fx-background-color: #8b5cf6, -fx-bg-card; -fx-background-insets: 0, 4 0 0 0; -fx-background-radius: 12, 0 0 12 12; }
-.stat-card-orange { -fx-background-color: #f59e0b, -fx-bg-card; -fx-background-insets: 0, 4 0 0 0; -fx-background-radius: 12, 0 0 12 12; }
+.stat-card { -fx-background-color: app-bg-card; -fx-padding: 18px 20px; -fx-background-radius: 12px; -fx-effect: dropshadow(gaussian, app-shadow, 20, 0, 0, 4); }
+.stat-card-blue { -fx-background-color: #3b82f6, app-bg-card; -fx-background-insets: 0, 4 0 0 0; -fx-background-radius: 12, 0 0 12 12; }
+.stat-card-green { -fx-background-color: #10b981, app-bg-card; -fx-background-insets: 0, 4 0 0 0; -fx-background-radius: 12, 0 0 12 12; }
+.stat-card-purple { -fx-background-color: #8b5cf6, app-bg-card; -fx-background-insets: 0, 4 0 0 0; -fx-background-radius: 12, 0 0 12 12; }
+.stat-card-orange { -fx-background-color: #f59e0b, app-bg-card; -fx-background-insets: 0, 4 0 0 0; -fx-background-radius: 12, 0 0 12 12; }
 
-.stat-label { -fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: -fx-text-muted; -fx-padding: 0 0 4 0; }
-.stat-value { -fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: -fx-text-main; }
-.stat-subtext { -fx-font-size: 11px; -fx-text-fill: -fx-text-muted; }
+.stat-label { -fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: app-text-muted; -fx-padding: 0 0 4 0; }
+.stat-value { -fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: app-text-main; }
+.stat-subtext { -fx-font-size: 11px; -fx-text-fill: app-text-muted; }
 
 /* ═══════════════ TABLES ═══════════════════════════════ */
-.table-view { -fx-background-color: -fx-bg-card; -fx-border-color: -fx-border-color; -fx-effect: dropshadow(gaussian, -fx-shadow, 16, 0, 0, 3); }
-.table-view .column-header-background { -fx-background-color: -fx-bg-input; }
-.table-view .column-header { -fx-background-color: transparent; -fx-border-color: transparent transparent -fx-border-color transparent; }
-.table-view .column-header .label { -fx-text-fill: -fx-text-muted; }
-.table-row-cell:even { -fx-background-color: -fx-bg-card; }
-.table-row-cell:odd { -fx-background-color: -fx-bg-input; }
+.table-view { -fx-background-color: app-bg-card; -fx-border-color: app-border-color; -fx-effect: dropshadow(gaussian, app-shadow, 16, 0, 0, 3); }
+.table-view .column-header-background { -fx-background-color: app-bg-input; }
+.table-view .column-header { -fx-background-color: transparent; -fx-border-color: transparent transparent app-border-color transparent; }
+.table-view .column-header .label { -fx-text-fill: app-text-muted; }
+.table-row-cell:even { -fx-background-color: app-bg-card; }
+.table-row-cell:odd { -fx-background-color: app-bg-input; }
 .table-row-cell:hover { -fx-background-color: rgba(59,130,246,0.1); }
-.table-cell { -fx-text-fill: -fx-text-main; }
+.table-cell { -fx-text-fill: app-text-main; }
 
 /* ═══════════════ INPUTS ════════════════════════════════ */
 .text-field, .password-field, .text-area {
-    -fx-background-color: -fx-bg-input; -fx-border-color: -fx-border-color; -fx-border-radius: 8px;
-    -fx-background-radius: 8px; -fx-padding: 9px 12px; -fx-text-fill: -fx-text-main; -fx-prompt-text-fill: -fx-text-muted;
+    -fx-background-color: app-bg-input; -fx-border-color: app-border-color; -fx-border-radius: 8px;
+    -fx-background-radius: 8px; -fx-padding: 9px 12px; -fx-text-fill: app-text-main; -fx-prompt-text-fill: app-text-muted;
 }
-.text-field:focused { -fx-background-color: -fx-bg-card; -fx-border-color: -fx-accent-primary; }
+.text-field:focused { -fx-background-color: app-bg-card; -fx-border-color: app-accent-primary; }
 
-.read-only-field { -fx-background-color: -fx-bg-input; -fx-text-fill: -fx-text-muted; -fx-border-color: -fx-border-color; }
+.read-only-field { -fx-background-color: app-bg-input; -fx-text-fill: app-text-muted; -fx-border-color: app-border-color; }
 
 /* ═══════════════ QUICK ACTIONS ═════════════════════════ */
 .quick-action-card {
-    -fx-background-color: -fx-bg-card; -fx-padding: 24px; -fx-background-radius: 12px;
-    -fx-effect: dropshadow(gaussian, -fx-shadow, 20, 0, 0, 4); -fx-border-color: -fx-border-color; -fx-cursor: hand;
+    -fx-background-color: app-bg-card; -fx-padding: 24px; -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, app-shadow, 20, 0, 0, 4); -fx-border-color: app-border-color; -fx-cursor: hand;
 }
-.quick-action-card:hover { -fx-background-color: -fx-bg-input; -fx-border-color: -fx-accent-primary; -fx-translate-y: -4px; }
-.quick-action-title { -fx-text-fill: -fx-text-main; }
-.quick-action-desc { -fx-text-fill: -fx-text-muted; }
+.quick-action-card:hover { -fx-background-color: app-bg-input; -fx-border-color: app-accent-primary; -fx-translate-y: -4px; }
+.quick-action-title { -fx-text-fill: app-text-main; }
+.quick-action-desc { -fx-text-fill: app-text-muted; }
 
 /* ═══════════════ ANIMATIONS ═══════════════════════════ */
 @keyframes fadeIn { from { opacity: 0; -fx-translate-y: 10; } to { opacity: 1; -fx-translate-y: 0; } }

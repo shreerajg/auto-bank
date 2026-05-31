@@ -209,8 +209,8 @@ public class AccountController {
             try {
                 accountService.deactivateAccount(selected.getId(), "Manual deactivation by operator");
                 MainController.showToast(I18n.t("common.success") + ": " + selected.getAccountNumber(), Toast.Type.SUCCESS);
-                load(searchField.getText());
-                detailBox.setVisible(false);
+                load(searchField != null ? searchField.getText() : "");
+                if (detailBox != null) detailBox.setVisible(false);
             } catch (Exception e) {
                 MainController.showToast(I18n.t("common.error") + ": " + e.getMessage(), Toast.Type.ERROR);
             }

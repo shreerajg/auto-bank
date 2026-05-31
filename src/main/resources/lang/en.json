@@ -63,6 +63,7 @@
   "accounts.button.cancel": "Cancel",
   "accounts.button.register": "✚  Register Member",
   "accounts.button.update": "💾  Update Account",
+  "accounts.count_msg": "Showing %d accounts",
   "tx.title": "Transaction Ledger",
   "tx.subtitle": "Complete history of deposits and withdrawals",
   "tx.table.ref": "Ref #",

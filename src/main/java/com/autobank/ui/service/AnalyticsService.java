@@ -25,8 +25,8 @@ public class AnalyticsService {
     public List<CashFlowData> getMonthlyCashFlow(int months) throws SQLException {
         List<CashFlowData> result = new ArrayList<>();
         String sql = "SELECT DATE_FORMAT(created_at, '%Y-%m') as mo, " +
-                     "SUM(CASE WHEN type = 'DEPOSIT' THEN amount ELSE 0 END) as dep, " +
-                     "SUM(CASE WHEN type = 'WITHDRAWAL' THEN amount ELSE 0 END) as wth " +
+                     "COALESCE(SUM(CASE WHEN type = 'DEPOSIT' THEN amount ELSE 0 END), 0) as dep, " +
+                     "COALESCE(SUM(CASE WHEN type = 'WITHDRAWAL' THEN amount ELSE 0 END), 0) as wth " +
                      "FROM transactions " +
                      "WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL ? MONTH) " +
                      "GROUP BY mo ORDER BY mo";

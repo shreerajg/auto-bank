@@ -186,8 +186,21 @@
     -fx-effect: dropshadow(gaussian, app-shadow, 20, 0, 0, 4); -fx-border-color: app-border-color; -fx-cursor: hand;
 }
 .quick-action-card:hover { -fx-background-color: app-bg-input; -fx-border-color: app-accent-primary; -fx-translate-y: -4px; }
-.quick-action-title { -fx-text-fill: app-text-main; }
-.quick-action-desc { -fx-text-fill: app-text-muted; }
+.quick-action-icon { -fx-font-size: 28px; -fx-padding: 0 0 10 0; }
+.quick-action-title { -fx-text-fill: app-text-main; -fx-font-weight: bold; -fx-font-size: 14px; }
+.quick-action-desc { -fx-text-fill: app-text-muted; -fx-font-size: 11px; }
+
+/* ═══════════════ INFO BANNER ═══════════════════════════ */
+.info-banner {
+    -fx-background-color: rgba(37,99,235,0.05); -fx-padding: 14px 20px; -fx-background-radius: 12px;
+    -fx-border-color: rgba(37,99,235,0.1); -fx-border-width: 1px; -fx-border-radius: 12px;
+}
+.info-banner-icon { -fx-font-size: 18px; }
+.info-banner-text { -fx-text-fill: app-text-main; -fx-font-size: 13px; }
+.info-banner-status {
+    -fx-text-fill: app-accent-success; -fx-font-weight: bold; -fx-font-size: 12px;
+    -fx-padding: 4px 10px; -fx-background-color: rgba(5,150,105,0.1); -fx-background-radius: 20px;
+}
 
 /* ═══════════════ ANIMATIONS ═══════════════════════════ */
 @keyframes fadeIn { from { opacity: 0; -fx-translate-y: 10; } to { opacity: 1; -fx-translate-y: 0; } }

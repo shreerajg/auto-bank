@@ -51,6 +51,8 @@ public class AccountController {
 
     @FXML
     public void initialize() {
+        if (accountTable == null) return;
+
         colAccountNumber.setCellValueFactory(new PropertyValueFactory<>("accountNumber"));
         colHolderName.setCellValueFactory(new PropertyValueFactory<>("holderName"));
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
@@ -75,10 +77,19 @@ public class AccountController {
             load("");
         }
 
-        Platform.runLater(searchField::requestFocus);
+        if (searchField != null) {
+            Platform.runLater(searchField::requestFocus);
+        }
+    }
+
+    @FXML
+    public void handleRefresh() {
+        load(searchField != null ? searchField.getText() : "");
+        MainController.showToast(I18n.t("common.refresh"), Toast.Type.INFO);
     }
 
     private void setupDraftListeners() {
+        if (nameField == null) return;
         nameField.textProperty().addListener((obs, old, val) -> {
             if (editingAccount == null) saveDraft();
         });
@@ -91,6 +102,7 @@ public class AccountController {
     }
 
     private void saveDraft() {
+        if (nameField == null) return;
         Map<String, String> data = new HashMap<>();
         data.put("name", nameField.getText());
         data.put("phone", phoneField.getText());
@@ -99,6 +111,7 @@ public class AccountController {
     }
 
     private void loadDraft() {
+        if (nameField == null) return;
         Map<String, String> data = draftManager.getDraft(FORM_ID);
         if (!data.isEmpty()) {
             nameField.setText(data.getOrDefault("name", ""));
@@ -109,6 +122,7 @@ public class AccountController {
     }
 
     private void setupStatusColumn() {
+        if (colStatus == null) return;
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colStatus.setCellFactory(column -> new TableCell<>() {
             @Override
@@ -120,11 +134,11 @@ public class AccountController {
                 } else {
                     setText(item);
                     if ("ACTIVE".equals(item)) {
-                        setStyle("-fx-text-fill: #27ae60; -fx-font-weight: bold;");
+                        setStyle("-fx-text-fill: #059669; -fx-font-weight: bold;");
                     } else if ("INACTIVE".equals(item)) {
-                        setStyle("-fx-text-fill: #7f8c8d;");
+                        setStyle("-fx-text-fill: #64748b;");
                     } else {
-                        setStyle("-fx-text-fill: #e67e22;");
+                        setStyle("-fx-text-fill: #d97706;");
                     }
                 }
             }
@@ -132,9 +146,13 @@ public class AccountController {
     }
 
     private void load(String query) {
+        if (accountTable == null) return;
         try {
             accountTable.setItems(FXCollections.observableArrayList(
                 accountService.searchAccounts(query)));
+            if (statusLabel != null) {
+                statusLabel.setText(String.format(I18n.t("accounts.count_msg"), accountTable.getItems().size()));
+            }
         } catch (Exception e) {
             MainController.showToast("Search Error: " + e.getMessage(), Toast.Type.ERROR);
         }
@@ -148,6 +166,13 @@ public class AccountController {
             detailPhone.setText(a.getPhone() != null && !a.getPhone().isEmpty() ? a.getPhone() : "N/A");
             detailBalance.setText("₹ " + (a.getBalance() != null ? a.getBalance().toString() : "0.00"));
             detailStatus.setText(a.getStatus());
+            
+            // Apply status style to detail view
+            if ("ACTIVE".equals(a.getStatus())) {
+                detailStatus.setStyle("-fx-text-fill: #059669; -fx-font-weight: bold;");
+            } else {
+                detailStatus.setStyle("-fx-text-fill: #dc2626; -fx-font-weight: bold;");
+            }
         }
     }
 

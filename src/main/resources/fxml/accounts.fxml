@@ -6,7 +6,6 @@
 <SplitPane xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.autobank.account.ui.AccountController"
            dividerPositions="0.68"
-           style="-fx-background-color: -fx-bg-base;"
            xmlns="http://javafx.com/javafx/17">
 
     <!-- Left: Table Area -->

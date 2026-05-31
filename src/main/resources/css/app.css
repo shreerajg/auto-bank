@@ -64,10 +64,6 @@
     -fx-accent-primary-hover: #1e40af;
 }
 
-.root {
-    -fx-background-color: -fx-bg-base;
-}
-
 /* ═══════════════ LOGIN ════════════════════════════════ */
 .login-root { -fx-background-color: -fx-bg-sidebar; }
 .login-accent-panel {

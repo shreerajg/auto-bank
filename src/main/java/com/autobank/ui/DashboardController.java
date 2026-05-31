@@ -167,6 +167,27 @@ public class DashboardController {
         } catch (Exception ignored) {}
     }
 
+    @FXML
+    private void handleNewAccount() {
+        if (MainController.getInstance() != null) {
+            MainController.getInstance().showAccounts();
+        }
+    }
+
+    @FXML
+    private void handleDeposit() {
+        if (MainController.getInstance() != null) {
+            MainController.getInstance().showTransactions();
+        }
+    }
+
+    @FXML
+    private void handleWithdraw() {
+        if (MainController.getInstance() != null) {
+            MainController.getInstance().showTransactions();
+        }
+    }
+
     @FunctionalInterface
     interface RsHandler { void accept(ResultSet rs) throws Exception; }
 
@@ -175,6 +196,8 @@ public class DashboardController {
              Statement s = c.createStatement();
              ResultSet rs = s.executeQuery(sql)) {
             handler.accept(rs);
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            log.error("Database error in dashboard: {}", e.getMessage());
+        }
     }
 }

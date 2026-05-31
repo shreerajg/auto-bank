@@ -4,8 +4,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.*?>
 
-<ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #f0f2f5;" 
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.autobank.ui.DashboardController">
+<ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: app-bg-base;" 
+          xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+          fx:controller="com.autobank.ui.DashboardController">
     <VBox fx:id="mainContainer" spacing="32" styleClass="content-pane">
         
         <!-- Header -->

@@ -59,6 +59,10 @@ public class MainController {
     private String currentTheme = "light";
     private static MainController instance;
 
+    public static MainController getInstance() {
+        return instance;
+    }
+
     @FXML
     public void initialize() {
         instance = this;

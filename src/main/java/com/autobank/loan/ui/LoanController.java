@@ -156,6 +156,13 @@ public class LoanController {
 
     private void status(String msg) { statusLabel.setText(msg); }
 
+    @FXML
+    private void handleClearDisburseForm() {
+        clearForm();
+        draftManager.clearDraft(FORM_ID);
+        status("Draft cleared");
+    }
+
     private void clearForm() {
         loanSearchField.clear();
         loanAccountCombo.setValue(null);

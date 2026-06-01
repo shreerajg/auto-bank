@@ -3,6 +3,7 @@ package com.autobank;
 import com.autobank.auth.model.UserSession;
 import com.autobank.backup.BackupScheduler;
 import com.autobank.config.DatabaseConfig;
+import com.autobank.util.DraftManager;
 import com.autobank.util.I18n;
 import javafx.application.Application;
 import javafx.application.Platform;

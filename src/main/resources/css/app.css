@@ -111,6 +111,12 @@
     -fx-padding: 10px 18px; -fx-background-radius: 8px; -fx-cursor: hand;
 }
 
+.secondary-button {
+    -fx-background-color: transparent; -fx-text-fill: app-text-muted; -fx-border-color: app-border-color;
+    -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-padding: 8px 14px; -fx-cursor: hand;
+}
+.secondary-button:hover { -fx-background-color: app-bg-input; -fx-text-fill: app-text-main; }
+
 .lang-button {
     -fx-background-color: rgba(255,255,255,0.07); -fx-text-fill: app-text-sidebar;
     -fx-border-color: app-border-sidebar; -fx-border-radius: 8px; -fx-background-radius: 8px;

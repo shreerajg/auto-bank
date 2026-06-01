@@ -73,6 +73,8 @@
                 <Button text="%tx.button.withdraw" onAction="#handleWithdrawal"
                         styleClass="danger-button"  HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="50"/>
             </HBox>
+            <Button text="Clear Form" onAction="#handleClearForm"
+                    styleClass="secondary-button" maxWidth="Infinity" prefHeight="35"/>
             <Label fx:id="statusLabel" alignment="CENTER" maxWidth="Infinity" style="-fx-font-weight: bold;"/>
         </VBox>
     </VBox>

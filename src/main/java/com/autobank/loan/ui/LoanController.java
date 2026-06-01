@@ -4,6 +4,7 @@ import com.autobank.account.model.Account;
 import com.autobank.account.service.AccountService;
 import com.autobank.loan.model.Loan;
 import com.autobank.loan.service.LoanService;
+import com.autobank.util.DraftManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -11,6 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoanController {
 
@@ -34,6 +37,8 @@ public class LoanController {
 
     private final LoanService loanService   = new LoanService();
     private final AccountService accService = new AccountService();
+    private final DraftManager draftManager = DraftManager.getInstance();
+    private static final String FORM_ID = "LOAN_DISBURSE";
 
     @FXML
     public void initialize() {
@@ -49,7 +54,7 @@ public class LoanController {
         filterCombo.setOnAction(e -> loadLoans());
 
         loanAccountCombo.setConverter(new StringConverter<>() {
-            @Override public String toString(Account a) { return a == null ? "" : a.toString(); }
+            @Override public String toString(Account a) { return a == null ? "" : a.getAccountNumber() + " - " + a.getHolderName(); }
             @Override public Account fromString(String s) { return null; }
         });
         loanSearchField.textProperty().addListener((obs, old, val) -> {
@@ -63,7 +68,45 @@ public class LoanController {
             if (sel != null) payLoanIdField.setText(String.valueOf(sel.getId()));
         });
 
+        setupDraftListeners();
+        loadDraft();
         loadLoans();
+    }
+
+    private void setupDraftListeners() {
+        loanAmountField.textProperty().addListener((obs, old, val) -> saveDraft());
+        interestRateField.textProperty().addListener((obs, old, val) -> saveDraft());
+        installmentField.textProperty().addListener((obs, old, val) -> saveDraft());
+        dueDateField.textProperty().addListener((obs, old, val) -> saveDraft());
+        loanAccountCombo.getSelectionModel().selectedItemProperty().addListener((obs, old, val) -> saveDraft());
+    }
+
+    private void saveDraft() {
+        Map<String, String> data = new HashMap<>();
+        data.put("amount", loanAmountField.getText());
+        data.put("rate", interestRateField.getText());
+        data.put("installment", installmentField.getText());
+        data.put("due", dueDateField.getText());
+        Account acc = loanAccountCombo.getValue();
+        if (acc != null) {
+            data.put("accountId", String.valueOf(acc.getId()));
+            data.put("accountNum", acc.getAccountNumber());
+        }
+        draftManager.saveDraft(FORM_ID, data);
+    }
+
+    private void loadDraft() {
+        Map<String, String> data = draftManager.getDraft(FORM_ID);
+        if (!data.isEmpty()) {
+            loanAmountField.setText(data.getOrDefault("amount", ""));
+            interestRateField.setText(data.getOrDefault("rate", ""));
+            installmentField.setText(data.getOrDefault("installment", ""));
+            dueDateField.setText(data.getOrDefault("due", ""));
+            String accNum = data.get("accountNum");
+            if (accNum != null) {
+                loanSearchField.setText(accNum);
+            }
+        }
     }
 
     @FXML
@@ -79,6 +122,7 @@ public class LoanController {
             loanService.disburseLoan(acc.getId(), amt, rate, inst, due.isEmpty() ? null : due);
             status("✓ Loan of ₹" + amt + " disbursed to " + acc.getHolderName());
             clearForm();
+            draftManager.clearDraft(FORM_ID);
             loadLoans();
         } catch (Exception e) {
             status("Error: " + e.getMessage());

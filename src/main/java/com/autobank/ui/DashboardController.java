@@ -107,7 +107,9 @@ public class DashboardController {
 
         run(sql, rs -> {
             while (rs.next()) {
-                String date = rs.getDate("d").toString();
+                java.sql.Date sqlDate = rs.getDate("d");
+                if (sqlDate == null) continue;
+                String date = sqlDate.toString();
                 int count = rs.getInt("c");
                 if (rs.getString("type").contains("DEPOSIT")) {
                     depositSeries.getData().add(new XYChart.Data<>(date, count));

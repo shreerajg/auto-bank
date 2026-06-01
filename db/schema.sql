@@ -151,3 +151,12 @@ CREATE TABLE IF NOT EXISTS interest_batches (
     FOREIGN KEY (operator_id) REFERENCES users(id),
     UNIQUE INDEX idx_batch_period (month, year, batch_type)
 );
+
+CREATE TABLE IF NOT EXISTS form_drafts (
+    form_id VARCHAR(50) NOT NULL,
+    user_id INT NOT NULL,
+    draft_data TEXT,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (form_id, user_id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);

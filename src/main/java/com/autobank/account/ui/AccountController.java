@@ -255,6 +255,15 @@ public class AccountController {
         }
     }
 
+    @FXML
+    private void handleClearDraft() {
+        nameField.clear();
+        phoneField.clear();
+        addressField.clear();
+        draftManager.clearDraft(FORM_ID);
+        MainController.showToast("Draft cleared", Toast.Type.INFO);
+    }
+
     private void resetForm() {
         editingAccount = null;
         nameField.clear();

@@ -120,6 +120,7 @@
                         <Button fx:id="registerButton" text="%accounts.button.register" onAction="#handleCreateAccount"
                                 styleClass="primary-button" maxWidth="Infinity" prefHeight="45" HBox.hgrow="ALWAYS"/>
                     </HBox>
+                    <Button text="Clear Form" onAction="#handleClearDraft" maxWidth="Infinity" styleClass="secondary-button"/>
                 </VBox>
             </ScrollPane>
         </Tab>

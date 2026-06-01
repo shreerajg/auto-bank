@@ -78,6 +78,8 @@
 
                 <Button text="%loans.button.disburse" onAction="#handleDisburse"
                         styleClass="primary-button" maxWidth="Infinity" prefHeight="42"/>
+                <Button text="Clear Form" onAction="#handleClearDisburseForm"
+                        styleClass="secondary-button" maxWidth="Infinity" prefHeight="35"/>
             </VBox>
 
             <!-- Record Payment -->

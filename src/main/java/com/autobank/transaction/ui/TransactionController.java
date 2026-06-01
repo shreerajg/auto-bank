@@ -223,6 +223,13 @@ public class TransactionController {
         }
     }
 
+    @FXML
+    private void handleClearForm() {
+        clearForm();
+        draftManager.clearDraft(FORM_ID);
+        MainController.showToast("Form and draft cleared", Toast.Type.INFO);
+    }
+
     private void clearForm() {
         amountField.clear();
         descriptionField.clear();

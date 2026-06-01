@@ -123,6 +123,7 @@ public class AutoBankApp extends Application {
     @Override
     public void stop() {
         BackupScheduler.getInstance().stop();
+        DraftManager.getInstance().shutdown();
         DatabaseConfig.shutdown();
     }
 

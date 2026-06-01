@@ -12,15 +12,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.*;
 
 /**
  * Manages unsaved form data across different panels.
- * Persistent version using database storage.
+ * Persistent version using database storage with asynchronous saving.
  */
 public class DraftManager {
     private static final Logger log = LoggerFactory.getLogger(DraftManager.class);
     private static final DraftManager INSTANCE = new DraftManager();
     private final Gson gson = new Gson();
+    
+    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
+        Thread t = new Thread(r, "draft-saver-thread");
+        t.setDaemon(true);
+        return t;
+    });
+    
+    private final Map<String, ScheduledFuture<?>> pendingTasks = new ConcurrentHashMap<>();
 
     private DraftManager() {}
 
@@ -28,7 +37,34 @@ public class DraftManager {
         return INSTANCE;
     }
 
+    public void shutdown() {
+        scheduler.shutdown();
+        try {
+            if (!scheduler.awaitTermination(2, TimeUnit.SECONDS)) {
+                scheduler.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            scheduler.shutdownNow();
+        }
+    }
+
     public void saveDraft(String formId, Map<String, String> data) {
+        // Debounce saving: if a task is already scheduled for this form, cancel it
+        ScheduledFuture<?> existingTask = pendingTasks.remove(formId);
+        if (existingTask != null) {
+            existingTask.cancel(false);
+        }
+
+        // Schedule new save task after 500ms of inactivity
+        ScheduledFuture<?> newTask = scheduler.schedule(() -> {
+            executeSave(formId, data);
+            pendingTasks.remove(formId);
+        }, 500, TimeUnit.MILLISECONDS);
+        
+        pendingTasks.put(formId, newTask);
+    }
+
+    private void executeSave(String formId, Map<String, String> data) {
         int userId = getUserId();
         if (userId <= 0) return;
 
@@ -48,6 +84,7 @@ public class DraftManager {
             stmt.setString(3, json);
             stmt.setString(4, json);
             stmt.executeUpdate();
+            log.debug("Draft saved for form: {}", formId);
         } catch (Exception e) {
             log.error("Failed to save draft for form {}: {}", formId, e.getMessage());
         }

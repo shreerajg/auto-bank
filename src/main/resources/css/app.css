@@ -77,6 +77,10 @@
     app-accent-primary: #0284c7;
     app-accent-primary-hover: #0369a1;
     app-bg-header: white;
+    
+    /* 3D Block Effect */
+    app-3d-shadow: #0c4a6e;
+    app-3d-shadow-dark: #075985;
 }
 
 .theme-forest {
@@ -87,6 +91,10 @@
     app-bg-input: #dcfce7;
     app-accent-primary: #16a34a;
     app-accent-primary-hover: #15803d;
+    
+    /* 3D Block Effect */
+    app-3d-shadow: #14532d;
+    app-3d-shadow-dark: #15803d;
 }
 
 /* ═══════════════ LOGIN ════════════════════════════════ */

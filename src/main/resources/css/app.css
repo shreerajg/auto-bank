@@ -32,6 +32,10 @@
     app-border-sidebar: rgba(255,255,255,0.06);
     app-shadow: rgba(15,23,42,0.08);
     app-shadow-md: rgba(15,23,42,0.12);
+    
+    /* 3D Block Effect */
+    app-3d-shadow: #1a2847;
+    app-3d-shadow-dark: #0f172a;
 
     -fx-background-color: app-bg-base;
 }

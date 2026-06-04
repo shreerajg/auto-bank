@@ -347,18 +347,35 @@
 .chart-legend { -fx-background-color: transparent; -fx-padding: 20 0 0 0; }
 .chart-legend-item { -fx-text-fill: #64748b; -fx-font-size: 11px; }
 
-/* ═══════════════ ANIMATIONS ═══════════════════════════ */
-@keyframes fadeIn { from { opacity: 0; -fx-translate-y: 10; } to { opacity: 1; -fx-translate-y: 0; } }
-.fade-in { -fx-animation-name: fadeIn; -fx-animation-duration: 0.5s; -fx-animation-fill-mode: both; }
-
-@keyframes pulse {
-    0% { -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.4), 10, 0, 0, 0); }
-    50% { -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.6), 20, 0, 0, 0); }
-    100% { -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.4), 10, 0, 0, 0); }
-}
-.pulse-action { -fx-animation-name: pulse; -fx-animation-duration: 2s; -fx-animation-iteration-count: infinite; }
-
 /* ═══════════════ TOAST ═════════════════════════════════ */
-.toast { -fx-background-color: #1e293b; -fx-text-fill: white; -fx-background-radius: 40px; -fx-font-weight: bold; }
-.toast-success { -fx-background-color: -fx-accent-success; }
-.toast-error { -fx-background-color: -fx-accent-danger; }
+.toast { 
+    -fx-background-color: #1e293b; -fx-text-fill: white; -fx-background-radius: 40px; 
+    -fx-font-weight: bold; -fx-font-size: 13px; -fx-padding: 12 24;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 16, 0, 0, 6);
+}
+.toast-success { -fx-background-color: #059669; }
+.toast-error { -fx-background-color: #dc2626; }
+
+/* ═══════════════ MISC / BADGES ════════════════════════ */
+.badge {
+    -fx-font-size: 11px; -fx-font-weight: bold; -fx-padding: 3 10; -fx-background-radius: 16px;
+}
+.badge-blue   { -fx-background-color: #dbeafe; -fx-text-fill: #1e40af; }
+.badge-green  { -fx-background-color: #d1fae5; -fx-text-fill: #065f46; }
+.badge-red    { -fx-background-color: #fee2e2; -fx-text-fill: #991b1b; }
+.badge-orange { -fx-background-color: #fed7aa; -fx-text-fill: #92400e; }
+
+.divider-label {
+    -fx-text-fill: app-text-muted; -fx-font-size: 11px; -fx-font-weight: bold;
+    -fx-padding: 0 8;
+}
+
+/* ═══════════════ SCROLLBARS ════════════════════════════ */
+.scroll-bar:vertical .track { -fx-background-color: transparent; }
+.scroll-bar:vertical .thumb { -fx-background-color: #e2e8f0; -fx-background-radius: 4px; }
+.scroll-bar:vertical .thumb:hover { -fx-background-color: #cbd5e1; }
+.scroll-bar:horizontal { -fx-pref-height: 6; }
+.scroll-bar:vertical { -fx-pref-width: 6; }
+.scroll-bar .increment-button, .scroll-bar .decrement-button { -fx-padding: 0; -fx-pref-height: 0; -fx-pref-width: 0; }
+.scroll-pane { -fx-background-color: transparent; }
+.scroll-pane .viewport { -fx-background-color: transparent; }

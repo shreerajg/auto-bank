@@ -281,22 +281,23 @@
 
 /* ═══════════════ CARDS ════════════════════════════════ */
 .chart-card, .form-panel, .card {
-    -fx-background-color: white; -fx-padding: 28px; -fx-background-radius: 16px;
-    -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.06), 24, 0, 0, 8); 
-    -fx-border-color: #f1f5f9; -fx-border-width: 1px; -fx-border-radius: 16px;
+    -fx-background-color: app-3d-shadow, white; 
+    -fx-padding: 28px; -fx-background-radius: 16px;
+    -fx-background-insets: 5 0 0 5, 0 5 5 0;
+    -fx-border-color: transparent, #f1f5f9; -fx-border-width: 0, 1px; -fx-border-radius: 0, 16px;
 }
 
 .stat-card { 
-    -fx-background-color: white; -fx-padding: 24px; -fx-background-radius: 16px; 
-    -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.06), 24, 0, 0, 8); 
-    -fx-border-color: #f1f5f9; -fx-border-width: 1px; -fx-border-radius: 16px;
+    -fx-background-color: app-3d-shadow, white; -fx-padding: 24px; -fx-background-radius: 16px; 
+    -fx-background-insets: 5 0 0 5, 0 5 5 0;
+    -fx-border-color: transparent, #f1f5f9; -fx-border-width: 0, 1px; -fx-border-radius: 0, 16px;
 }
-.stat-card-blue   { -fx-border-color: rgba(59,130,246,0.2); -fx-background-color: linear-gradient(to bottom right, white, #f0f9ff); }
-.stat-card-green  { -fx-border-color: rgba(16,185,129,0.2); -fx-background-color: linear-gradient(to bottom right, white, #f0fdf4); }
-.stat-card-teal   { -fx-border-color: rgba(20,184,166,0.2); -fx-background-color: linear-gradient(to bottom right, white, #f0fdfa); }
-.stat-card-purple { -fx-border-color: rgba(139,92,246,0.2); -fx-background-color: linear-gradient(to bottom right, white, #f5f3ff); }
-.stat-card-orange { -fx-border-color: rgba(245,158,11,0.2); -fx-background-color: linear-gradient(to bottom right, white, #fffbeb); }
-.stat-card-red    { -fx-border-color: rgba(239,68,68,0.2); -fx-background-color: linear-gradient(to bottom right, white, #fef2f2); }
+.stat-card-blue   { -fx-background-color: app-3d-shadow, linear-gradient(to bottom right, white, #f0f9ff); }
+.stat-card-green  { -fx-background-color: app-3d-shadow, linear-gradient(to bottom right, white, #f0fdf4); }
+.stat-card-teal   { -fx-background-color: app-3d-shadow, linear-gradient(to bottom right, white, #f0fdfa); }
+.stat-card-purple { -fx-background-color: app-3d-shadow, linear-gradient(to bottom right, white, #f5f3ff); }
+.stat-card-orange { -fx-background-color: app-3d-shadow, linear-gradient(to bottom right, white, #fffbeb); }
+.stat-card-red    { -fx-background-color: app-3d-shadow, linear-gradient(to bottom right, white, #fef2f2); }
 
 .stat-label { -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #64748b; -fx-padding: 0 0 6 0; -fx-text-transform: uppercase; }
 .stat-value { -fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #0f172a; }

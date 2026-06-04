@@ -5,62 +5,62 @@
 
 <VBox xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.autobank.dailyops.ui.DailyOpsController"
-      spacing="20" styleClass="content-pane"
+      spacing="24" styleClass="content-pane"
       xmlns="http://javafx.com/javafx/22">
 
     <!-- Header -->
-    <HBox alignment="CENTER_LEFT" spacing="12">
-        <VBox spacing="4" HBox.hgrow="ALWAYS">
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <VBox spacing="6" HBox.hgrow="ALWAYS">
             <Label text="%dailyops.title" styleClass="page-title"/>
             <Label fx:id="todayDateLabel" styleClass="page-subtitle"/>
         </VBox>
     </HBox>
 
     <!-- Top cards row -->
-    <HBox spacing="16">
+    <HBox spacing="24">
 
         <!-- Day Status Card -->
-        <VBox spacing="14" styleClass="form-panel" HBox.hgrow="ALWAYS">
+        <VBox spacing="16" styleClass="chart-card" HBox.hgrow="ALWAYS">
             <Label text="%dailyops.status.title" styleClass="section-title"/>
             <Separator/>
             <HBox spacing="0">
-                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <VBox spacing="8" HBox.hgrow="ALWAYS">
                     <Label text="%dailyops.label.session" styleClass="stat-label"/>
-                    <Label fx:id="sessionStatusLabel" text="—" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #0f172a;"/>
+                    <Label fx:id="sessionStatusLabel" text="—" style="-fx-font-weight: bold; -fx-font-size: 15px; -fx-text-fill: #0f172a;"/>
                 </VBox>
-                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <VBox spacing="8" HBox.hgrow="ALWAYS">
                     <Label text="%dailyops.label.opening_bal" styleClass="stat-label"/>
-                    <Label fx:id="openingBalLabel" text="—" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #0f172a;"/>
+                    <Label fx:id="openingBalLabel" text="—" style="-fx-font-weight: bold; -fx-font-size: 15px; -fx-text-fill: #0f172a;"/>
                 </VBox>
-                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <VBox spacing="8" HBox.hgrow="ALWAYS">
                     <Label text="%dailyops.label.expected_cash" styleClass="stat-label"/>
-                    <Label fx:id="expectedCashLabel" text="—" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #059669;"/>
+                    <Label fx:id="expectedCashLabel" text="—" style="-fx-font-weight: bold; -fx-font-size: 15px; -fx-text-fill: #10b981;"/>
                 </VBox>
             </HBox>
         </VBox>
 
         <!-- Open Day Card -->
-        <VBox spacing="12" styleClass="form-panel" HBox.hgrow="ALWAYS">
+        <VBox spacing="16" styleClass="chart-card" HBox.hgrow="ALWAYS">
             <Label text="%dailyops.section.open" styleClass="section-title"/>
             <Separator/>
-            <VBox spacing="6">
+            <VBox spacing="8">
                 <Label text="%dailyops.label.opening_cash" styleClass="stat-label"/>
-                <TextField fx:id="openingBalField" promptText="%dailyops.label.opening_cash"/>
+                <TextField fx:id="openingBalField" promptText="%dailyops.label.opening_cash" prefHeight="44"/>
             </VBox>
             <Button fx:id="openDayBtn" text="%dailyops.button.open" onAction="#handleOpenDay"
-                    styleClass="success-button" maxWidth="Infinity" prefHeight="40"/>
+                    styleClass="success-button" maxWidth="Infinity" prefHeight="44"/>
         </VBox>
 
         <!-- Close Day Card -->
-        <VBox spacing="12" styleClass="form-panel" HBox.hgrow="ALWAYS">
+        <VBox spacing="16" styleClass="chart-card" HBox.hgrow="ALWAYS">
             <Label text="%dailyops.section.close" styleClass="section-title"/>
             <Separator/>
-            <VBox spacing="6">
+            <VBox spacing="8">
                 <Label text="%dailyops.label.actual_cash" styleClass="stat-label"/>
-                <TextField fx:id="actualCashField" promptText="%dailyops.label.actual_cash"/>
+                <TextField fx:id="actualCashField" promptText="%dailyops.label.actual_cash" prefHeight="44"/>
             </VBox>
             <Button fx:id="closeDayBtn" text="%dailyops.button.close" onAction="#handleCloseDay"
-                    styleClass="danger-button" maxWidth="Infinity" prefHeight="40"/>
+                    styleClass="danger-button" maxWidth="Infinity" prefHeight="44"/>
         </VBox>
 
     </HBox>
@@ -68,15 +68,15 @@
     <Label fx:id="statusLabel" styleClass="status-label" wrapText="true"/>
 
     <!-- History -->
-    <VBox spacing="10">
+    <VBox spacing="12">
         <Label text="%dailyops.history.title" styleClass="section-title"/>
-        <TableView fx:id="historyTable" VBox.vgrow="ALWAYS" prefHeight="320">
+        <TableView fx:id="historyTable" VBox.vgrow="ALWAYS" prefHeight="360" styleClass="table-view">
             <columns>
-                <TableColumn fx:id="colDate"          text="%dailyops.table.date"              prefWidth="120"/>
-                <TableColumn fx:id="colOpening"       text="%dailyops.table.opening"   prefWidth="140"/>
-                <TableColumn fx:id="colExpected"      text="%dailyops.table.expected" prefWidth="150"/>
-                <TableColumn fx:id="colActual"        text="%dailyops.table.actual"   prefWidth="140"/>
-                <TableColumn fx:id="colSessionStatus" text="%accounts.table.status"            prefWidth="90"/>
+                <TableColumn fx:id="colDate"          text="%dailyops.table.date"              prefWidth="130"/>
+                <TableColumn fx:id="colOpening"       text="%dailyops.table.opening"   prefWidth="160"/>
+                <TableColumn fx:id="colExpected"      text="%dailyops.table.expected" prefWidth="170"/>
+                <TableColumn fx:id="colActual"        text="%dailyops.table.actual"   prefWidth="160"/>
+                <TableColumn fx:id="colSessionStatus" text="%accounts.table.status"            prefWidth="110"/>
             </columns>
         </TableView>
     </VBox>

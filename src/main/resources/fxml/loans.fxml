@@ -6,100 +6,96 @@
 <SplitPane xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.autobank.loan.ui.LoanController"
            dividerPositions="0.62"
-           style="-fx-background-color: #f1f5f9;"
+           style="-fx-background-color: transparent;"
            xmlns="http://javafx.com/javafx/22">
 
     <!-- LEFT: Loan list -->
-    <VBox spacing="16" styleClass="content-pane">
-
+    <VBox spacing="24" styleClass="content-pane">
         <HBox alignment="CENTER_LEFT" spacing="12">
-            <VBox spacing="4" HBox.hgrow="ALWAYS">
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
                 <Label text="%loans.title" styleClass="page-title"/>
                 <Label text="%loans.subtitle" styleClass="page-subtitle"/>
             </VBox>
         </HBox>
 
         <!-- Filter bar -->
-        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="chart-card" style="-fx-padding: 10px 16px;">
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="chart-card" style="-fx-padding: 12px 20px;">
             <Label text="%loans.filter" style="-fx-text-fill: #64748b; -fx-font-weight: bold;"/>
-            <ComboBox fx:id="filterCombo" prefWidth="130" promptText="%loans.filter.all"/>
+            <ComboBox fx:id="filterCombo" prefWidth="150" promptText="%loans.filter.all"/>
         </HBox>
 
-        <TableView fx:id="loanTable" VBox.vgrow="ALWAYS">
+        <TableView fx:id="loanTable" VBox.vgrow="ALWAYS" styleClass="table-view">
             <columns>
-                <TableColumn fx:id="colId"          text="%loans.table.id"         prefWidth="65"/>
-                <TableColumn fx:id="colHolder"      text="%loans.table.holder"          prefWidth="170"/>
-                <TableColumn fx:id="colAmount"      text="%loans.table.principal"   prefWidth="115"/>
-                <TableColumn fx:id="colOutstanding" text="%loans.table.outstanding" prefWidth="125"/>
-                <TableColumn fx:id="colInterest"    text="%loans.table.rate"          prefWidth="70"/>
-                <TableColumn fx:id="colStatus"      text="%accounts.table.status"          prefWidth="85"/>
+                <TableColumn fx:id="colId"          text="%loans.table.id"         prefWidth="80"/>
+                <TableColumn fx:id="colHolder"      text="%loans.table.holder"          prefWidth="200"/>
+                <TableColumn fx:id="colAmount"      text="%loans.table.principal"   prefWidth="130"/>
+                <TableColumn fx:id="colOutstanding" text="%loans.table.outstanding" prefWidth="150"/>
+                <TableColumn fx:id="colInterest"    text="%loans.table.rate"          prefWidth="80"/>
+                <TableColumn fx:id="colStatus"      text="%accounts.table.status"          prefWidth="100"/>
             </columns>
+            <placeholder>
+                <VBox alignment="CENTER" spacing="10">
+                    <Label text="ℹ" style="-fx-font-size: 32px; -fx-text-fill: #cbd5e1;"/>
+                    <Label text="No loans found" style="-fx-text-fill: #94a3b8;"/>
+                </VBox>
+            </placeholder>
         </TableView>
-
         <Label fx:id="statusLabel" styleClass="status-label" wrapText="true"/>
     </VBox>
 
     <!-- RIGHT: Forms -->
-    <ScrollPane fitToWidth="true" style="-fx-background-color: #f1f5f9; -fx-background: #f1f5f9; -fx-border-color: transparent;">
-        <VBox spacing="16" style="-fx-padding: 28px 24px;">
-
+    <ScrollPane fitToWidth="true" styleClass="scroll-pane" style="-fx-background-color: transparent;">
+        <VBox spacing="28" style="-fx-padding: 32px 28px;">
             <!-- Disburse Loan -->
-            <VBox spacing="12" styleClass="form-panel">
+            <VBox spacing="16" styleClass="form-panel">
                 <Label text="%loans.section.disburse" styleClass="section-title"/>
                 <Separator/>
-
-                <VBox spacing="6">
+                <VBox spacing="8">
                     <Label text="%tx.label.select_account" styleClass="stat-label"/>
                     <TextField fx:id="loanSearchField" promptText="%tx.label.search_acc"/>
                     <ComboBox fx:id="loanAccountCombo" maxWidth="Infinity" promptText="%tx.label.choose_acc"/>
                 </VBox>
-
                 <HBox spacing="12">
-                    <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <VBox spacing="8" HBox.hgrow="ALWAYS">
                         <Label text="%loans.label.amount" styleClass="stat-label"/>
-                        <TextField fx:id="loanAmountField" promptText="e.g. 50000"/>
+                        <TextField fx:id="loanAmountField" promptText="e.g. 50000"/> 
                     </VBox>
-                    <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <VBox spacing="8" HBox.hgrow="ALWAYS">
                         <Label text="%loans.label.rate" styleClass="stat-label"/>
                         <TextField fx:id="interestRateField" promptText="e.g. 12"/>
                     </VBox>
                 </HBox>
-
                 <HBox spacing="12">
-                    <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <VBox spacing="8" HBox.hgrow="ALWAYS">
                         <Label text="%loans.label.installment" styleClass="stat-label"/>
                         <TextField fx:id="installmentField" promptText="Optional"/>
                     </VBox>
-                    <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <VBox spacing="8" HBox.hgrow="ALWAYS">
                         <Label text="%loans.label.due_date" styleClass="stat-label"/>
                         <TextField fx:id="dueDateField" promptText="e.g. 2026-12-31"/>
                     </VBox>
                 </HBox>
-
                 <Button text="%loans.button.disburse" onAction="#handleDisburse"
-                        styleClass="primary-button" maxWidth="Infinity" prefHeight="42"/>
+                        styleClass="primary-button" maxWidth="Infinity" prefHeight="44"/>
                 <Button text="Clear Form" onAction="#handleClearDisburseForm"
-                        styleClass="secondary-button" maxWidth="Infinity" prefHeight="35"/>
+                        styleClass="secondary-button" maxWidth="Infinity" prefHeight="38"/>
             </VBox>
 
             <!-- Record Payment -->
-            <VBox spacing="12" styleClass="form-panel">
+            <VBox spacing="16" styleClass="form-panel">
                 <Label text="%loans.section.payment" styleClass="section-title"/>
                 <Separator/>
-
-                <VBox spacing="6">
+                <VBox spacing="8">
                     <Label text="%loans.label.loan_id" styleClass="stat-label"/>
                     <TextField fx:id="payLoanIdField" promptText="Loan ID"/>
                 </VBox>
-                <VBox spacing="6">
+                <VBox spacing="8">
                     <Label text="%tx.label.amount" styleClass="stat-label"/>
                     <TextField fx:id="payAmountField" promptText="Amount paid"/>
                 </VBox>
-
                 <Button text="%loans.button.payment" onAction="#handlePayment"
-                        styleClass="success-button" maxWidth="Infinity" prefHeight="42"/>
+                        styleClass="success-button" maxWidth="Infinity" prefHeight="44"/>
             </VBox>
-
         </VBox>
     </ScrollPane>
 

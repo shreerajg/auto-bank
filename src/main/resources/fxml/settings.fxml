@@ -4,78 +4,78 @@
 
 <VBox xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.autobank.settings.ui.SettingsController"
-      spacing="16" styleClass="content-pane"
+      spacing="24" styleClass="content-pane"
       xmlns="http://javafx.com/javafx/22">
 
     <Label text="%settings.title" styleClass="page-title"/>
 
-    <HBox spacing="16" fillHeight="true">
+    <HBox spacing="24" fillHeight="true">
         <!-- Left Column -->
-        <VBox spacing="16" HBox.hgrow="ALWAYS">
+        <VBox spacing="24" HBox.hgrow="ALWAYS">
 
             <!-- DB Info -->
-            <VBox spacing="10" styleClass="form-panel">
+            <VBox spacing="12" styleClass="form-panel">
                 <Label text="%settings.db.title" styleClass="section-title"/>
-                <HBox spacing="10" alignment="CENTER_LEFT">
+                <HBox spacing="12" alignment="CENTER_LEFT">
                     <Label text="%settings.db.status"/>
-                    <Label fx:id="dbStatusLabel" text="—"/>
+                    <Label fx:id="dbStatusLabel" text="—" style="-fx-font-weight: bold;"/>
                 </HBox>
-                <Label text="%settings.db.url"/>
-                <TextField fx:id="dbUrlField" editable="false" styleClass="read-only-field"/>
-                <Label text="%settings.db.user"/>
-                <TextField fx:id="dbUserField" editable="false" styleClass="read-only-field"/>
+                <Label text="%settings.db.url" styleClass="stat-label"/>
+                <TextField fx:id="dbUrlField" editable="false" styleClass="read-only-field" prefHeight="40"/>
+                <Label text="%settings.db.user" styleClass="stat-label"/>
+                <TextField fx:id="dbUserField" editable="false" styleClass="read-only-field" prefHeight="40"/>
                 <Button text="%settings.db.test" onAction="#handleTestConnection"
-                        styleClass="primary-button" maxWidth="Infinity"/>
+                        styleClass="primary-button" maxWidth="Infinity" prefHeight="42"/>
                 <Label fx:id="settingsStatusLabel" styleClass="status-label"/>
             </VBox>
 
             <!-- Change Password -->
-            <VBox spacing="10" styleClass="form-panel">
+            <VBox spacing="12" styleClass="form-panel">
                 <Label text="%settings.pw.title" styleClass="section-title"/>
-                <Label text="%settings.pw.current"/>
-                <PasswordField fx:id="oldPasswordField" promptText="%settings.pw.current"/>
-                <Label text="%settings.pw.new"/>
-                <PasswordField fx:id="newPasswordField" promptText="%settings.pw.new"/>
-                <Label text="%settings.pw.confirm"/>
-                <PasswordField fx:id="confirmPasswordField" promptText="%settings.pw.confirm"/>
+                <Label text="%settings.pw.current" styleClass="stat-label"/>
+                <PasswordField fx:id="oldPasswordField" promptText="%settings.pw.current" prefHeight="40"/>
+                <Label text="%settings.pw.new" styleClass="stat-label"/>
+                <PasswordField fx:id="newPasswordField" promptText="%settings.pw.new" prefHeight="40"/>
+                <Label text="%settings.pw.confirm" styleClass="stat-label"/>
+                <PasswordField fx:id="confirmPasswordField" promptText="%settings.pw.confirm" prefHeight="40"/>
                 <Button text="%settings.pw.update" onAction="#handleChangePassword"
-                        styleClass="success-button" maxWidth="Infinity"/>
+                        styleClass="success-button" maxWidth="Infinity" prefHeight="42"/>
                 <Label fx:id="pwStatusLabel" styleClass="status-label" wrapText="true"/>
             </VBox>
         </VBox>
 
         <!-- Right Column -->
-        <VBox spacing="16" HBox.hgrow="ALWAYS">
+        <VBox spacing="24" HBox.hgrow="ALWAYS">
 
             <!-- System Info -->
-            <VBox spacing="8" styleClass="form-panel">
+            <VBox spacing="12" styleClass="form-panel">
                 <Label text="%settings.sys.title" styleClass="section-title"/>
-                <HBox spacing="10">
+                <HBox spacing="12">
                     <Label text="%settings.sys.version"/>
-                    <Label fx:id="versionLabel" text="—"/>
+                    <Label fx:id="versionLabel" text="—" style="-fx-font-weight: bold;"/>
                 </HBox>
-                <HBox spacing="10">
+                <HBox spacing="12">
                     <Label text="%settings.sys.logged_in"/>
-                    <Label fx:id="currentUserLabel" text="—"/>
+                    <Label fx:id="currentUserLabel" text="—" style="-fx-font-weight: bold;"/>
                 </HBox>
             </VBox>
 
             <!-- Theme Settings -->
-            <VBox spacing="10" styleClass="form-panel">
+            <VBox spacing="12" styleClass="form-panel">
                 <Label text="Appearance &amp; Themes" styleClass="section-title"/>
-                <Label text="Select application color theme:"/>
-                <HBox spacing="10">
-                    <Button text="☀ Light" onAction="#setLightTheme" styleClass="primary-button" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                    <Button text="🌙 Dark"  onAction="#setDarkTheme"  styleClass="primary-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" style="-fx-background-color: #334155;"/>
-                    <Button text="🔵 Blue"  onAction="#setBlueTheme"  styleClass="primary-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" style="-fx-background-color: #1e3a8a;"/>
+                <Label text="Select application color theme:" styleClass="stat-label"/>
+                <HBox spacing="12">
+                    <Button text="☀ Light" onAction="#setLightTheme" styleClass="primary-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="40"/>
+                    <Button text="🌙 Dark"  onAction="#setDarkTheme"  styleClass="primary-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" style="-fx-background-color: #334155;" prefHeight="40"/>
+                    <Button text="🔵 Ocean"  onAction="#setBlueTheme"  styleClass="primary-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" style="-fx-background-color: #0369a1;" prefHeight="40"/>
                 </HBox>
             </VBox>
 
             <!-- Audit Log Viewer -->
-            <VBox spacing="8" styleClass="form-panel" VBox.vgrow="ALWAYS">
-                <HBox alignment="CENTER_LEFT" spacing="10">
+            <VBox spacing="12" styleClass="form-panel" VBox.vgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="12">
                     <Label text="%settings.audit.title" styleClass="section-title" HBox.hgrow="ALWAYS"/>
-                    <Button text="%settings.audit.reload" onAction="#handleViewFullLog" styleClass="primary-button"/>
+                    <Button text="%settings.audit.reload" onAction="#handleViewFullLog" styleClass="secondary-button" prefHeight="32"/>
                 </HBox>
                 <TextArea fx:id="auditLogArea" editable="false" wrapText="true"
                           prefRowCount="18" VBox.vgrow="ALWAYS"

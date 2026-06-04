@@ -3,39 +3,45 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox spacing="20" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml"
+<VBox spacing="28" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.autobank.distribution.ui.DistributionController"
       styleClass="content-pane">
 
     <!-- Header -->
-    <HBox alignment="CENTER_LEFT" spacing="12">
-        <VBox spacing="4" HBox.hgrow="ALWAYS">
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <VBox spacing="6" HBox.hgrow="ALWAYS">
             <Label text="%dist.title" styleClass="page-title"/>
             <Label text="%dist.subtitle" styleClass="page-subtitle"/>
         </VBox>
-        <Button text="%dist.button.import" onAction="#handleImport" styleClass="primary-button"/>
+        <Button text="%dist.button.import" onAction="#handleImport" styleClass="primary-button" prefHeight="42"/>
     </HBox>
 
     <!-- Main card -->
-    <VBox spacing="14" VBox.vgrow="ALWAYS" styleClass="card">
+    <VBox spacing="18" VBox.vgrow="ALWAYS" styleClass="chart-card">
 
-        <HBox alignment="CENTER_LEFT" spacing="12">
+        <HBox alignment="CENTER_LEFT" spacing="14">
             <Label fx:id="statusLabel" text="%dist.label.start"
                    styleClass="status-label" HBox.hgrow="ALWAYS"/>
             <Button fx:id="processBtn" text="%dist.button.process"
-                    onAction="#handleProcess" disable="true" styleClass="success-button"/>
+                    onAction="#handleProcess" disable="true" styleClass="success-button" prefHeight="40"/>
         </HBox>
 
         <Separator/>
 
-        <TableView fx:id="recordTable" VBox.vgrow="ALWAYS">
+        <TableView fx:id="recordTable" VBox.vgrow="ALWAYS" styleClass="table-view">
             <columns>
-                <TableColumn fx:id="colName"   text="%accounts.table.name"          prefWidth="200"/>
-                <TableColumn fx:id="colAcc"    text="%accounts.table.acc_no"     prefWidth="130"/>
-                <TableColumn fx:id="colAmount" text="%tx.table.amount"    prefWidth="120"/>
-                <TableColumn fx:id="colStatus" text="%accounts.table.status"        prefWidth="110"/>
-                <TableColumn fx:id="colError"  text="%dist.table.error"  prefWidth="300"/>
+                <TableColumn fx:id="colName"   text="%accounts.table.name"          prefWidth="220"/>
+                <TableColumn fx:id="colAcc"    text="%accounts.table.acc_no"     prefWidth="140"/>
+                <TableColumn fx:id="colAmount" text="%tx.table.amount"    prefWidth="140"/>
+                <TableColumn fx:id="colStatus" text="%accounts.table.status"        prefWidth="120"/>
+                <TableColumn fx:id="colError"  text="%dist.table.error"  prefWidth="320"/>
             </columns>
+            <placeholder>
+                <VBox alignment="CENTER" spacing="12">
+                    <Label text="ℹ" style="-fx-font-size: 32px; -fx-text-fill: #cbd5e1;"/>
+                    <Label text="Import a file to view records" style="-fx-text-fill: #94a3b8;"/>
+                </VBox>
+            </placeholder>
         </TableView>
 
     </VBox>

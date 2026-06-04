@@ -10,45 +10,45 @@
 
     <!-- Left: Table Area -->
     <VBox spacing="0" styleClass="content-area">
-        <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+        <padding><Insets top="28" right="32" bottom="28" left="32"/></padding>
         
-        <HBox alignment="CENTER_LEFT" spacing="12">
-            <VBox spacing="4" HBox.hgrow="ALWAYS">
+        <HBox alignment="CENTER_LEFT" spacing="16">
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
                 <Label text="%accounts.title" styleClass="page-title"/>
                 <Label text="%accounts.subtitle" styleClass="page-subtitle"/>
             </VBox>
-            <Button text="⟳" onAction="#handleRefresh" styleClass="lang-button" style="-fx-font-size: 16px;"/>
+            <Button text="⟳" onAction="#handleRefresh" styleClass="icon-button" style="-fx-font-size: 18px;"/>
         </HBox>
 
-        <Region minHeight="24"/>
+        <Region minHeight="28"/>
 
         <!-- Search Bar -->
-        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="chart-card" style="-fx-padding: 8px 16px;">
-            <Label text="🔍" style="-fx-font-size: 16px; -fx-text-fill: -fx-text-muted;"/>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="chart-card" style="-fx-padding: 12px 18px;">
+            <Label text="🔍" style="-fx-font-size: 16px; -fx-text-fill: #94a3b8;"/>
             <TextField fx:id="searchField" promptText="%accounts.search.prompt"
                        HBox.hgrow="ALWAYS"
                        style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-size: 14px;"/>
         </HBox>
 
-        <Region minHeight="20"/>
+        <Region minHeight="24"/>
 
         <TableView fx:id="accountTable" VBox.vgrow="ALWAYS" styleClass="table-view">
             <columns>
-                <TableColumn fx:id="colAccountNumber" text="%accounts.table.acc_no"   prefWidth="130"/>
-                <TableColumn fx:id="colHolderName"   text="%accounts.table.name" prefWidth="250"/>
-                <TableColumn fx:id="colPhone"         text="%accounts.table.phone"       prefWidth="120"/>
-                <TableColumn fx:id="colBalance"       text="%accounts.table.balance" prefWidth="130"/>
-                <TableColumn fx:id="colStatus"        text="%accounts.table.status"      prefWidth="100"/>
+                <TableColumn fx:id="colAccountNumber" text="%accounts.table.acc_no"   prefWidth="140"/>
+                <TableColumn fx:id="colHolderName"   text="%accounts.table.name" prefWidth="260"/>
+                <TableColumn fx:id="colPhone"         text="%accounts.table.phone"       prefWidth="130"/>
+                <TableColumn fx:id="colBalance"       text="%accounts.table.balance" prefWidth="140"/>
+                <TableColumn fx:id="colStatus"        text="%accounts.table.status"      prefWidth="110"/>
             </columns>
             <placeholder>
-                <VBox alignment="CENTER" spacing="10">
-                    <Label text="ℹ" style="-fx-font-size: 32px; -fx-text-fill: #cbd5e1;"/>
-                    <Label text="No accounts found matching your query"/>
+                <VBox alignment="CENTER" spacing="12">
+                    <Label text="ℹ" style="-fx-font-size: 36px; -fx-text-fill: #cbd5e1;"/>
+                    <Label text="No accounts found" style="-fx-text-fill: #94a3b8;"/>
                 </VBox>
             </placeholder>
         </TableView>
 
-        <HBox alignment="CENTER_RIGHT" style="-fx-padding: 8 0 0 0;">
+        <HBox alignment="CENTER_RIGHT" style="-fx-padding: 12 0 0 0;">
             <Label fx:id="statusLabel" text="..." styleClass="status-label"/>
         </HBox>
     </VBox>
@@ -56,71 +56,71 @@
     <!-- Right: Tabs for Details & Creation -->
     <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" styleClass="chart-card">
         <Tab text="%accounts.tab.details">
-            <VBox fx:id="detailBox" spacing="24" visible="false">
-                <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+            <VBox fx:id="detailBox" spacing="28" visible="false">
+                <padding><Insets top="32" right="28" bottom="32" left="28"/></padding>
                 
-                <VBox spacing="6">
+                <VBox spacing="8">
                     <Label text="%accounts.label.name" styleClass="stat-label"/>
-                    <Label fx:id="detailName" text="—" styleClass="header-label" style="-fx-font-size: 24px;"/>
+                    <Label fx:id="detailName" text="—" styleClass="header-label" style="-fx-font-size: 28px;"/>
                 </VBox>
 
-                <GridPane hgap="30" vgap="20">
-                    <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <GridPane hgap="36" vgap="24">
+                    <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="0">
                         <Label text="%accounts.label.acc_no" styleClass="stat-label"/>
-                        <Label fx:id="detailAcc" text="—" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                        <Label fx:id="detailAcc" text="—" style="-fx-font-weight: bold; -fx-font-size: 15px;"/>
                     </VBox>
-                    <VBox spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="0">
                         <Label text="%accounts.label.status" styleClass="stat-label"/>
-                        <Label fx:id="detailStatus" text="—" style="-fx-font-weight: bold;"/>
+                        <Label fx:id="detailStatus" text="—" style="-fx-font-weight: bold; -fx-font-size: 15px;"/>
                     </VBox>
-                    <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="1">
                         <Label text="%accounts.label.phone" styleClass="stat-label"/>
-                        <Label fx:id="detailPhone" text="—" style="-fx-font-size: 14px;"/>
+                        <Label fx:id="detailPhone" text="—" style="-fx-font-size: 15px;"/>
                     </VBox>
-                    <VBox spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="1">
                         <Label text="%accounts.label.balance" styleClass="stat-label"/>
-                        <Label fx:id="detailBalance" text="—" style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: -fx-accent-success;"/>
+                        <Label fx:id="detailBalance" text="—" style="-fx-font-weight: bold; -fx-font-size: 20px; -fx-text-fill: #10b981;"/>
                     </VBox>
                 </GridPane>
 
-                <Separator style="-fx-padding: 10 0;"/>
+                <Separator style="-fx-padding: 16 0;"/>
                 
-                <VBox spacing="10" VBox.vgrow="ALWAYS">
-                    <Button text="%accounts.button.history" maxWidth="Infinity" prefHeight="40" styleClass="nav-button" style="-fx-border-color: -fx-border-color; -fx-border-radius: 8;"/>
-                    <Button text="%accounts.button.edit" onAction="#handleEditDetails" maxWidth="Infinity" prefHeight="40" styleClass="nav-button" style="-fx-border-color: -fx-border-color; -fx-border-radius: 8;"/>
+                <VBox spacing="14" VBox.vgrow="ALWAYS">
+                    <Button text="%accounts.button.history" maxWidth="Infinity" prefHeight="44" styleClass="secondary-button"/>
+                    <Button text="%accounts.button.edit" onAction="#handleEditDetails" maxWidth="Infinity" prefHeight="44" styleClass="secondary-button"/>
                     <Pane VBox.vgrow="ALWAYS"/>
-                    <Button text="%accounts.button.deactivate" onAction="#handleDeactivateAccount" maxWidth="Infinity" prefHeight="40" styleClass="nav-button" style="-fx-border-color: #fee2e2; -fx-text-fill: #dc2626; -fx-border-radius: 8;"/>
+                    <Button text="%accounts.button.deactivate" onAction="#handleDeactivateAccount" maxWidth="Infinity" prefHeight="44" styleClass="secondary-button" style="-fx-border-color: #fca5a5; -fx-text-fill: #ef4444;"/>
                 </VBox>
             </VBox>
         </Tab>
         <Tab fx:id="createTab" text="%accounts.tab.create">
-            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-padding: 0;">
-                <VBox spacing="20">
-                    <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+            <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+                <VBox spacing="24">
+                    <padding><Insets top="32" right="28" bottom="32" left="28"/></padding>
                     
-                    <Label fx:id="registerTitle" text="%accounts.label.register_title" styleClass="view-title" style="-fx-font-size: 18px;"/>
+                    <Label fx:id="registerTitle" text="%accounts.label.register_title" styleClass="view-title" style="-fx-font-size: 20px;"/>
                     
                     <VBox spacing="8">
                         <Label text="%accounts.label.full_name" styleClass="stat-label"/>
-                        <TextField fx:id="nameField" promptText="Enter full name" prefHeight="40"/>
+                        <TextField fx:id="nameField" promptText="Enter full name" prefHeight="44"/>
                     </VBox>
                     <VBox spacing="8">
                         <Label text="%accounts.label.phone" styleClass="stat-label"/>
-                        <TextField fx:id="phoneField" promptText="Primary contact number" prefHeight="40"/>
+                        <TextField fx:id="phoneField" promptText="Primary contact number" prefHeight="44"/>
                     </VBox>
                     <VBox spacing="8">
                         <Label text="%accounts.label.address" styleClass="stat-label"/>
-                        <TextArea fx:id="addressField" promptText="Full residential address" prefHeight="100" wrapText="true"/>
+                        <TextArea fx:id="addressField" promptText="Full residential address" prefHeight="120" wrapText="true"/>
                     </VBox>
 
-                    <Region minHeight="20"/>
+                    <Region minHeight="24"/>
                     
-                    <HBox spacing="12">
-                        <Button text="%accounts.button.cancel" onAction="#handleCancelEdit" prefHeight="45" HBox.hgrow="ALWAYS" maxWidth="Infinity" style="-fx-background-color: #f1f5f9; -fx-text-fill: #64748b; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                    <HBox spacing="14">
+                        <Button text="%accounts.button.cancel" onAction="#handleCancelEdit" prefHeight="48" HBox.hgrow="ALWAYS" maxWidth="Infinity" styleClass="secondary-button"/>
                         <Button fx:id="registerButton" text="%accounts.button.register" onAction="#handleCreateAccount"
-                                styleClass="primary-button" maxWidth="Infinity" prefHeight="45" HBox.hgrow="ALWAYS"/>
+                                styleClass="primary-button" maxWidth="Infinity" prefHeight="48" HBox.hgrow="ALWAYS"/>
                     </HBox>
-                    <Button text="Clear Form" onAction="#handleClearDraft" maxWidth="Infinity" styleClass="secondary-button"/>
+                    <Button text="Clear Form" onAction="#handleClearDraft" maxWidth="Infinity" prefHeight="40" styleClass="secondary-button" style="-fx-border-color: transparent;"/>
                 </VBox>
             </ScrollPane>
         </Tab>

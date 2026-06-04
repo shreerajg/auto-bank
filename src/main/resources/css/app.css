@@ -150,35 +150,48 @@
 
 /* ═══════════════ BUTTONS ══════════════════════════════ */
 .primary-button {
-    -fx-background-color: app-accent-primary; -fx-text-fill: white; -fx-font-weight: bold;
+    -fx-background-color: app-3d-shadow, app-accent-primary; 
+    -fx-text-fill: white; -fx-font-weight: bold;
     -fx-font-size: 13px; -fx-padding: 11px 24px; -fx-background-radius: 10px; -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(59,130,246,0.2), 8, 0, 0, 2);
+    -fx-background-insets: 4 0 0 4, 0 4 4 0;
 }
 .primary-button:hover { 
-    -fx-background-color: app-accent-primary-hover; 
-    -fx-effect: dropshadow(gaussian, rgba(59,130,246,0.4), 12, 0, 0, 4);
-    -fx-scale-x: 1.02; -fx-scale-y: 1.02; 
+    -fx-background-color: app-3d-shadow, app-accent-primary-hover;
+    -fx-background-insets: 2 1 1 2, 0 2 2 0;
 }
-.primary-button:pressed { -fx-scale-x: 0.98; -fx-scale-y: 0.98; }
+.primary-button:pressed { 
+    -fx-background-color: app-3d-shadow, app-accent-primary;
+    -fx-background-insets: 0, 0;
+}
 
 .success-button {
-    -fx-background-color: app-accent-success; -fx-text-fill: white; -fx-font-weight: bold;
+    -fx-background-color: app-3d-shadow, app-accent-success; 
+    -fx-text-fill: white; -fx-font-weight: bold;
     -fx-padding: 11px 24px; -fx-background-radius: 10px; -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(16,185,129,0.2), 8, 0, 0, 2);
+    -fx-background-insets: 4 0 0 4, 0 4 4 0;
 }
 .success-button:hover { 
-    -fx-effect: dropshadow(gaussian, rgba(16,185,129,0.4), 12, 0, 0, 4);
-    -fx-scale-x: 1.02; -fx-scale-y: 1.02;
+    -fx-background-color: app-3d-shadow, app-accent-success;
+    -fx-background-insets: 2 1 1 2, 0 2 2 0;
+}
+.success-button:pressed {
+    -fx-background-color: app-3d-shadow, app-accent-success;
+    -fx-background-insets: 0, 0;
 }
 
 .danger-button {
-    -fx-background-color: app-accent-danger; -fx-text-fill: white; -fx-font-weight: bold;
+    -fx-background-color: app-3d-shadow, app-accent-danger; 
+    -fx-text-fill: white; -fx-font-weight: bold;
     -fx-padding: 11px 24px; -fx-background-radius: 10px; -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(239,68,68,0.2), 8, 0, 0, 2);
+    -fx-background-insets: 4 0 0 4, 0 4 4 0;
 }
 .danger-button:hover { 
-    -fx-effect: dropshadow(gaussian, rgba(239,68,68,0.4), 12, 0, 0, 4);
-    -fx-scale-x: 1.02; -fx-scale-y: 1.02;
+    -fx-background-color: app-3d-shadow, app-accent-danger;
+    -fx-background-insets: 2 1 1 2, 0 2 2 0;
+}
+.danger-button:pressed {
+    -fx-background-color: app-3d-shadow, app-accent-danger;
+    -fx-background-insets: 0, 0;
 }
 
 .secondary-button {

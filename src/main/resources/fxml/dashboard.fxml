@@ -7,34 +7,34 @@
 <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: app-bg-base;" 
           xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
           fx:controller="com.autobank.ui.DashboardController">
-    <VBox fx:id="mainContainer" spacing="32" styleClass="content-pane">
+    <VBox fx:id="mainContainer" spacing="36" styleClass="content-pane">
         
         <!-- Header -->
         <HBox alignment="CENTER_LEFT" spacing="16">
-            <VBox spacing="6">
+            <VBox spacing="8">
                 <Label fx:id="dashboardTitle" text="%dashboard.title" styleClass="page-title"/>
                 <Label fx:id="dashboardSubtitle" text="%dashboard.subtitle" styleClass="page-subtitle"/>
             </VBox>
         </HBox>
 
         <!-- Stat Cards Row -->
-        <HBox spacing="20">
-            <VBox styleClass="stat-card, stat-card-blue" spacing="12" HBox.hgrow="ALWAYS">
+        <HBox spacing="24">
+            <VBox styleClass="stat-card, stat-card-blue" spacing="14" HBox.hgrow="ALWAYS">
                 <Label fx:id="totalAccountsHeader" text="%dashboard.stats.accounts" styleClass="stat-label"/>
                 <Label fx:id="totalAccountsLabel" text="—" styleClass="stat-value"/>
                 <Label text="%dashboard.stats.accounts_sub" styleClass="stat-subtext"/>
             </VBox>
-            <VBox styleClass="stat-card, stat-card-green" spacing="12" HBox.hgrow="ALWAYS">
+            <VBox styleClass="stat-card, stat-card-green" spacing="14" HBox.hgrow="ALWAYS">
                 <Label fx:id="totalBalanceHeader" text="%dashboard.stats.balance" styleClass="stat-label"/>
                 <Label fx:id="totalBalanceLabel" text="—" styleClass="stat-value"/>
                 <Label text="%dashboard.stats.balance_sub" styleClass="stat-subtext"/>
             </VBox>
-            <VBox styleClass="stat-card, stat-card-purple" spacing="12" HBox.hgrow="ALWAYS">
+            <VBox styleClass="stat-card, stat-card-purple" spacing="14" HBox.hgrow="ALWAYS">
                 <Label fx:id="activeLoansHeader" text="%dashboard.stats.loans" styleClass="stat-label"/>
                 <Label fx:id="activeLoansLabel" text="—" styleClass="stat-value"/>
                 <Label text="%dashboard.stats.loans_sub" styleClass="stat-subtext"/>
             </VBox>
-            <VBox styleClass="stat-card, stat-card-orange" spacing="12" HBox.hgrow="ALWAYS">
+            <VBox styleClass="stat-card, stat-card-orange" spacing="14" HBox.hgrow="ALWAYS">
                 <Label fx:id="todayTxHeader" text="%dashboard.stats.today" styleClass="stat-label"/>
                 <Label fx:id="todayTxLabel" text="—" styleClass="stat-value"/>
                 <Label text="%dashboard.stats.today_sub" styleClass="stat-subtext"/>

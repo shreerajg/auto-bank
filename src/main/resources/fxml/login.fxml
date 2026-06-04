@@ -9,12 +9,12 @@
       xmlns="http://javafx.com/javafx/22">
 
     <!-- Left accent panel -->
-    <VBox alignment="CENTER" spacing="16" HBox.hgrow="ALWAYS"
+    <VBox alignment="CENTER" spacing="20" HBox.hgrow="ALWAYS"
           styleClass="login-accent-panel">
         <Label text="🏦" styleClass="login-brand-icon"/>
         <Label text="%app.title" styleClass="login-brand-title"/>
         <Label text="%app.subtitle" styleClass="login-brand-subtitle"/>
-        <Region prefHeight="20"/>
+        <Region prefHeight="40"/>
         <Label text="✦  Secure  ·  Reliable  ·  Offline-First  ✦" styleClass="login-brand-tagline"/>
     </VBox>
 

@@ -264,8 +264,10 @@
 }
 .stat-card-blue   { -fx-border-color: rgba(59,130,246,0.2); -fx-background-color: linear-gradient(to bottom right, white, #f0f9ff); }
 .stat-card-green  { -fx-border-color: rgba(16,185,129,0.2); -fx-background-color: linear-gradient(to bottom right, white, #f0fdf4); }
+.stat-card-teal   { -fx-border-color: rgba(20,184,166,0.2); -fx-background-color: linear-gradient(to bottom right, white, #f0fdfa); }
 .stat-card-purple { -fx-border-color: rgba(139,92,246,0.2); -fx-background-color: linear-gradient(to bottom right, white, #f5f3ff); }
 .stat-card-orange { -fx-border-color: rgba(245,158,11,0.2); -fx-background-color: linear-gradient(to bottom right, white, #fffbeb); }
+.stat-card-red    { -fx-border-color: rgba(239,68,68,0.2); -fx-background-color: linear-gradient(to bottom right, white, #fef2f2); }
 
 .stat-label { -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #64748b; -fx-padding: 0 0 6 0; -fx-text-transform: uppercase; }
 .stat-value { -fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #0f172a; }
@@ -379,3 +381,37 @@
 .scroll-bar .increment-button, .scroll-bar .decrement-button { -fx-padding: 0; -fx-pref-height: 0; -fx-pref-width: 0; }
 .scroll-pane { -fx-background-color: transparent; }
 .scroll-pane .viewport { -fx-background-color: transparent; }
+
+/* ═══════════════ COMBOBOX & DROPDOWN ══════════════════ */
+.combo-box { -fx-font-size: 13px; }
+.combo-box-base { 
+    -fx-background-color: #f8fafc; 
+    -fx-border-color: #e2e8f0; 
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 9px 12px;
+}
+.combo-box-base:focused { 
+    -fx-background-color: white; 
+    -fx-border-color: #3b82f6;
+    -fx-effect: dropshadow(gaussian, rgba(59,130,246,0.1), 8, 0, 0, 0);
+}
+
+/* ═══════════════ LIST VIEW ════════════════════════════ */
+.list-view { -fx-background-color: white; -fx-border-color: #e2e8f0; -fx-border-radius: 12px; }
+.list-cell { -fx-padding: 10 14; -fx-text-fill: #0f172a; -fx-font-size: 13px; }
+.list-cell:hover { -fx-background-color: #f0f9ff; }
+.list-cell:selected { -fx-background-color: #3b82f6; -fx-text-fill: white; }
+
+/* ═══════════════ TAB PANE ═════════════════════════════ */
+.tab-pane { -fx-background-color: transparent; }
+.tab { -fx-padding: 12 20; -fx-font-size: 13px; -fx-text-fill: #64748b; }
+.tab:selected { -fx-text-fill: #3b82f6; -fx-background-color: transparent; }
+.tab-header-background { -fx-background-color: white; }
+
+/* ═══════════════ RADIO & CHECKBOX ═════════════════════ */
+.radio-button { -fx-font-size: 13px; -fx-text-fill: #0f172a; }
+.checkbox { -fx-font-size: 13px; -fx-text-fill: #0f172a; }
+
+/* ═══════════════ SEPARATOR ════════════════════════════ */
+.separator .line { -fx-border-color: #e2e8f0; -fx-border-width: 1px; }

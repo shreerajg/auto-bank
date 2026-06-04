@@ -62,6 +62,10 @@
     app-border-sidebar: #1f2937;
     app-shadow: rgba(0,0,0,0.5);
     app-shadow-md: rgba(0,0,0,0.7);
+    
+    /* 3D Block Effect */
+    app-3d-shadow: #000000;
+    app-3d-shadow-dark: #000000;
 }
 
 .theme-ocean {

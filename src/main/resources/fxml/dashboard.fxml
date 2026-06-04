@@ -42,20 +42,20 @@
         </HBox>
 
         <!-- Quick Actions Row -->
-        <VBox spacing="16">
+        <VBox spacing="18">
             <Label text="Quick Actions" styleClass="section-title"/>
-            <HBox spacing="20">
-                <VBox styleClass="quick-action-card" spacing="4" HBox.hgrow="ALWAYS" onMouseClicked="#handleNewAccount">
+            <HBox spacing="24">
+                <VBox styleClass="quick-action-card" spacing="6" HBox.hgrow="ALWAYS" onMouseClicked="#handleNewAccount">
                     <Label text="👤" styleClass="quick-action-icon"/>
                     <Label text="New Account" styleClass="quick-action-title"/>
-                    <Label text="Register a new customer/farmer" styleClass="quick-action-desc"/>
+                    <Label text="Register a new customer or farmer" styleClass="quick-action-desc"/>
                 </VBox>
-                <VBox styleClass="quick-action-card" spacing="4" HBox.hgrow="ALWAYS" onMouseClicked="#handleDeposit">
+                <VBox styleClass="quick-action-card" spacing="6" HBox.hgrow="ALWAYS" onMouseClicked="#handleDeposit">
                     <Label text="💰" styleClass="quick-action-icon"/>
                     <Label text="Cash Deposit" styleClass="quick-action-title"/>
                     <Label text="Add money to an existing account" styleClass="quick-action-desc"/>
                 </VBox>
-                <VBox styleClass="quick-action-card" spacing="4" HBox.hgrow="ALWAYS" onMouseClicked="#handleWithdraw">
+                <VBox styleClass="quick-action-card" spacing="6" HBox.hgrow="ALWAYS" onMouseClicked="#handleWithdraw">
                     <Label text="🏧" styleClass="quick-action-icon"/>
                     <Label text="Withdrawal" styleClass="quick-action-title"/>
                     <Label text="Debit money from an account" styleClass="quick-action-desc"/>
@@ -64,42 +64,42 @@
         </VBox>
 
         <!-- Charts Row 1: Transaction Trends and Loan Distribution -->
-        <HBox spacing="24">
+        <HBox spacing="28">
             <!-- Transaction Trend Chart -->
             <VBox styleClass="chart-card" HBox.hgrow="ALWAYS">
                 <Label text="%dashboard.chart.title" styleClass="chart-title"/>
-                <BarChart fx:id="txChart" prefHeight="300" animated="false">
+                <BarChart fx:id="txChart" prefHeight="320" animated="false">
                     <xAxis><CategoryAxis side="BOTTOM" /></xAxis>
                     <yAxis><NumberAxis side="LEFT" /></yAxis>
                 </BarChart>
             </VBox>
 
             <!-- Loan Distribution Pie Chart -->
-            <VBox styleClass="chart-card" prefWidth="350">
+            <VBox styleClass="chart-card" prefWidth="380">
                 <Label text="Loan Distribution" styleClass="chart-title"/>
-                <PieChart fx:id="loanPieChart" prefHeight="300" animated="true"/>
+                <PieChart fx:id="loanPieChart" prefHeight="320" animated="true"/>
             </VBox>
         </HBox>
 
         <!-- Charts Row 2: Cash Flow and Recent Activity -->
-        <HBox spacing="24">
+        <HBox spacing="28">
             <!-- Cash Flow Line Chart -->
             <VBox styleClass="chart-card" HBox.hgrow="ALWAYS">
                 <Label text="Monthly Cash Flow" styleClass="chart-title"/>
-                <LineChart fx:id="cashFlowChart" prefHeight="300" animated="false">
+                <LineChart fx:id="cashFlowChart" prefHeight="320" animated="false">
                     <xAxis><CategoryAxis side="BOTTOM" /></xAxis>
                     <yAxis><NumberAxis side="LEFT" /></yAxis>
                 </LineChart>
             </VBox>
 
             <!-- Recent Activity Table -->
-            <VBox styleClass="chart-card" prefWidth="400">
+            <VBox styleClass="chart-card" prefWidth="420">
                 <Label text="%dashboard.recent.title" styleClass="chart-title"/>
-                <TableView fx:id="recentTable" VBox.vgrow="ALWAYS" prefHeight="300">
+                <TableView fx:id="recentTable" VBox.vgrow="ALWAYS" prefHeight="320">
                     <columns>
-                        <TableColumn fx:id="colType" text="%dashboard.recent.type" prefWidth="100"/>
-                        <TableColumn fx:id="colAmount" text="%dashboard.recent.amount" prefWidth="120"/>
-                        <TableColumn fx:id="colDate" text="%dashboard.recent.time" prefWidth="150"/>
+                        <TableColumn fx:id="colType" text="%dashboard.recent.type" prefWidth="110"/>
+                        <TableColumn fx:id="colAmount" text="%dashboard.recent.amount" prefWidth="140"/>
+                        <TableColumn fx:id="colDate" text="%dashboard.recent.time" prefWidth="160"/>
                     </columns>
                 </TableView>
             </VBox>

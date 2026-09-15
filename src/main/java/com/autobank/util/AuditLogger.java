@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Types;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AuditLogger {
 

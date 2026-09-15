@@ -41,7 +41,7 @@ public class DatabaseConfig {
             cfg.setJdbcUrl(dbUrl);
             cfg.setUsername(dbUser);
             cfg.setPassword(dbPass);
-            cfg.setMaximumPoolSize(5);
+            cfg.setMaximumPoolSize(20);
             cfg.setConnectionTimeout(8000);
             cfg.setAutoCommit(true);
 

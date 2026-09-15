@@ -305,7 +305,23 @@ public class MainController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             loader.setResources(I18n.getBundle());
             Node view = loader.load();
+            
+            // Smooth entrance animation
+            view.setOpacity(0.0);
+            view.setTranslateY(15);
             contentArea.getChildren().setAll(view);
+            
+            javafx.animation.FadeTransition fade = new javafx.animation.FadeTransition(javafx.util.Duration.millis(300), view);
+            fade.setFromValue(0.0);
+            fade.setToValue(1.0);
+            
+            javafx.animation.TranslateTransition translate = new javafx.animation.TranslateTransition(javafx.util.Duration.millis(300), view);
+            translate.setFromY(15);
+            translate.setToY(0);
+            
+            javafx.animation.ParallelTransition pt = new javafx.animation.ParallelTransition(view, fade, translate);
+            pt.play();
+            
         } catch (Exception e) {
             log.error("Failed to load view: {}", fxml, e);
             showErrorView(fxml, e);

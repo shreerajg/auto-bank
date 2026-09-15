@@ -67,6 +67,21 @@ public class DashboardController {
         loadChartData();
         loadAnalyticsCharts();
         loadRecentActivity();
+        
+        // Add smooth entrance animation for dashboard elements
+        if (mainContainer != null) {
+            mainContainer.setOpacity(0.0);
+            mainContainer.setTranslateY(20);
+            
+            FadeTransition fade = new FadeTransition(Duration.millis(500), mainContainer);
+            fade.setToValue(1.0);
+            
+            TranslateTransition translate = new TranslateTransition(Duration.millis(500), mainContainer);
+            translate.setToY(0);
+            
+            javafx.animation.ParallelTransition pt = new javafx.animation.ParallelTransition(mainContainer, fade, translate);
+            pt.play();
+        }
     }
 
     private void refreshLabels() {

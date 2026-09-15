@@ -70,6 +70,33 @@ public class DistributionService {
                 ResultSet rs = psDist.getGeneratedKeys();
                 if (rs.next()) dist.setId(rs.getInt(1));
 
+                // PRELOAD ACCOUNT IDs to avoid N+1 queries
+                java.util.Map<String, Integer> accountMap = new java.util.HashMap<>();
+                List<String> accNums = new ArrayList<>();
+                for (var element : records) {
+                    JsonObject r = element.getAsJsonObject();
+                    if (r.has("account_number") && !r.get("account_number").getAsString().isBlank()) {
+                        accNums.add(r.get("account_number").getAsString());
+                    }
+                }
+                
+                if (!accNums.isEmpty()) {
+                    StringBuilder inClause = new StringBuilder();
+                    for (int i = 0; i < accNums.size(); i++) {
+                        inClause.append("?");
+                        if (i < accNums.size() - 1) inClause.append(",");
+                    }
+                    try (PreparedStatement psLookup = conn.prepareStatement("SELECT id, account_number FROM accounts WHERE account_number IN (" + inClause + ")")) {
+                        for (int i = 0; i < accNums.size(); i++) {
+                            psLookup.setString(i + 1, accNums.get(i));
+                        }
+                        ResultSet lookupRs = psLookup.executeQuery();
+                        while (lookupRs.next()) {
+                            accountMap.put(lookupRs.getString("account_number"), lookupRs.getInt("id"));
+                        }
+                    }
+                }
+
                 String sqlRec = "INSERT INTO distribution_records (distribution_id, account_id, holder_name, amount, status) VALUES (?, ?, ?, ?, 'PENDING')";
                 PreparedStatement psRec = conn.prepareStatement(sqlRec);
                 
@@ -77,7 +104,7 @@ public class DistributionService {
                 for (var element : records) {
                     JsonObject r = element.getAsJsonObject();
                     String accNum = r.has("account_number") ? r.get("account_number").getAsString() : "";
-                    Integer accId = findAccountId(conn, accNum);
+                    Integer accId = accountMap.get(accNum);
                     
                     psRec.setInt(1, dist.getId());
                     if (accId != null) {
@@ -104,15 +131,6 @@ public class DistributionService {
                 conn.rollback();
                 throw e;
             }
-        }
-    }
-
-    private Integer findAccountId(Connection conn, String accNum) throws SQLException {
-        if (accNum == null || accNum.isBlank()) return null;
-        try (PreparedStatement ps = conn.prepareStatement("SELECT id FROM accounts WHERE account_number = ?")) {
-            ps.setString(1, accNum);
-            ResultSet rs = ps.executeQuery();
-            return rs.next() ? rs.getInt(1) : null;
         }
     }
 
@@ -144,23 +162,25 @@ public class DistributionService {
 
     public void processDistribution(int distId) throws SQLException {
         List<DistributionRecord> records = getPendingRecords(distId);
-        for (DistributionRecord r : records) {
-            if (r.getAccountId() != null) {
-                try {
-                    Transaction tx = transactionService.deposit(r.getAccountId(), r.getAmount(), "Bulk Distribution #" + distId);
-                    updateRecordStatus(r.getId(), "CREDITED", null, tx.getId());
-                } catch (Exception e) {
-                    updateRecordStatus(r.getId(), "FAILED", e.getMessage(), null);
-                }
-            } else {
-                updateRecordStatus(r.getId(), "FAILED", "No matching account", null);
-            }
-        }
-        
         try (Connection conn = DatabaseConfig.getConnection();
-             PreparedStatement ps = conn.prepareStatement("UPDATE payment_distributions SET status = 'COMPLETED' WHERE id = ?")) {
-            ps.setInt(1, distId);
-            ps.executeUpdate();
+             PreparedStatement updStatus = conn.prepareStatement("UPDATE distribution_records SET status = ?, error_message = ?, transaction_id = ? WHERE id = ?")) {
+            for (DistributionRecord r : records) {
+                if (r.getAccountId() != null) {
+                    try {
+                        Transaction tx = transactionService.deposit(r.getAccountId(), r.getAmount(), "Bulk Distribution #" + distId);
+                        updateRecordStatus(updStatus, r.getId(), "CREDITED", null, tx.getId());
+                    } catch (Exception e) {
+                        updateRecordStatus(updStatus, r.getId(), "FAILED", e.getMessage(), null);
+                    }
+                } else {
+                    updateRecordStatus(updStatus, r.getId(), "FAILED", "No matching account", null);
+                }
+            }
+            
+            try (PreparedStatement ps = conn.prepareStatement("UPDATE payment_distributions SET status = 'COMPLETED' WHERE id = ?")) {
+                ps.setInt(1, distId);
+                ps.executeUpdate();
+            }
         }
     }
 
@@ -199,14 +219,11 @@ public class DistributionService {
         return null;
     }
 
-    private void updateRecordStatus(int recId, String status, String error, Integer txId) throws SQLException {
-        try (Connection conn = DatabaseConfig.getConnection();
-             PreparedStatement ps = conn.prepareStatement("UPDATE distribution_records SET status = ?, error_message = ?, transaction_id = ? WHERE id = ?")) {
-            ps.setString(1, status);
-            ps.setString(2, error);
-            if (txId != null) ps.setInt(3, txId); else ps.setNull(3, Types.INTEGER);
-            ps.setInt(4, recId);
-            ps.executeUpdate();
-        }
+    private void updateRecordStatus(PreparedStatement ps, int recId, String status, String error, Integer txId) throws SQLException {
+        ps.setString(1, status);
+        ps.setString(2, error);
+        if (txId != null) ps.setInt(3, txId); else ps.setNull(3, Types.INTEGER);
+        ps.setInt(4, recId);
+        ps.executeUpdate();
     }
 }

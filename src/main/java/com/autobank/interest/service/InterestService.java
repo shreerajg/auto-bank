@@ -108,6 +108,9 @@ public class InterestService {
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery();
                 
+                String updSql = "UPDATE loans SET outstanding = outstanding + ? WHERE id = ?";
+                PreparedStatement upd = conn.prepareStatement(updSql);
+
                 BigDecimal totalInterest = BigDecimal.ZERO;
                 int count = 0;
 
@@ -120,12 +123,9 @@ public class InterestService {
 
                     if (interest.compareTo(BigDecimal.ZERO) > 0) {
                         // Add interest to outstanding loan balance
-                        String updSql = "UPDATE loans SET outstanding = outstanding + ? WHERE id = ?";
-                        try (PreparedStatement upd = conn.prepareStatement(updSql)) {
-                            upd.setBigDecimal(1, interest);
-                            upd.setInt(2, loanId);
-                            upd.executeUpdate();
-                        }
+                        upd.setBigDecimal(1, interest);
+                        upd.setInt(2, loanId);
+                        upd.executeUpdate();
                         
                         // Record as a specialized debit transaction
                         transactionService.withdraw(accId, interest, "Loan Interest Accrual #" + loanId + " - " + month + "/" + year, conn);
@@ -134,6 +134,7 @@ public class InterestService {
                         count++;
                     }
                 }
+                upd.close();
 
                 saveBatchRecord(conn, year, month, "LOAN", totalInterest, count, opId);
                 conn.commit();

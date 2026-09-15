@@ -25,10 +25,22 @@ public class DatabaseConfig {
                 in.close();
             }
 
+            String dbUser = props.getProperty("db.user");
+            String dbPass = props.getProperty("db.password");
+            
+            if (dbUser == null || dbUser.isBlank() || dbPass == null || dbPass.isBlank()) {
+                throw new RuntimeException("Database credentials not found in config.properties. Aborting for security.");
+            }
+
+            String dbUrl = props.getProperty("db.url", "jdbc:mysql://localhost:3306/autobank");
+            if (!dbUrl.contains("useSSL")) {
+                dbUrl += dbUrl.contains("?") ? "&useSSL=true&requireSSL=true" : "?useSSL=true&requireSSL=true";
+            }
+
             HikariConfig cfg = new HikariConfig();
-            cfg.setJdbcUrl(props.getProperty("db.url", "jdbc:mysql://localhost:3306/autobank"));
-            cfg.setUsername(props.getProperty("db.user", "root"));
-            cfg.setPassword(props.getProperty("db.password", "topg"));
+            cfg.setJdbcUrl(dbUrl);
+            cfg.setUsername(dbUser);
+            cfg.setPassword(dbPass);
             cfg.setMaximumPoolSize(5);
             cfg.setConnectionTimeout(8000);
             cfg.setAutoCommit(true);

@@ -15,6 +15,11 @@ public class AuthService {
     private static final Logger log = LoggerFactory.getLogger(AuthService.class);
 
     public Optional<User> authenticate(String username, String password) {
+        if (password == null || password.length() > 72) {
+            log.warn("Login attempt with invalid password length for user: {}", username);
+            return Optional.empty();
+        }
+        
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(
                  "SELECT id, username, password_hash, role, is_active " +

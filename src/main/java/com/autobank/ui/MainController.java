@@ -71,6 +71,13 @@ public class MainController {
         currentUserLabel.setText(user.getUsername() + " (" + user.getRole() + ")");
         dateLabel.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
 
+        if (!"ADMIN".equalsIgnoreCase(user.getRole())) {
+            backupBtn.setVisible(false);
+            backupBtn.setManaged(false);
+            settingsBtn.setVisible(false);
+            settingsBtn.setManaged(false);
+        }
+
         loadTheme();
         refreshLabels();
         showDashboard();

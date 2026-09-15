@@ -15,6 +15,7 @@ AutoBank is a professional, reliable, and offline-first desktop financial manage
 - **Backend**: Java (Transaction engine and business logic).
 - **Database**: MySQL (Ensures data integrity and transaction safety).
 - **Automation**: Python (Excel/PDF parsing, report generation, and analytics).
+  **audit logger**: the audit logger is secure and stored in the database and cannot be deleted.
 
 ## 📂 System Modules
 1. **Authentication & Security**: Secure login and session management.

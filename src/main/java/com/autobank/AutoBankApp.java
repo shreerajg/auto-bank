@@ -125,6 +125,7 @@ public class AutoBankApp extends Application {
     @Override
     public void stop() {
         BackupScheduler.getInstance().stop();
+        com.autobank.sync.service.SyncQueueService.getInstance().stop();
         DraftManager.getInstance().shutdown();
         DatabaseConfig.shutdown();
     }

@@ -60,6 +60,7 @@ public class AutoBankApp extends Application {
 
         // Configure and arm the daily backup scheduler from config
         initBackupScheduler();
+        com.autobank.sync.service.SyncQueueService.getInstance().start();
     }
 
     private void initBackupScheduler() {

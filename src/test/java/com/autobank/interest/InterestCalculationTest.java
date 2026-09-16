@@ -22,7 +22,7 @@ public class InterestCalculationTest {
         BigDecimal rate = new BigDecimal("6.00");
         BigDecimal monthlyInterest = calculateMonthlyInterest(principal, rate);
 
-        assertEquals(new BigDecimal("600.00"), monthlyInterest);
+        assertEquals(0, new BigDecimal("600.00").compareTo(monthlyInterest));
     }
 
     @Test
@@ -32,13 +32,13 @@ public class InterestCalculationTest {
         BigDecimal rate = new BigDecimal("7.50");
         BigDecimal monthlyInterest = calculateMonthlyInterest(principal, rate);
 
-        assertEquals(new BigDecimal("62.50"), monthlyInterest);
+        assertEquals(0, new BigDecimal("62.50").compareTo(monthlyInterest));
     }
 
     @Test
     public void testZeroPrincipalOrRate() {
-        assertEquals(BigDecimal.ZERO, calculateMonthlyInterest(BigDecimal.ZERO, new BigDecimal("8.00")));
-        assertEquals(new BigDecimal("0.00"), calculateMonthlyInterest(new BigDecimal("50000.00"), BigDecimal.ZERO));
+        assertEquals(0, BigDecimal.ZERO.compareTo(calculateMonthlyInterest(BigDecimal.ZERO, new BigDecimal("8.00"))));
+        assertEquals(0, BigDecimal.ZERO.compareTo(calculateMonthlyInterest(new BigDecimal("50000.00"), BigDecimal.ZERO)));
         assertEquals(BigDecimal.ZERO, calculateMonthlyInterest(null, new BigDecimal("8.00")));
         assertEquals(BigDecimal.ZERO, calculateMonthlyInterest(new BigDecimal("50000.00"), null));
     }

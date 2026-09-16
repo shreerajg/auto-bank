@@ -82,6 +82,11 @@ public class MainController {
         refreshLabels();
         showDashboard();
         setupShortcuts();
+        
+        com.autobank.backup.BackupScheduler.getInstance().start(
+            path -> MainController.showToast("Auto-backup completed: " + path.getFileName(), Toast.Type.SUCCESS),
+            err -> MainController.showToast("Auto-backup failed: " + err, Toast.Type.ERROR)
+        );
     }
 
     public static void setTheme(String themeName) {

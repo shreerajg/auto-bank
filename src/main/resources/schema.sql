@@ -157,3 +157,15 @@ CREATE TABLE IF NOT EXISTS form_drafts (
     PRIMARY KEY (form_id, user_id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+CREATE TABLE IF NOT EXISTS sync_queue (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    task_type VARCHAR(50) NOT NULL,
+    payload TEXT NOT NULL,
+    target_endpoint VARCHAR(255),
+    status VARCHAR(20) DEFAULT 'PENDING' NOT NULL,
+    retry_count INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_sync_status (status)
+);

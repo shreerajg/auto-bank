@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<SplitPane xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.autobank.deposit.ui.DepositController"
+           dividerPositions="0.63"
+           style="-fx-background-color: transparent;"
+           xmlns="http://javafx.com/javafx/22">
+
+    <!-- LEFT: Portfolio Stats, Filters, and Deposit Ledger -->
+    <VBox spacing="18" styleClass="content-pane">
+        <!-- Title & Subtitle -->
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="%deposits.title" styleClass="page-title"/>
+                <Label text="%deposits.subtitle" styleClass="page-subtitle"/>
+            </VBox>
+            <Button text="%common.refresh" onAction="#handleRefresh" styleClass="secondary-button"/>
+        </HBox>
+
+        <!-- 4 Top Metric Cards -->
+        <HBox spacing="14">
+            <VBox spacing="4" styleClass="stat-card, stat-card-blue" HBox.hgrow="ALWAYS">
+                <Label text="%deposits.stat.fd_vol" styleClass="stat-label"/>
+                <Label fx:id="fdVolumeLabel" text="₹0.00" styleClass="stat-value" style="-fx-font-size: 22px;"/>
+                <Label text="Lump-sum Term Deposits" styleClass="stat-subtext"/>
+            </VBox>
+            <VBox spacing="4" styleClass="stat-card, stat-card-green" HBox.hgrow="ALWAYS">
+                <Label text="%deposits.stat.rd_vol" styleClass="stat-label"/>
+                <Label fx:id="rdVolumeLabel" text="₹0.00" styleClass="stat-value" style="-fx-font-size: 22px;"/>
+                <Label text="Monthly Installments" styleClass="stat-subtext"/>
+            </VBox>
+            <VBox spacing="4" styleClass="stat-card, stat-card-orange" HBox.hgrow="ALWAYS">
+                <Label text="%deposits.stat.due_soon" styleClass="stat-label"/>
+                <Label fx:id="dueSoonLabel" text="0" styleClass="stat-value" style="-fx-font-size: 22px;"/>
+                <Label text="Upcoming Payouts" styleClass="stat-subtext"/>
+            </VBox>
+            <VBox spacing="4" styleClass="stat-card, stat-card-purple" HBox.hgrow="ALWAYS">
+                <Label text="%deposits.stat.total_active" styleClass="stat-label"/>
+                <Label fx:id="totalActiveLabel" text="0" styleClass="stat-value" style="-fx-font-size: 22px;"/>
+                <Label text="Active Member Schemes" styleClass="stat-subtext"/>
+            </VBox>
+        </HBox>
+
+        <!-- Search and Filters Bar -->
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="chart-card" style="-fx-padding: 10px 16px;">
+            <TextField fx:id="searchField" promptText="Search by Deposit #, Account # or Name..." prefWidth="260" HBox.hgrow="ALWAYS"/>
+            <Label text="Status:" style="-fx-text-fill: #64748b; -fx-font-weight: bold;"/>
+            <ComboBox fx:id="statusFilterCombo" prefWidth="150"/>
+            <Label text="Type:" style="-fx-text-fill: #64748b; -fx-font-weight: bold;"/>
+            <ComboBox fx:id="typeFilterCombo" prefWidth="130"/>
+        </HBox>
+
+        <!-- Table View -->
+        <TableView fx:id="depositTable" VBox.vgrow="ALWAYS" styleClass="table-view">
+            <columns>
+                <TableColumn fx:id="colDepositNumber" text="%deposits.table.number" prefWidth="110"/>
+                <TableColumn fx:id="colHolder"        text="%deposits.table.holder" prefWidth="160"/>
+                <TableColumn fx:id="colType"          text="%deposits.table.type" prefWidth="60"/>
+                <TableColumn fx:id="colPrincipal"     text="%deposits.table.principal" prefWidth="110"/>
+                <TableColumn fx:id="colRate"          text="%deposits.table.rate" prefWidth="65"/>
+                <TableColumn fx:id="colTenure"        text="%deposits.table.tenure" prefWidth="75"/>
+                <TableColumn fx:id="colMaturityAmt"   text="%deposits.table.maturity_amt" prefWidth="115"/>
+                <TableColumn fx:id="colMaturityDate"  text="%deposits.table.maturity_date" prefWidth="95"/>
+                <TableColumn fx:id="colDeposited"     text="%deposits.table.total_deposited" prefWidth="110"/>
+                <TableColumn fx:id="colStatus"        text="%deposits.table.status" prefWidth="90"/>
+            </columns>
+            <placeholder>
+                <VBox alignment="CENTER" spacing="10">
+                    <Label text="💰" style="-fx-font-size: 32px;"/>
+                    <Label text="No deposit schemes found" style="-fx-text-fill: #94a3b8;"/>
+                </VBox>
+            </placeholder>
+        </TableView>
+
+        <Label fx:id="statusMessageLabel" styleClass="status-label" wrapText="true"/>
+    </VBox>
+
+    <!-- RIGHT: Operation Tabs (Open Deposit, RD Pay, Settlement & Certificate) -->
+    <ScrollPane fitToWidth="true" styleClass="scroll-pane" style="-fx-background-color: transparent;">
+        <VBox spacing="16" style="-fx-padding: 24px 20px;">
+            <TabPane fx:id="operationsTabPane" tabClosingPolicy="UNAVAILABLE" styleClass="tab-pane">
+                
+                <!-- TAB 1: Open New Deposit -->
+                <Tab text="%deposits.tab.open">
+                    <VBox spacing="14" styleClass="form-panel" style="-fx-padding: 20px;">
+                        <Label text="Create New Term Deposit" styleClass="section-title"/>
+                        <Separator/>
+
+                        <!-- Member Selection -->
+                        <VBox spacing="6">
+                            <Label text="%tx.label.select_account" styleClass="stat-label"/>
+                            <TextField fx:id="openSearchMemberField" promptText="Search member name or account #..."/>
+                            <ComboBox fx:id="openAccountCombo" maxWidth="Infinity" promptText="%tx.label.choose_acc"/>
+                        </VBox>
+
+                        <!-- Deposit Type -->
+                        <HBox spacing="12">
+                            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                                <Label text="DEPOSIT SCHEME TYPE" styleClass="stat-label"/>
+                                <ComboBox fx:id="openTypeCombo" maxWidth="Infinity"/>
+                            </VBox>
+                            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                                <Label text="TENURE (MONTHS)" styleClass="stat-label"/>
+                                <TextField fx:id="openTenureField" promptText="e.g. 12"/>
+                            </VBox>
+                        </HBox>
+
+                        <!-- Amount & Interest Rate -->
+                        <HBox spacing="12">
+                            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                                <Label fx:id="openAmountLabel" text="PRINCIPAL AMOUNT (₹)" styleClass="stat-label"/>
+                                <TextField fx:id="openAmountField" promptText="e.g. 50000"/>
+                            </VBox>
+                            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                                <Label text="INTEREST RATE (% P.A.)" styleClass="stat-label"/>
+                                <TextField fx:id="openInterestRateField" promptText="e.g. 8.0"/>
+                            </VBox>
+                        </HBox>
+
+                        <CheckBox fx:id="openDeductSavingsCheck" text="Deduct initial amount from Savings Account" selected="true"/>
+
+                        <!-- Live Calculation Preview Card -->
+                        <VBox spacing="8" style="-fx-background-color: #f1f5f9; -fx-padding: 14px; -fx-background-radius: 10px; -fx-border-color: #cbd5e1; -fx-border-width: 1px; -fx-border-radius: 10px;">
+                            <Label text="%deposits.calc.preview" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="%deposits.calc.maturity" style="-fx-text-fill: #334155; -fx-font-weight: bold;"/>
+                                <Pane HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="previewMaturityLabel" text="₹0.00" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #059669;"/>
+                            </HBox>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="%deposits.calc.interest" style="-fx-text-fill: #64748b;"/>
+                                <Pane HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="previewInterestLabel" text="₹0.00" style="-fx-font-weight: bold; -fx-text-fill: #2563eb;"/>
+                            </HBox>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="Maturity Date:" style="-fx-text-fill: #64748b;"/>
+                                <Pane HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="previewDateLabel" text="-" style="-fx-text-fill: #334155;"/>
+                            </HBox>
+                        </VBox>
+
+                        <Button text="%deposits.btn.open" onAction="#handleOpenDeposit" styleClass="primary-button" maxWidth="Infinity" prefHeight="42"/>
+                    </VBox>
+                </Tab>
+
+                <!-- TAB 2: Pay RD Installment -->
+                <Tab text="%deposits.tab.rd_pay">
+                    <VBox spacing="14" styleClass="form-panel" style="-fx-padding: 20px;">
+                        <Label text="Record RD Monthly Installment" styleClass="section-title"/>
+                        <Separator/>
+
+                        <VBox spacing="6">
+                            <Label text="SELECTED DEPOSIT (Click table row or type ID)" styleClass="stat-label"/>
+                            <TextField fx:id="rdDepositIdField" promptText="Deposit ID or #" />
+                        </VBox>
+
+                        <VBox spacing="6" style="-fx-background-color: #f8fafc; -fx-padding: 12px; -fx-background-radius: 8px;">
+                            <Label fx:id="rdDetailsLabel" text="Select an active Recurring Deposit from the table" style="-fx-text-fill: #64748b;" wrapText="true"/>
+                        </VBox>
+
+                        <CheckBox fx:id="rdDeductSavingsCheck" text="Auto-deduct installment from member Savings Account" selected="true"/>
+
+                        <Button text="%deposits.btn.rd_pay" onAction="#handlePayRdInstallment" styleClass="success-button" maxWidth="Infinity" prefHeight="42"/>
+                    </VBox>
+                </Tab>
+
+                <!-- TAB 3: Settlement & Certificate -->
+                <Tab text="%deposits.tab.settle">
+                    <VBox spacing="14" styleClass="form-panel" style="-fx-padding: 20px;">
+                        <Label text="Maturity Settlement &amp; Certificate" styleClass="section-title"/>
+                        <Separator/>
+
+                        <VBox spacing="6">
+                            <Label text="DEPOSIT TO SETTLE (Click row in table)" styleClass="stat-label"/>
+                            <TextField fx:id="settleDepositIdField" promptText="Deposit ID"/>
+                        </VBox>
+
+                        <!-- Settle Info Box -->
+                        <VBox spacing="6" style="-fx-background-color: #f8fafc; -fx-padding: 12px; -fx-background-radius: 8px; -fx-border-color: #e2e8f0; -fx-border-width: 1px; -fx-border-radius: 8px;">
+                            <Label fx:id="settleSummaryLabel" text="No deposit selected" style="-fx-text-fill: #334155; -fx-font-weight: bold;" wrapText="true"/>
+                            <Label fx:id="settleCalculationsLabel" text="Maturity details will appear here" style="-fx-text-fill: #64748b; -fx-font-size: 11px;" wrapText="true"/>
+                        </VBox>
+
+                        <VBox spacing="6">
+                            <Label text="PREMATURE PENALTY RATE DEDUCTION (%)" styleClass="stat-label"/>
+                            <TextField fx:id="settlePenaltyField" text="1.0" promptText="Penalty % reduction"/>
+                        </VBox>
+
+                        <CheckBox fx:id="settleCreditSavingsCheck" text="Credit payout directly to member Savings Account" selected="true"/>
+
+                        <HBox spacing="10">
+                            <Button text="%deposits.btn.settle_mature" onAction="#handleNormalSettlement" styleClass="success-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="40"/>
+                            <Button text="%deposits.btn.settle_premature" onAction="#handlePrematureSettlement" styleClass="danger-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="40"/>
+                        </HBox>
+
+                        <Separator style="-fx-padding: 4 0;"/>
+
+                        <Button text="%deposits.btn.certificate" onAction="#handleShowCertificate" styleClass="secondary-button" maxWidth="Infinity" prefHeight="38"/>
+                    </VBox>
+                </Tab>
+
+            </TabPane>
+        </VBox>
+    </ScrollPane>
+
+</SplitPane>

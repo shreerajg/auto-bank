@@ -73,9 +73,10 @@ public class CommandPalette extends StackPane {
         allCommands.add(new CommandItem("📊", "Dashboard", "nav.dashboard", "Alt + 1", mainController::showDashboard));
         allCommands.add(new CommandItem("👤", "Accounts", "nav.accounts", "Alt + 2", mainController::showAccounts));
         allCommands.add(new CommandItem("💸", "Transactions", "nav.transactions", "Alt + 3", mainController::showTransactions));
+        allCommands.add(new CommandItem("💰", "Term Deposits", "nav.deposits", "Alt + D", mainController::showDeposits));
+        allCommands.add(new CommandItem("🏠", "Loans", "nav.loans", "Alt + 6", mainController::showLoans));
         allCommands.add(new CommandItem("📈", "Interest Engine", "nav.interest", "Alt + 4", mainController::showInterest));
         allCommands.add(new CommandItem("🥛", "Distributions", "nav.distributions", "Alt + 5", mainController::showDistributions));
-        allCommands.add(new CommandItem("🏠", "Loans", "nav.loans", "Alt + 6", mainController::showLoans));
         allCommands.add(new CommandItem("📅", "Daily Operations", "nav.dailyops", "Alt + 7", mainController::showDailyOps));
         allCommands.add(new CommandItem("📈", "Reports", "nav.reports", "Alt + 8", mainController::showReports));
         allCommands.add(new CommandItem("🔒", "Backup & Recovery", "nav.backup", "Alt + 9", mainController::showBackup));

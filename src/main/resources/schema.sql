@@ -169,3 +169,44 @@ CREATE TABLE IF NOT EXISTS sync_queue (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_sync_status (status)
 );
+
+CREATE TABLE IF NOT EXISTS term_deposits (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    deposit_number VARCHAR(30) UNIQUE NOT NULL,
+    account_id INT NOT NULL,
+    deposit_type VARCHAR(10) NOT NULL, -- 'FD' or 'RD'
+    principal_amount NUMERIC(15,2) NOT NULL,
+    monthly_installment NUMERIC(15,2) DEFAULT 0.00,
+    tenure_months INT NOT NULL,
+    interest_rate NUMERIC(5,2) NOT NULL,
+    maturity_amount NUMERIC(15,2) NOT NULL,
+    deposit_date DATE NOT NULL,
+    maturity_date DATE NOT NULL,
+    status VARCHAR(20) DEFAULT 'ACTIVE' NOT NULL, -- 'ACTIVE', 'MATURED', 'CLOSED', 'PREMATURE_CLOSED'
+    total_deposited NUMERIC(15,2) NOT NULL,
+    interest_paid NUMERIC(15,2) DEFAULT 0.00,
+    payout_amount NUMERIC(15,2) DEFAULT 0.00,
+    closed_at TIMESTAMP NULL,
+    operator_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES accounts(id),
+    FOREIGN KEY (operator_id) REFERENCES users(id),
+    INDEX idx_dep_acct (account_id),
+    INDEX idx_dep_status (status),
+    INDEX idx_dep_maturity (maturity_date)
+);
+
+CREATE TABLE IF NOT EXISTS term_deposit_installments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    deposit_id INT NOT NULL,
+    installment_number INT NOT NULL,
+    amount NUMERIC(15,2) NOT NULL,
+    payment_date DATE NOT NULL,
+    transaction_id INT NULL,
+    operator_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (deposit_id) REFERENCES term_deposits(id),
+    FOREIGN KEY (transaction_id) REFERENCES transactions(id),
+    FOREIGN KEY (operator_id) REFERENCES users(id),
+    INDEX idx_dep_inst_dep (deposit_id)
+);

@@ -55,8 +55,8 @@ class DepositCalculatorTest {
         assertNotNull(maturity);
         // Total invested = 12,000. Maturity should be greater than total invested
         assertTrue(maturity.compareTo(BigDecimal.valueOf(12000)) > 0);
-        // Expected value for 1000 @ 7.5% for 12 months with quarterly compounding is approx 12,499.78
-        assertEquals(new BigDecimal("12499.78"), maturity);
+        // 12 installments of 1000 compounded quarterly @ 7.5% gives approx 12502.82
+        assertEquals(new BigDecimal("12502.82"), maturity);
     }
 
     @Test

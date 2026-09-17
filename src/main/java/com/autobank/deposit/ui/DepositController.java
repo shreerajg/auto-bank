@@ -216,17 +216,10 @@ public class DepositController {
     }
 
     private void searchAccountsForOpen(String query) {
-        if (query == null || query.isBlank()) {
-            try {
-                List<Account> list = accountService.getAllAccounts();
-                openAccountCombo.setItems(FXCollections.observableArrayList(list));
-            } catch (Exception ignored) {}
-            return;
-        }
         try {
-            List<Account> list = accountService.searchAccounts(query.trim());
+            List<Account> list = accountService.searchAccounts(query != null ? query.trim() : "");
             openAccountCombo.setItems(FXCollections.observableArrayList(list));
-            if (!list.isEmpty()) {
+            if (!list.isEmpty() && (query != null && !query.isBlank())) {
                 openAccountCombo.getSelectionModel().selectFirst();
             }
         } catch (Exception e) {
@@ -334,14 +327,14 @@ public class DepositController {
     public void handleRefresh() {
         loadDeposits();
         refreshStats();
-        Toast.show(depositTable, "Deposits refreshed");
+        MainController.showToast("Deposits refreshed", Toast.Type.INFO);
     }
 
     @FXML
     public void handleOpenDeposit() {
         Account acct = openAccountCombo.getValue();
         if (acct == null) {
-            Toast.error(depositTable, "Please select an account first");
+            MainController.showToast("Please select an account first", Toast.Type.ERROR);
             return;
         }
 
@@ -353,7 +346,7 @@ public class DepositController {
             boolean deduct = openDeductSavingsCheck.isSelected();
 
             if (amt.compareTo(BigDecimal.ZERO) <= 0 || tenure <= 0 || rate.compareTo(BigDecimal.ZERO) < 0) {
-                Toast.error(depositTable, "Please enter valid amount, tenure, and interest rate");
+                MainController.showToast("Please enter valid amount, tenure, and interest rate", Toast.Type.ERROR);
                 return;
             }
 
@@ -361,7 +354,7 @@ public class DepositController {
                 acct.getId(), type, amt, amt, tenure, rate, deduct
             );
 
-            Toast.success(depositTable, I18n.t("deposits.msg.created") + " (" + td.getDepositNumber() + ")");
+            MainController.showToast(I18n.t("deposits.msg.created") + " (" + td.getDepositNumber() + ")", Toast.Type.SUCCESS);
             loadDeposits();
             refreshStats();
 
@@ -370,7 +363,7 @@ public class DepositController {
 
         } catch (Exception e) {
             log.error("Failed to open deposit", e);
-            Toast.error(depositTable, "Error: " + e.getMessage());
+            MainController.showToast("Error: " + e.getMessage(), Toast.Type.ERROR);
         }
     }
 
@@ -378,7 +371,7 @@ public class DepositController {
     public void handlePayRdInstallment() {
         String idStr = rdDepositIdField.getText().trim();
         if (idStr.isEmpty()) {
-            Toast.error(depositTable, "Please enter or select a Deposit ID");
+            MainController.showToast("Please enter or select a Deposit ID", Toast.Type.ERROR);
             return;
         }
 
@@ -387,13 +380,13 @@ public class DepositController {
             boolean deduct = rdDeductSavingsCheck.isSelected();
             depositService.payRdInstallment(depositId, deduct);
 
-            Toast.success(depositTable, I18n.t("deposits.msg.rd_paid"));
+            MainController.showToast(I18n.t("deposits.msg.rd_paid"), Toast.Type.SUCCESS);
             loadDeposits();
             refreshStats();
 
         } catch (Exception e) {
             log.error("Failed to pay RD installment", e);
-            Toast.error(depositTable, "Error: " + e.getMessage());
+            MainController.showToast("Error: " + e.getMessage(), Toast.Type.ERROR);
         }
     }
 
@@ -401,7 +394,7 @@ public class DepositController {
     public void handleNormalSettlement() {
         String idStr = settleDepositIdField.getText().trim();
         if (idStr.isEmpty()) {
-            Toast.error(depositTable, "Please enter or select a Deposit ID");
+            MainController.showToast("Please enter or select a Deposit ID", Toast.Type.ERROR);
             return;
         }
 
@@ -415,13 +408,13 @@ public class DepositController {
             confirm.setContentText("Proceed with closing this deposit and paying out full maturity proceeds?");
             if (confirm.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
                 depositService.settleDeposit(depositId, false, BigDecimal.ZERO, credit);
-                Toast.success(depositTable, I18n.t("deposits.msg.settled"));
+                MainController.showToast(I18n.t("deposits.msg.settled"), Toast.Type.SUCCESS);
                 loadDeposits();
                 refreshStats();
             }
         } catch (Exception e) {
             log.error("Failed to settle deposit", e);
-            Toast.error(depositTable, "Error: " + e.getMessage());
+            MainController.showToast("Error: " + e.getMessage(), Toast.Type.ERROR);
         }
     }
 
@@ -429,7 +422,7 @@ public class DepositController {
     public void handlePrematureSettlement() {
         String idStr = settleDepositIdField.getText().trim();
         if (idStr.isEmpty()) {
-            Toast.error(depositTable, "Please enter or select a Deposit ID");
+            MainController.showToast("Please enter or select a Deposit ID", Toast.Type.ERROR);
             return;
         }
 
@@ -444,13 +437,13 @@ public class DepositController {
             confirm.setContentText("A penalty reduction of " + penalty + "% will be deducted from the interest. Proceed with premature payout?");
             if (confirm.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
                 depositService.settleDeposit(depositId, true, penalty, credit);
-                Toast.success(depositTable, "Deposit closed prematurely and settled");
+                MainController.showToast("Deposit closed prematurely and settled", Toast.Type.SUCCESS);
                 loadDeposits();
                 refreshStats();
             }
         } catch (Exception e) {
             log.error("Failed premature settlement", e);
-            Toast.error(depositTable, "Error: " + e.getMessage());
+            MainController.showToast("Error: " + e.getMessage(), Toast.Type.ERROR);
         }
     }
 
@@ -458,7 +451,7 @@ public class DepositController {
     public void handleShowCertificate() {
         TermDeposit d = selectedDeposit;
         if (d == null) {
-            Toast.error(depositTable, "Please select a deposit from the table to view certificate");
+            MainController.showToast("Please select a deposit from the table to view certificate", Toast.Type.ERROR);
             return;
         }
 

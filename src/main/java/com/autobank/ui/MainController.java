@@ -38,9 +38,10 @@ public class MainController {
     @FXML private Button dashboardBtn;
     @FXML private Button accountsBtn;
     @FXML private Button transactionsBtn;
+    @FXML private Button depositsBtn;
+    @FXML private Button loansBtn;
     @FXML private Button interestBtn;
     @FXML private Button distributionBtn;
-    @FXML private Button loansBtn;
     @FXML private Button dailyOpsBtn;
     @FXML private Button reportsBtn;
     @FXML private Button backupBtn;

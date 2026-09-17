@@ -178,9 +178,10 @@ public class MainController {
         dashboardBtn.setText("📊  " + I18n.t("nav.dashboard"));
         accountsBtn.setText("👤  " + I18n.t("nav.accounts"));
         transactionsBtn.setText("💸  " + I18n.t("nav.transactions"));
+        depositsBtn.setText("💰  " + I18n.t("nav.deposits"));
+        loansBtn.setText("🏠  " + I18n.t("nav.loans"));
         interestBtn.setText("📈  " + I18n.t("nav.interest"));
         distributionBtn.setText("🥛  " + I18n.t("nav.distributions"));
-        loansBtn.setText("🏠  " + I18n.t("nav.loans"));
         dailyOpsBtn.setText("📅  " + I18n.t("nav.dailyops"));
         reportsBtn.setText("📈  " + I18n.t("nav.reports"));
         backupBtn.setText("🔒  " + I18n.t("nav.backup"));
@@ -212,6 +213,14 @@ public class MainController {
                 viewTitleLabel.setText(I18n.t("nav.transactions"));
                 viewSubtitleLabel.setText("Execute deposits, withdrawals and transfers");
                 break;
+            case "/fxml/deposits.fxml":
+                viewTitleLabel.setText(I18n.t("nav.deposits"));
+                viewSubtitleLabel.setText("Fixed (FD) and Recurring (RD) deposit schemes & settlements");
+                break;
+            case "/fxml/loans.fxml":
+                viewTitleLabel.setText(I18n.t("nav.loans"));
+                viewSubtitleLabel.setText("Track and manage loan disbursements and EMI");
+                break;
             case "/fxml/interest.fxml":
                 viewTitleLabel.setText(I18n.t("nav.interest"));
                 viewSubtitleLabel.setText("Calculate and apply periodic interest");
@@ -219,10 +228,6 @@ public class MainController {
             case "/fxml/distributions.fxml":
                 viewTitleLabel.setText(I18n.t("nav.distributions"));
                 viewSubtitleLabel.setText("Process dairy payments and rural distributions");
-                break;
-            case "/fxml/loans.fxml":
-                viewTitleLabel.setText(I18n.t("nav.loans"));
-                viewSubtitleLabel.setText("Track and manage loan disbursements and EMI");
                 break;
             case "/fxml/dailyops.fxml":
                 viewTitleLabel.setText(I18n.t("nav.dailyops"));
@@ -261,9 +266,10 @@ public class MainController {
     @FXML public void showDashboard()    { currentViewFxml = "/fxml/dashboard.fxml"; load(currentViewFxml); activate(dashboardBtn); updateHeaderTitles(); }
     @FXML public void showAccounts()     { currentViewFxml = "/fxml/accounts.fxml";  load(currentViewFxml); activate(accountsBtn); updateHeaderTitles(); }
     @FXML public void showTransactions() { currentViewFxml = "/fxml/transactions.fxml"; load(currentViewFxml); activate(transactionsBtn); updateHeaderTitles(); }
+    @FXML public void showDeposits()     { currentViewFxml = "/fxml/deposits.fxml"; load(currentViewFxml); activate(depositsBtn); updateHeaderTitles(); }
+    @FXML public void showLoans()        { currentViewFxml = "/fxml/loans.fxml";       load(currentViewFxml); activate(loansBtn); updateHeaderTitles(); }
     @FXML public void showInterest()     { currentViewFxml = "/fxml/interest.fxml";     load(currentViewFxml); activate(interestBtn); updateHeaderTitles(); }
     @FXML public void showDistributions(){ currentViewFxml = "/fxml/distributions.fxml"; load(currentViewFxml); activate(distributionBtn); updateHeaderTitles(); }
-    @FXML public void showLoans()        { currentViewFxml = "/fxml/loans.fxml";       load(currentViewFxml); activate(loansBtn); updateHeaderTitles(); }
     @FXML public void showDailyOps()     { currentViewFxml = "/fxml/dailyops.fxml";   load(currentViewFxml); activate(dailyOpsBtn); updateHeaderTitles(); }
     @FXML public void showReports()      { currentViewFxml = "/fxml/reports.fxml";    load(currentViewFxml); activate(reportsBtn); updateHeaderTitles(); }
     @FXML public void showBackup()       { currentViewFxml = "/fxml/backup.fxml";     load(currentViewFxml); activate(backupBtn); updateHeaderTitles(); }
@@ -370,8 +376,8 @@ public class MainController {
 
     private void activate(Button active) {
         currentActiveBtn = active;
-        for (Button b : new Button[]{dashboardBtn, accountsBtn, transactionsBtn, interestBtn,
-                                     distributionBtn, loansBtn, dailyOpsBtn, reportsBtn, 
+        for (Button b : new Button[]{dashboardBtn, accountsBtn, transactionsBtn, depositsBtn, loansBtn,
+                                     interestBtn, distributionBtn, dailyOpsBtn, reportsBtn, 
                                      settingsBtn, backupBtn}) {
             if (b != null) b.getStyleClass().remove("active");
         }

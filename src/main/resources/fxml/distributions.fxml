@@ -13,6 +13,7 @@
             <Label text="%dist.title" styleClass="page-title"/>
             <Label text="%dist.subtitle" styleClass="page-subtitle"/>
         </VBox>
+        <Button text="Export" onAction="#handleExport" styleClass="secondary-button" prefHeight="42"/>
         <Button text="%dist.button.import" onAction="#handleImport" styleClass="primary-button" prefHeight="42"/>
     </HBox>
 

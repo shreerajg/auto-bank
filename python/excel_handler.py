@@ -34,9 +34,16 @@ def import_payment_file(file_path: str) -> dict:
         return {"error": str(e)}
 
 
-def export_to_excel(data: list, output_path: str, sheet_name: str = "Report") -> dict:
+def export_to_excel(data: dict, output_path: str, sheet_name: str = "Report") -> dict:
     try:
-        pd.DataFrame(data).to_excel(output_path, sheet_name=sheet_name, index=False)
+        # Expected data format: {"headers": [...], "rows": [[...], [...]]}
+        if isinstance(data, dict) and "headers" in data and "rows" in data:
+            records = [dict(zip(data["headers"], row)) for row in data["rows"]]
+            df = pd.DataFrame(records)
+        else:
+            df = pd.DataFrame(data)
+        
+        df.to_excel(output_path, sheet_name=sheet_name, index=False)
         return {"success": True, "path": output_path}
     except Exception as e:
         return {"error": str(e)}

@@ -40,13 +40,14 @@ def import_pdf_file(file_path: str) -> dict:
                     continue
                 
                 # Regex for: <AccountDigits> <Space> <Names> <Space> <AmountDigits>
-                # e.g., "1023 श्रीकांत पाटील 5000.50"
-                match = re.match(r'^(\d+)\s+(.+?)\s+([\d\.]+)$', line)
+                # e.g., "1023 श्रीकांत पाटील 5000.50" or "1023 Jane Doe 1,500.50"
+                match = re.match(r'^(\d+)\s+(.+?)\s+([\d\.,]+)$', line)
                 if match:
                     account = match.group(1).strip()
                     name = match.group(2).strip()
                     try:
-                        amount = float(match.group(3).strip())
+                        amount_str = match.group(3).strip().replace(',', '')
+                        amount = float(amount_str)
                         records.append({
                             "account_number": account,
                             "name": name,

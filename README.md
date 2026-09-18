@@ -9,6 +9,7 @@ AutoBank is a professional, reliable, and offline-first desktop financial manage
 - **Bilingual Support**: Full English and Marathi UI support.
 - **Backup-First Architecture**: Automatic timed backups, transaction snapshots, and manual recovery modes.
 - **Low-End Hardware Optimized**: Designed to run efficiently on basic Windows systems.
+- **audit logger**: the audit logger is secure and stored in the database and cannot be deleted.
 
 ## 🛠️ Technology Stack
 - **Frontend**: JavaFX (Modern, lightweight, keyboard-friendly UI).

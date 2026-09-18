@@ -24,7 +24,8 @@ public class DistributionService {
     private final TransactionService transactionService = new TransactionService();
 
     public PaymentDistribution parseFile(String filePath) throws Exception {
-        ProcessBuilder pb = new ProcessBuilder("python", "python/excel_handler.py", filePath);
+        String scriptPath = filePath.toLowerCase().endsWith(".pdf") ? "python/pdf_importer.py" : "python/excel_handler.py";
+        ProcessBuilder pb = new ProcessBuilder("python", scriptPath, filePath);
         pb.redirectErrorStream(true);
         Process p = pb.start();
         

@@ -12,7 +12,6 @@ class DepositCalculatorTest {
 
     @Test
     void testFdMaturityQuarterlyCompounding() {
-        // Principal = 100,000, Rate = 8.0% p.a., Tenure = 12 months (4 quarters)
         // A = 100000 * (1 + 0.08/4)^4 = 100000 * (1.02)^4 = 100000 * 1.08243216 = 108,243.22
         BigDecimal principal = BigDecimal.valueOf(100000);
         BigDecimal rate = BigDecimal.valueOf(8.0);
@@ -53,7 +52,6 @@ class DepositCalculatorTest {
 
         BigDecimal maturity = DepositCalculator.calculateRdMaturity(installment, rate, tenureMonths);
         assertNotNull(maturity);
-        // Total invested = 12,000. Maturity should be greater than total invested
         assertTrue(maturity.compareTo(BigDecimal.valueOf(12000)) > 0);
         assertEquals(new BigDecimal("12495.69"), maturity);
     }
@@ -68,7 +66,7 @@ class DepositCalculatorTest {
         deposit.setTenureMonths(24);
         deposit.setDepositDate(LocalDate.now().minusMonths(6));
 
-        // Premature closure after 6 months with 1.0% penalty -> effective rate = 7.5%
+        //  closure after 6 months with 1.0% penalty -> effective rate = 7.5%
         DepositCalculator.PrematureSettlement settlement =
             DepositCalculator.calculatePrematurePayout(deposit, LocalDate.now(), BigDecimal.valueOf(1.0));
 

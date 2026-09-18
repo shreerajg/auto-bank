@@ -108,6 +108,70 @@ public class DistributionController {
         });
     }
 
+    @FXML
+    private void handleExport() {
+        if (currentDist == null) return;
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
+        chooser.setInitialFileName("Distribution_" + currentDist.getId() + ".xlsx");
+        File file = chooser.showSaveDialog(statusLabel.getScene().getWindow());
+        if (file != null) {
+            try {
+                // Use python/excel_handler.py to export to excel
+                java.util.List<DistributionRecord> records = service.getRecords(currentDist.getId());
+                java.util.Map<String, Object> data = new java.util.HashMap<>();
+                data.put("headers", new String[]{"Name", "Account Number", "Amount", "Status", "Error Message"});
+                java.util.List<java.util.List<String>> rows = new java.util.ArrayList<>();
+                for (DistributionRecord r : records) {
+                    rows.add(java.util.List.of(
+                        r.getHolderName() != null ? r.getHolderName() : "",
+                        r.getAccountNumber() != null ? r.getAccountNumber() : "",
+                        r.getAmount() != null ? r.getAmount().toString() : "",
+                        r.getStatus() != null ? r.getStatus() : "",
+                        r.getErrorMessage() != null ? r.getErrorMessage() : ""
+                    ));
+                }
+                data.put("rows", rows);
+
+                // Create temp JSON file
+                File tempJson = File.createTempFile("export_data_", ".json");
+                try (java.io.FileWriter writer = new java.io.FileWriter(tempJson)) {
+                    new com.google.gson.Gson().toJson(data, writer);
+                }
+
+                // Temporary python script to call excel_handler.py export function
+                File pyTemp = File.createTempFile("run_excel_export", ".py");
+                try (java.io.FileWriter pyWriter = new java.io.FileWriter(pyTemp)) {
+                    pyWriter.write("import json, sys\n" +
+                                   "import python.excel_handler as eh\n" +
+                                   "with open(sys.argv[1], 'r', encoding='utf-8') as f:\n" +
+                                   "    data = json.load(f)\n" +
+                                   "res = eh.export_to_excel(data, sys.argv[2])\n" +
+                                   "print(json.dumps(res))\n");
+                }
+
+                ProcessBuilder pb = new ProcessBuilder("python", pyTemp.getAbsolutePath(), 
+                        tempJson.getAbsolutePath(), file.getAbsolutePath());
+                pb.redirectErrorStream(true);
+                Process p = pb.start();
+                if (p.waitFor() != 0) throw new Exception("Export failed");
+                
+                tempJson.delete();
+                pyTemp.delete();
+
+                statusLabel.setText("Exported successfully to " + file.getName());
+                statusLabel.setStyle("-fx-text-fill: #059669;");
+                if (java.awt.Desktop.isDesktopSupported()) {
+                    java.awt.Desktop.getDesktop().open(file);
+                }
+            } catch (Exception e) {
+                statusLabel.setText("Export error: " + e.getMessage());
+                statusLabel.setStyle("-fx-text-fill: #dc2626;");
+                log.error("Export failed", e);
+            }
+        }
+    }
+
     private void loadRecords() {
         try {
             recordTable.setItems(FXCollections.observableArrayList(service.getRecords(currentDist.getId())));

@@ -10,6 +10,7 @@ AutoBank is a professional, reliable, and offline-first desktop financial manage
 - **Backup-First Architecture**: Automatic timed backups, transaction snapshots, and manual recovery modes.
 - **Low-End Hardware Optimized**: Designed to run efficiently on basic Windows systems.
 - **audit logger**: the audit logger is secure and stored in the database and cannot be deleted.
+  **pdf dairy exporter**: the pdf dairy exporter is a feature that allows you to export dairy payments to a pdf file.
 
 ## 🛠️ Technology Stack
 - **Frontend**: JavaFX (Modern, lightweight, keyboard-friendly UI).

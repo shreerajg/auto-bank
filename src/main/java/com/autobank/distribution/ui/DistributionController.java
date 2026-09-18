@@ -65,7 +65,8 @@ public class DistributionController {
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("Excel Files", "*.xlsx", "*.xls"),
-            new FileChooser.ExtensionFilter("CSV Files", "*.csv")
+            new FileChooser.ExtensionFilter("CSV Files", "*.csv"),
+            new FileChooser.ExtensionFilter("PDF Files", "*.pdf")
         );
         File file = chooser.showOpenDialog(statusLabel.getScene().getWindow());
         if (file != null) {

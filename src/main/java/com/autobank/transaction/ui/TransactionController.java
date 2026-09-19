@@ -278,4 +278,53 @@ public class TransactionController {
             MainController.showToast("Load error: " + e.getMessage(), Toast.Type.ERROR);
         }
     }
+
+    @FXML
+    private void handleSearch() {
+        try {
+            String query = searchField != null ? searchField.getText() : null;
+            LocalDate start = startDatePicker != null ? startDatePicker.getValue() : null;
+            LocalDate end = endDatePicker != null ? endDatePicker.getValue() : null;
+            transactionTable.setItems(FXCollections.observableArrayList(txService.searchTransactions(query, start, end)));
+        } catch (Exception e) {
+            MainController.showToast("Search error: " + e.getMessage(), Toast.Type.ERROR);
+        }
+    }
+
+    @FXML
+    private void handleResetFilter() {
+        if (searchField != null) searchField.clear();
+        if (startDatePicker != null) startDatePicker.setValue(null);
+        if (endDatePicker != null) endDatePicker.setValue(null);
+        loadRecent();
+    }
+
+    private void setupCashbookTable() {
+        if (colCbId == null) return;
+        colCbId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colCbType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colCbAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        colCbDesc.setCellValueFactory(new PropertyValueFactory<>("description"));
+    }
+
+    @FXML
+    private void loadCashbook() {
+        if (cashbookDatePicker == null || cashbookTable == null) return;
+        LocalDate date = cashbookDatePicker.getValue();
+        if (date == null) {
+            date = LocalDate.now();
+            cashbookDatePicker.setValue(date);
+        }
+        
+        try {
+            TransactionService.CashbookSummary summary = txService.getCashbook(date);
+            cbOpenBal.setText("₹ " + String.format("%.2f", summary.openingBalance));
+            cbTotalIn.setText("₹ " + String.format("%.2f", summary.totalIn));
+            cbTotalOut.setText("₹ " + String.format("%.2f", summary.totalOut));
+            cbCloseBal.setText("₹ " + String.format("%.2f", summary.closingBalance));
+            cashbookTable.setItems(FXCollections.observableArrayList(summary.transactions));
+        } catch (Exception e) {
+            MainController.showToast("Cashbook error: " + e.getMessage(), Toast.Type.ERROR);
+        }
+    }
 }

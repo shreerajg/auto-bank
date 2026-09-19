@@ -57,7 +57,7 @@ public class LoanController {
         colInterest.setCellValueFactory(new PropertyValueFactory<>("interestRate"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        filterCombo.setItems(FXCollections.observableArrayList("ALL", "ACTIVE", "CLOSED"));
+        filterCombo.setItems(FXCollections.observableArrayList("ALL", "ACTIVE", "CLOSED", "OVERDUE"));
         filterCombo.setValue("ACTIVE");
         filterCombo.setOnAction(e -> loadLoans());
 

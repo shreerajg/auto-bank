@@ -27,7 +27,6 @@ public class InterestCalculationTest {
 
     @Test
     public void testRoundingOnFractionalInterest() {
-        // Principal = 10,000, Annual Rate = 7.5% -> Annual Interest = 750 -> Monthly = 62.50
         BigDecimal principal = new BigDecimal("10000.00");
         BigDecimal rate = new BigDecimal("7.50");
         BigDecimal monthlyInterest = calculateMonthlyInterest(principal, rate);

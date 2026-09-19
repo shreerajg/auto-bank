@@ -1,6 +1,7 @@
-package com.autobank.deposit.service;
+package com.autobank.deposit;
 
 import com.autobank.deposit.model.TermDeposit;
+import com.autobank.deposit.service.DepositCalculator;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

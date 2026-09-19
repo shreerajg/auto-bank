@@ -5,6 +5,8 @@ import com.autobank.config.DatabaseConfig;
 import com.autobank.loan.model.Loan;
 import com.autobank.util.AuditLogger;
 
+import com.autobank.loan.model.LoanPayment;
+
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;

@@ -11,6 +11,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 
+import com.autobank.loan.model.LoanPayment;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.geometry.Insets;
+import java.time.format.DateTimeFormatter;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,6 +74,16 @@ public class LoanController {
         // Select loan on table click for payment
         loanTable.getSelectionModel().selectedItemProperty().addListener((obs, old, sel) -> {
             if (sel != null) payLoanIdField.setText(String.valueOf(sel.getId()));
+        });
+
+        loanTable.setRowFactory(tv -> {
+            TableRow<Loan> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    showLoanDetails(row.getItem());
+                }
+            });
+            return row;
         });
 
         setupDraftListeners();

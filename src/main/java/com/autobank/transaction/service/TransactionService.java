@@ -9,8 +9,106 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 public class TransactionService {
+
+    public static class CashbookSummary {
+        public BigDecimal openingBalance = BigDecimal.ZERO;
+        public BigDecimal closingBalance = BigDecimal.ZERO;
+        public BigDecimal totalIn = BigDecimal.ZERO;
+        public BigDecimal totalOut = BigDecimal.ZERO;
+        public List<Transaction> transactions = new ArrayList<>();
+    }
+
+    public List<Transaction> searchTransactions(String query, LocalDate start, LocalDate end) throws SQLException {
+        List<Transaction> list = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM transactions WHERE 1=1 ");
+        List<Object> params = new ArrayList<>();
+        
+        if (query != null && !query.trim().isEmpty()) {
+            sql.append("AND (description LIKE ? OR type LIKE ? OR CAST(id AS TEXT) LIKE ?) ");
+            String likeQuery = "%" + query.trim() + "%";
+            params.add(likeQuery);
+            params.add(likeQuery);
+            params.add(likeQuery);
+        }
+        if (start != null) {
+            sql.append("AND created_at >= ? ");
+            params.add(Timestamp.valueOf(start.atStartOfDay()));
+        }
+        if (end != null) {
+            sql.append("AND created_at < ? ");
+            params.add(Timestamp.valueOf(end.plusDays(1).atStartOfDay()));
+        }
+        sql.append("ORDER BY created_at DESC LIMIT 500");
+
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
+            
+            for (int i = 0; i < params.size(); i++) {
+                stmt.setObject(i + 1, params.get(i));
+            }
+            
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                list.add(mapTransaction(rs));
+            }
+        }
+        return list;
+    }
+
+    public CashbookSummary getCashbook(LocalDate date) throws SQLException {
+        CashbookSummary summary = new CashbookSummary();
+        try (Connection conn = DatabaseConfig.getConnection()) {
+            // Get opening balance (sum of DEPOSITS - WITHDRAWALS up to start of date)
+            PreparedStatement openStmt = conn.prepareStatement(
+                "SELECT SUM(CASE WHEN type LIKE '%DEPOSIT%' OR type LIKE '%CREDIT%' THEN amount ELSE -amount END) as bal " +
+                "FROM transactions WHERE status = 'ACTIVE' AND created_at < ?");
+            openStmt.setTimestamp(1, Timestamp.valueOf(date.atStartOfDay()));
+            ResultSet rsOpen = openStmt.executeQuery();
+            if (rsOpen.next() && rsOpen.getBigDecimal("bal") != null) {
+                summary.openingBalance = rsOpen.getBigDecimal("bal");
+            }
+
+            // Get transactions for the day
+            PreparedStatement txStmt = conn.prepareStatement(
+                "SELECT * FROM transactions WHERE created_at >= ? AND created_at < ? ORDER BY created_at ASC");
+            txStmt.setTimestamp(1, Timestamp.valueOf(date.atStartOfDay()));
+            txStmt.setTimestamp(2, Timestamp.valueOf(date.plusDays(1).atStartOfDay()));
+            ResultSet rsTx = txStmt.executeQuery();
+            
+            while (rsTx.next()) {
+                Transaction tx = mapTransaction(rsTx);
+                summary.transactions.add(tx);
+                if ("ACTIVE".equals(tx.getStatus())) {
+                    if (tx.getType().contains("DEPOSIT") || tx.getType().contains("CREDIT")) {
+                        summary.totalIn = summary.totalIn.add(tx.getAmount());
+                    } else if (tx.getType().contains("WITHDRAWAL") || tx.getType().contains("DEBIT")) {
+                        summary.totalOut = summary.totalOut.add(tx.getAmount());
+                    }
+                }
+            }
+            
+            summary.closingBalance = summary.openingBalance.add(summary.totalIn).subtract(summary.totalOut);
+        }
+        return summary;
+    }
+
+    private Transaction mapTransaction(ResultSet rs) throws SQLException {
+        Transaction tx = new Transaction();
+        tx.setId(rs.getInt("id"));
+        tx.setAccountId(rs.getInt("account_id"));
+        tx.setType(rs.getString("type"));
+        tx.setAmount(rs.getBigDecimal("amount"));
+        tx.setBalanceBefore(rs.getBigDecimal("balance_before"));
+        tx.setBalanceAfter(rs.getBigDecimal("balance_after"));
+        tx.setDescription(rs.getString("description"));
+        tx.setStatus(rs.getString("status"));
+        Timestamp ts = rs.getTimestamp("created_at");
+        if (ts != null) tx.setCreatedAt(ts.toLocalDateTime());
+        return tx;
+    }
 
     public Transaction deposit(int accountId, BigDecimal amount, String desc) throws Exception {
         return execute(accountId, "DEPOSIT", amount, desc, null);
@@ -178,18 +276,7 @@ public class TransactionService {
             stmt.setInt(1, limit);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Transaction tx = new Transaction();
-                tx.setId(rs.getInt("id"));
-                tx.setAccountId(rs.getInt("account_id"));
-                tx.setType(rs.getString("type"));
-                tx.setAmount(rs.getBigDecimal("amount"));
-                tx.setBalanceBefore(rs.getBigDecimal("balance_before"));
-                tx.setBalanceAfter(rs.getBigDecimal("balance_after"));
-                tx.setDescription(rs.getString("description"));
-                tx.setStatus(rs.getString("status"));
-                Timestamp ts = rs.getTimestamp("created_at");
-                if (ts != null) tx.setCreatedAt(ts.toLocalDateTime());
-                list.add(tx);
+                list.add(mapTransaction(rs));
             }
         }
         return list;

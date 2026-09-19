@@ -104,6 +104,26 @@ public class LoanService {
         return list;
     }
 
+    public List<LoanPayment> getLoanPayments(int loanId) throws SQLException {
+        List<LoanPayment> list = new ArrayList<>();
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM loan_payments WHERE loan_id = ? ORDER BY paid_at DESC")) {
+            ps.setInt(1, loanId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                LoanPayment lp = new LoanPayment();
+                lp.setId(rs.getInt("id"));
+                lp.setLoanId(rs.getInt("loan_id"));
+                lp.setAmount(rs.getBigDecimal("amount"));
+                lp.setOperatorId(rs.getInt("operator_id"));
+                Timestamp ts = rs.getTimestamp("paid_at");
+                if (ts != null) lp.setPaidAt(ts.toLocalDateTime());
+                list.add(lp);
+            }
+        }
+        return list;
+    }
+
     private Loan map(ResultSet rs) throws SQLException {
         Loan l = new Loan();
         l.setId(rs.getInt("id"));

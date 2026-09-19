@@ -163,6 +163,57 @@ public class LoanController {
         }
     }
 
+    private void showLoanDetails(Loan loan) {
+        try {
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Loan Details - #" + loan.getId());
+
+            VBox layout = new VBox(16);
+            layout.setPadding(new Insets(20));
+            layout.setStyle("-fx-background-color: #f8fafc;");
+
+            Label header = new Label("Loan Accounts: " + loan.getHolderName());
+            header.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+
+            Label summary = new Label(String.format("Principal: ₹%s | Outstanding: ₹%s | Paid: ₹%s \nRate: %s%% | Status: %s",
+                    loan.getAmount(), loan.getOutstanding(), loan.getTotalPaid(), loan.getInterestRate(), loan.getStatus()));
+            summary.setStyle("-fx-font-size: 14px; -fx-text-fill: #475569;");
+
+            TableView<LoanPayment> paymentTable = new TableView<>();
+            TableColumn<LoanPayment, Integer> colPId = new TableColumn<>("Payment Ref");
+            colPId.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+            TableColumn<LoanPayment, BigDecimal> colPAmt = new TableColumn<>("Amount");
+            colPAmt.setCellValueFactory(new PropertyValueFactory<>("amount"));
+
+            TableColumn<LoanPayment, String> colPDate = new TableColumn<>("Date");
+            colPDate.setCellValueFactory(cellData -> {
+                var date = cellData.getValue().getPaidAt();
+                return new javafx.beans.property.SimpleStringProperty(
+                        date != null ? date.format(DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm")) : "-"
+                );
+            });
+
+            paymentTable.getColumns().addAll(colPId, colPAmt, colPDate);
+            paymentTable.setPrefHeight(250);
+
+            var payments = loanService.getLoanPayments(loan.getId());
+            paymentTable.setItems(FXCollections.observableArrayList(payments));
+
+            if (payments.isEmpty()) {
+                paymentTable.setPlaceholder(new Label("No payments recorded yet."));
+            }
+
+            layout.getChildren().addAll(header, summary, new Label("Payment History:"), paymentTable);
+            Scene scene = new Scene(layout, 500, 400);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            status("Error loading loan details: " + e.getMessage());
+        }
+    }
+
     private void loadLoans() {
         try {
             String filter = filterCombo.getValue() == null ? "ALL" : filterCombo.getValue();

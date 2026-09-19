@@ -77,7 +77,19 @@ public class LoanController {
         });
 
         loanTable.setRowFactory(tv -> {
-            TableRow<Loan> row = new TableRow<>();
+            TableRow<Loan> row = new TableRow<>() {
+                @Override
+                protected void updateItem(Loan item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setStyle("");
+                    } else if (item.getDueDate() != null && item.getDueDate().isBefore(java.time.LocalDate.now()) && item.getOutstanding().compareTo(BigDecimal.ZERO) > 0) {
+                        setStyle("-fx-background-color: #fee2e2;");
+                    } else {
+                        setStyle("");
+                    }
+                }
+            };
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     showLoanDetails(row.getItem());

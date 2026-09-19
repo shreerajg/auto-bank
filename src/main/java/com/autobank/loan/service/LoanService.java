@@ -91,13 +91,21 @@ public class LoanService {
     public List<Loan> getAllLoans(String statusFilter) throws SQLException {
         String sql = "SELECT l.*, a.account_number, a.holder_name FROM loans l " +
                      "JOIN accounts a ON l.account_id = a.id ";
-        if (!"ALL".equals(statusFilter)) sql += "WHERE l.status = ? ";
+        
+        if ("OVERDUE".equals(statusFilter)) {
+            sql += "WHERE l.status = 'ACTIVE' AND l.due_date < CURRENT_DATE ";
+        } else if (!"ALL".equals(statusFilter)) {
+            sql += "WHERE l.status = ? ";
+        }
+        
         sql += "ORDER BY l.disbursed_at DESC";
 
         List<Loan> list = new ArrayList<>();
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            if (!"ALL".equals(statusFilter)) ps.setString(1, statusFilter);
+            if (!"ALL".equals(statusFilter) && !"OVERDUE".equals(statusFilter)) {
+                ps.setString(1, statusFilter);
+            }
             ResultSet rs = ps.executeQuery();
             while (rs.next()) list.add(map(rs));
         }

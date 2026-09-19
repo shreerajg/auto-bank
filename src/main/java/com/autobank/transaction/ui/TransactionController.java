@@ -16,9 +16,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 public class TransactionController {
 
@@ -31,6 +33,11 @@ public class TransactionController {
     @FXML private Label balanceValueLabel;
     @FXML private Label selectedAccountLabel;
 
+    // History Tab
+    @FXML private TextField searchField;
+    @FXML private DatePicker startDatePicker;
+    @FXML private DatePicker endDatePicker;
+
     @FXML private TableView<Transaction> transactionTable;
     @FXML private TableColumn<Transaction, Integer> colId;
     @FXML private TableColumn<Transaction, String> colType;
@@ -38,6 +45,18 @@ public class TransactionController {
     @FXML private TableColumn<Transaction, BigDecimal> colBalance;
     @FXML private TableColumn<Transaction, String> colDate;
     @FXML private TableColumn<Transaction, String> colStatus;
+
+    // Cashbook Tab
+    @FXML private DatePicker cashbookDatePicker;
+    @FXML private Label cbOpenBal;
+    @FXML private Label cbTotalIn;
+    @FXML private Label cbTotalOut;
+    @FXML private Label cbCloseBal;
+    @FXML private TableView<Transaction> cashbookTable;
+    @FXML private TableColumn<Transaction, Integer> colCbId;
+    @FXML private TableColumn<Transaction, String> colCbType;
+    @FXML private TableColumn<Transaction, BigDecimal> colCbAmount;
+    @FXML private TableColumn<Transaction, String> colCbDesc;
 
     private final TransactionService txService = new TransactionService();
     private final AccountService accountService = new AccountService();
@@ -47,7 +66,12 @@ public class TransactionController {
     @FXML
     public void initialize() {
         setupTable();
+        setupCashbookTable();
         setupAccountCombo();
+
+        if (cashbookDatePicker != null) {
+            cashbookDatePicker.setValue(LocalDate.now());
+        }
 
         accountSearchField.textProperty().addListener((obs, old, val) -> {
             try {
@@ -71,9 +95,19 @@ public class TransactionController {
             saveDraft();
         });
 
+        if (searchField != null) {
+            searchField.textProperty().addListener((obs, old, val) -> {
+                if (val.isEmpty()) handleSearch();
+            });
+        }
+
         setupDraftListeners();
         loadDraft();
         loadRecent();
+        
+        if (cashbookDatePicker != null) {
+            Platform.runLater(this::loadCashbook);
+        }
 
         Platform.runLater(accountSearchField::requestFocus);
     }

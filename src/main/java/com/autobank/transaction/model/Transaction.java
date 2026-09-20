@@ -15,6 +15,8 @@ public class Transaction {
     private int operatorId;
     private LocalDateTime createdAt;
     private Integer referenceId;
+    private Integer reversedBy;
+    private LocalDateTime reversedAt;
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -38,4 +40,8 @@ public class Transaction {
     public void setCreatedAt(LocalDateTime v) { this.createdAt = v; }
     public Integer getReferenceId() { return referenceId; }
     public void setReferenceId(Integer v) { this.referenceId = v; }
+    public Integer getReversedBy() { return reversedBy; }
+    public void setReversedBy(Integer v) { this.reversedBy = v; }
+    public LocalDateTime getReversedAt() { return reversedAt; }
+    public void setReversedAt(LocalDateTime v) { this.reversedAt = v; }
 }

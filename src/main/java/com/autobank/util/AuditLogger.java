@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.Types;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class AuditLogger {
 
@@ -22,7 +23,7 @@ public class AuditLogger {
     public static void log(String eventType, String entityType, Integer entityId,
                            String description, Integer operatorId) {
         if (!DatabaseConfig.isConnected()) return;
-        
+
         executor.submit(() -> {
             try (Connection conn = DatabaseConfig.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(
@@ -38,5 +39,45 @@ public class AuditLogger {
                 log.warn("Audit write failed: {} — {}", eventType, description);
             }
         });
+    }
+
+    /**
+     * Flush pending audit log writes by shutting down the executor gracefully,
+     * waiting up to 5 seconds for pending tasks to complete, then recreating
+     * a fresh single-thread daemon executor.
+     */
+    public static void flushPendingLogs() {
+        executor.shutdown();
+        try {
+            if (!executor.awaitTermination(5, TimeUnit.SECONDS)) {
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+        // Recreate a fresh executor for subsequent log calls
+        ExecutorService fresh = Executors.newSingleThreadExecutor(r -> {
+            Thread t = new Thread(r, "audit-logger-thread");
+            t.setDaemon(true);
+            return t;
+        });
+        // Use reflection to replace the private static field since we cannot
+        // reassign a final field directly — fall back to a new executor reference.
+        try {
+            java.lang.reflect.Field field = AuditLogger.class.getDeclaredField("executor");
+            field.setAccessible(true);
+            // Suppress unchecked warning for the reflective set
+            field.set(null, fresh);
+        } catch (Exception e) {
+            log.warn("Failed to replace audit executor: {}", e.getMessage());
+        }
+    }
+
+    /**
+     * Check whether the audit log executor is still accepting tasks.
+     */
+    public static boolean isExecutorHealthy() {
+        return !executor.isShutdown() && !executor.isTerminated();
     }
 }

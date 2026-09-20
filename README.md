@@ -33,6 +33,8 @@ AutoBank is a professional, reliable, and offline-first desktop financial manage
 10. **Backup & Recovery**: Critical safety and restoration systems.
 11. **Settings**: Language toggles and system configurations.
 12. **Audit & Logging**: Comprehensive event logs for all system actions.
+13. **PDFdairy exporter**: the pdf dairy exporter is a feature that allows you to export dairy payments to a pdf file.
+14. **XML dairy importer**: the xml dairy importer is a feature that allows you to import dairy payments from an xml file.
 
 ## 🏁 Getting Started
 

@@ -6,9 +6,28 @@ Returns JSON to stdout.
 
 import json
 import sys
+import math
 from pathlib import Path
 
 import pandas as pd
+
+
+def validate_record(record: dict) -> dict | None:
+    """Validate a single imported record. Return cleaned record or None if invalid."""
+    name = str(record.get("name", "")).strip()
+    account = str(record.get("account_number", "")).strip()
+    try:
+        amount = float(record.get("amount", 0) or 0)
+    except (ValueError, TypeError):
+        amount = 0.0
+    if name == "":
+        return None
+    if account == "":
+        return None
+    if math.isnan(amount) or math.isinf(amount):
+        amount = 0.0
+    amount = abs(amount)
+    return {"name": name, "amount": amount, "account_number": account}
 
 
 def import_payment_file(file_path: str) -> dict:
@@ -18,31 +37,45 @@ def import_payment_file(file_path: str) -> dict:
 
     try:
         df = pd.read_excel(path) if path.suffix in (".xlsx", ".xls") else pd.read_csv(path)
-        records = []
-        for _, row in df.iterrows():
-            records.append({
-                "name": str(row.get("Name", row.get("नाव", ""))).strip(),
-                "amount": float(row.get("Amount", row.get("रक्कम", 0)) or 0),
-                "account_number": str(row.get("Account", row.get("खाते", ""))).strip(),
-            })
-        return {
-            "total_records": len(records),
-            "total_amount": sum(r["amount"] for r in records),
-            "records": records,
-        }
     except Exception as e:
         return {"error": str(e)}
+
+    records = []
+    rejected_count = 0
+    rejected_total = 0.0
+    for _, row in df.iterrows():
+        raw = {
+            "name": str(row.get("Name", row.get("नाव", ""))),
+            "amount": row.get("Amount", row.get("रक्कम", 0)),
+            "account_number": str(row.get("Account", row.get("खाते", ""))),
+        }
+        validated = validate_record(raw)
+        if validated is None:
+            rejected_count += 1
+            try:
+                rejected_total += float(raw.get("amount", 0) or 0)
+            except (ValueError, TypeError):
+                pass
+        else:
+            records.append(validated)
+
+    return {
+        "total_records": len(records) + rejected_count,
+        "rejected_records": rejected_count,
+        "total_amount": sum(r["amount"] for r in records),
+        "rejected_total": rejected_total,
+        "records": records,
+    }
 
 
 def export_to_excel(data: dict, output_path: str, sheet_name: str = "Report") -> dict:
     try:
-        # Expected data format: {"headers": [...], "rows": [[...], [...]]}
         if isinstance(data, dict) and "headers" in data and "rows" in data:
             records = [dict(zip(data["headers"], row)) for row in data["rows"]]
             df = pd.DataFrame(records)
         else:
             df = pd.DataFrame(data)
-        
+
         df.to_excel(output_path, sheet_name=sheet_name, index=False)
         return {"success": True, "path": output_path}
     except Exception as e:

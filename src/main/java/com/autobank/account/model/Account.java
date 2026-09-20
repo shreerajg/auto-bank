@@ -13,6 +13,9 @@ public class Account {
     private BigDecimal interestRate;
     private String status;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private boolean kycVerified;
+    private String photoUrl;
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -32,9 +35,10 @@ public class Account {
     public void setStatus(String v) { this.status = v; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime v) { this.createdAt = v; }
-
-    @Override
-    public String toString() {
-        return accountNumber + " — " + holderName;
-    }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime v) { this.updatedAt = v; }
+    public boolean isKycVerified() { return kycVerified; }
+    public void setKycVerified(boolean v) { this.kycVerified = v; }
+    public String getPhotoUrl() { return photoUrl; }
+    public void setPhotoUrl(String v) { this.photoUrl = v; }
 }

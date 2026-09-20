@@ -240,5 +240,10 @@
   "common.save": "जतन करा",
   "common.error": "त्रुटी",
   "common.success": "यश",
-  "common.refresh": "रिफ्रेश"
+  "common.refresh": "रिफ्रेश",
+  "deposits.calc.premature_penalty": "जर समयापूर्वी बंद केले गेले तर शтейपंट:",
+  "deposits.calc.penalty_rate": "शтейपंट दर (%):",
+  "interest.preview.confirm": "तुम्ही खरोखijl निवडलेल्या बॅचमधील सर्व रक्कम अदा करण्यास तयार आहात का?",
+  "reports.stat.total_fd": "एकूण मुदत ठेव (FD):",
+  "reports.stat.total_rd": "एकूण आवर्ती ठेव (RD):"
 }

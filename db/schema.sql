@@ -127,23 +127,44 @@ CREATE TABLE IF NOT EXISTS distribution_records (
     FOREIGN KEY (transaction_id) REFERENCES transactions(id)
 );
 
+CREATE TABLE IF NOT EXISTS dairy_payments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    distribution_record_id INT,
+    dairy_farm_name VARCHAR(100),
+    milk_collection_center VARCHAR(100),
+    liters DECIMAL(10,2),
+    rate_per_liter DECIMAL(10,2),
+    total_amount DECIMAL(15,2),
+    payment_date DATE,
+    status VARCHAR(20) DEFAULT 'PENDING' NOT NULL,
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    operator_id INT,
+    FOREIGN KEY (distribution_record_id) REFERENCES distribution_records(id),
+    FOREIGN KEY (operator_id) REFERENCES users(id),
+    INDEX idx_dairy_date (payment_date),
+    INDEX idx_dairy_status (status)
+);
+
 CREATE TABLE IF NOT EXISTS audit_log (
     id INT AUTO_INCREMENT PRIMARY KEY,
     event_type VARCHAR(50) NOT NULL,
     entity_type VARCHAR(50),
     entity_id INT,
     description TEXT,
+    audit_detail JSON,
     operator_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (operator_id) REFERENCES users(id),
-    INDEX idx_audit_date (created_at)
+    INDEX idx_audit_date (created_at),
+    INDEX idx_audit_entity (entity_type, entity_id)
 );
 
 CREATE TABLE IF NOT EXISTS interest_batches (
     id INT AUTO_INCREMENT PRIMARY KEY,
     month INT NOT NULL,
     year INT NOT NULL,
-    batch_type VARCHAR(20) NOT NULL, -- 'SAVINGS' or 'LOAN'
+    batch_type VARCHAR(20) NOT NULL,
     total_amount NUMERIC(15,2) NOT NULL,
     record_count INT NOT NULL,
     processed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -61,6 +61,7 @@ public class ReportController {
     @FXML private ComboBox<Integer> dayRangeCombo;
 
     private final ReportService service = new ReportService();
+    private TransactionExportService exportService;
 
     @FXML
     public void initialize() {

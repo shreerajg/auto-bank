@@ -88,6 +88,7 @@
                 <VBox spacing="14" VBox.vgrow="ALWAYS">
                     <Button text="%accounts.button.history" maxWidth="Infinity" prefHeight="44" styleClass="secondary-button"/>
                     <Button text="%accounts.button.edit" onAction="#handleEditDetails" maxWidth="Infinity" prefHeight="44" styleClass="secondary-button"/>
+                    <Button text="%accounts.button.statement" onAction="#handleExportStatement" maxWidth="Infinity" prefHeight="44" styleClass="secondary-button"/>
                     <Pane VBox.vgrow="ALWAYS"/>
                     <Button text="%accounts.button.deactivate" onAction="#handleDeactivateAccount" maxWidth="Infinity" prefHeight="44" styleClass="secondary-button" style="-fx-border-color: #fca5a5; -fx-text-fill: #ef4444;"/>
                 </VBox>

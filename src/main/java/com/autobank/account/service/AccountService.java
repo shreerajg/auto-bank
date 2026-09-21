@@ -112,6 +112,17 @@ public class AccountService {
 
 
 
+    public Account getAccountById(int id) throws SQLException {
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "SELECT * FROM accounts WHERE id = ?")) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return map(rs);
+        }
+        return null;
+    }
+
     private Account map(ResultSet rs) throws SQLException {
         Account a = new Account();
         a.setId(rs.getInt("id"));

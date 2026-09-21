@@ -65,6 +65,11 @@ public class ReportController {
 
     @FXML
     public void initialize() {
+        try {
+            exportService = new TransactionExportService();
+        } catch (SQLException e) {
+            exportService = null;
+        }
         colAccNum.setCellValueFactory(cd -> new SimpleStringProperty(
             cd.getValue().getOrDefault("accNum", "").toString()));
         colAccName.setCellValueFactory(cd -> new SimpleStringProperty(

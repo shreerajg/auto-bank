@@ -18,6 +18,7 @@
         <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-padding: 0 20 0 0;">
             <Button text="%reports.button.balances" onAction="#handleExportBalances" styleClass="secondary-button" prefHeight="40"/>
             <Button text="%reports.button.cashbook" onAction="#handleExportCashbook" styleClass="secondary-button" prefHeight="40"/>
+            <Button text="%reports.button.export_txns" onAction="#handleExportTransactions" styleClass="secondary-button" prefHeight="40"/>
         </HBox>
 
         <Label text="%reports.label.period" style="-fx-font-weight: bold;"/>

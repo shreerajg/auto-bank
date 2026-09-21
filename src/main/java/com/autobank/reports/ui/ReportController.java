@@ -3,6 +3,8 @@ package com.autobank.reports.ui;
 import com.autobank.config.DatabaseConfig;
 import com.autobank.reports.service.ReportService;
 import com.autobank.reports.service.ReportService.SummaryStats;
+import com.autobank.reports.service.TransactionExportService;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -10,10 +12,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 

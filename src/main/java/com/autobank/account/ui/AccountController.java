@@ -2,6 +2,7 @@ package com.autobank.account.ui;
 
 import com.autobank.account.model.Account;
 import com.autobank.account.service.AccountService;
+import com.autobank.reports.service.BankStatementService;
 import com.autobank.ui.MainController;
 import com.autobank.util.DraftManager;
 import com.autobank.util.I18n;
@@ -12,8 +13,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 

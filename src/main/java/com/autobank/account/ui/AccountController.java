@@ -260,6 +260,52 @@ public class AccountController {
     }
 
     @FXML
+    private void handleExportStatement() {
+        Account selected = accountTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            MainController.showToast(I18n.t("accounts.msg.select_to_export"), Toast.Type.ERROR);
+            return;
+        }
+        if (statementService == null) {
+            MainController.showToast("Statement service unavailable", Toast.Type.ERROR);
+            return;
+        }
+
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle(I18n.t("accounts.button.statement"));
+        chooser.setInitialFileName("statement_" + selected.getAccountNumber() + "_" +
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ".csv");
+        chooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+
+        java.io.File file = chooser.showSaveDialog(accountTable.getScene().getWindow());
+        if (file == null) return;
+
+        LocalDate start = LocalDate.now().minusMonths(12);
+        LocalDate end   = LocalDate.now();
+
+        Thread t = new Thread(() -> {
+            int count = statementService.exportStatement(
+                    selected.getId(), start, end, file.getAbsolutePath());
+            Platform.runLater(() -> {
+                if (count >= 0) {
+                    MainController.showToast(
+                            I18n.t("accounts.msg.statement_exported") + " (" + count + " txns)", Toast.Type.SUCCESS);
+                    try {
+                        if (java.awt.Desktop.isDesktopSupported()) {
+                            java.awt.Desktop.getDesktop().open(file);
+                        }
+                    } catch (Exception ignored) {}
+                } else {
+                    MainController.showToast(I18n.t("common.error") + ": export failed", Toast.Type.ERROR);
+                }
+            });
+        });
+        t.setDaemon(true);
+        t.start();
+    }
+
+    @FXML
     private void handleCancelEdit() {
         resetForm();
         if (tabPane != null) {

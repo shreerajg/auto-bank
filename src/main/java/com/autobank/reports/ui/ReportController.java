@@ -130,6 +130,42 @@ public class ReportController {
         }
     }
 
+    @FXML
+    private void handleExportTransactions() {
+        if (exportService == null) {
+            showError("Export service unavailable");
+            return;
+        }
+
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Export Transactions to CSV");
+        chooser.setInitialFileName("transactions_" +
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ".csv");
+        chooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+
+        java.io.File file = chooser.showSaveDialog(statusLabel.getScene().getWindow());
+        if (file == null) return;
+
+        LocalDate start = LocalDate.now().minusMonths(1);
+        LocalDate end   = LocalDate.now();
+        statusLabel.setText("Exporting transactions...");
+
+        Thread t = new Thread(() -> {
+            int count = exportService.exportTransactions(start, end, file.getAbsolutePath());
+            Platform.runLater(() -> {
+                if (count >= 0) {
+                    showSuccess("Exported " + count + " transactions: " + file.getName());
+                    openFile(file.getAbsolutePath());
+                } else {
+                    showError("Transaction export failed");
+                }
+            });
+        });
+        t.setDaemon(true);
+        t.start();
+    }
+
     private void openFile(String path) {
         try {
             java.io.File file = new java.io.File(path);

@@ -53,6 +53,7 @@ public class AccountController {
     private final DraftManager draftManager = DraftManager.getInstance();
     private static final String FORM_ID = "ACCOUNT_NEW";
     private Account editingAccount;
+    private BankStatementService statementService;
 
     @FXML
     public void initialize() {

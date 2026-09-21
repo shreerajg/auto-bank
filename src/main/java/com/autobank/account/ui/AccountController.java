@@ -59,6 +59,12 @@ public class AccountController {
     public void initialize() {
         if (accountTable == null) return;
 
+        try {
+            statementService = new BankStatementService();
+        } catch (SQLException e) {
+            statementService = null;
+        }
+
         colAccountNumber.setCellValueFactory(new PropertyValueFactory<>("accountNumber"));
         colHolderName.setCellValueFactory(new PropertyValueFactory<>("holderName"));
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));

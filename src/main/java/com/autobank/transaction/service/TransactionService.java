@@ -268,6 +268,39 @@ public class TransactionService {
         }
     }
 
+    public List<Transaction> getTransactionsBetween(LocalDate start, LocalDate end) throws SQLException {
+        List<Transaction> list = new ArrayList<>();
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "SELECT * FROM transactions WHERE created_at >= ? AND created_at < ? ORDER BY created_at DESC LIMIT 5000")) {
+            stmt.setTimestamp(1, Timestamp.valueOf(start.atStartOfDay()));
+            stmt.setTimestamp(2, Timestamp.valueOf(end.plusDays(1).atStartOfDay()));
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) list.add(mapTransaction(rs));
+        }
+        return list;
+    }
+
+    public List<Transaction> getTransactionsForAccount(int accountId, LocalDate start, LocalDate end) throws SQLException {
+        List<Transaction> list = new ArrayList<>();
+        StringBuilder sql = new StringBuilder(
+            "SELECT * FROM transactions WHERE account_id = ? ");
+        if (start != null) sql.append("AND created_at >= ? ");
+        if (end != null)   sql.append("AND created_at < ? ");
+        sql.append("ORDER BY created_at ASC LIMIT 5000");
+
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
+            int idx = 1;
+            stmt.setInt(idx++, accountId);
+            if (start != null) stmt.setTimestamp(idx++, Timestamp.valueOf(start.atStartOfDay()));
+            if (end != null)   stmt.setTimestamp(idx++, Timestamp.valueOf(end.plusDays(1).atStartOfDay()));
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) list.add(mapTransaction(rs));
+        }
+        return list;
+    }
+
     public List<Transaction> getRecent(int limit) throws SQLException {
         List<Transaction> list = new ArrayList<>();
         try (Connection conn = DatabaseConfig.getConnection();
